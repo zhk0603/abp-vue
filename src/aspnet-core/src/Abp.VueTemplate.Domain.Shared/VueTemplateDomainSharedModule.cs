@@ -36,7 +36,7 @@ namespace Abp.VueTemplate
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<VueTemplateResource>("en")
+                    .Add<VueTemplateResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/VueTemplate");
             });

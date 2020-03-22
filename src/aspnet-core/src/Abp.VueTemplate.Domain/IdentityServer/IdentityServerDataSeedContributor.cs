@@ -125,6 +125,23 @@ namespace Abp.VueTemplate.IdentityServer
                 );
             }
 
+            //Vue SPA 使用 简化授权模式。
+            var vueClientId = configurationSection["VueTemplate_Vue:ClientId"];
+            if (!vueClientId.IsNullOrWhiteSpace())
+            {
+                var webClientRootUrl = configurationSection["VueTemplate_Vue:RootUrl"].EnsureEndsWith('/');
+
+                await CreateClientAsync(
+                    vueClientId,
+                    commonScopes,
+                    new[] { "implicit", "password" },
+                    (configurationSection["VueTemplate_Vue:ClientSecret"] ?? "1q2w3e*").Sha256(),
+                    redirectUri: $"{webClientRootUrl}signin-oidc",
+                    postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc",
+                    silentRenewUrl: $"{webClientRootUrl}silent-renew-oidc"
+                );
+            }
+
             //Console Test Client
             var consoleClientId = configurationSection["VueTemplate_App:ClientId"];
             if (!consoleClientId.IsNullOrWhiteSpace())
@@ -145,7 +162,8 @@ namespace Abp.VueTemplate.IdentityServer
             string secret,
             string redirectUri = null,
             string postLogoutRedirectUri = null,
-            IEnumerable<string> permissions = null)
+            IEnumerable<string> permissions = null,
+            string silentRenewUrl = null)
         {
             var client = await _clientRepository.FindByCliendIdAsync(name);
             if (client == null)
@@ -164,8 +182,10 @@ namespace Abp.VueTemplate.IdentityServer
                         AbsoluteRefreshTokenLifetime = 31536000, //365 days
                         AccessTokenLifetime = 31536000, //365 days
                         AuthorizationCodeLifetime = 300,
-                        IdentityTokenLifetime = 300,
-                        RequireConsent = false
+                        IdentityTokenLifetime = 7200,
+                        RequireConsent = false,
+                        AllowAccessTokensViaBrowser = true,
+
                     },
                     autoSave: true
                 );
@@ -197,6 +217,14 @@ namespace Abp.VueTemplate.IdentityServer
                 if (client.FindRedirectUri(redirectUri) == null)
                 {
                     client.AddRedirectUri(redirectUri);
+                }
+            }
+
+            if(silentRenewUrl != null)
+            {
+                if (client.FindRedirectUri(silentRenewUrl) == null)
+                {
+                    client.AddRedirectUri(silentRenewUrl);
                 }
             }
 
