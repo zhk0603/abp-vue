@@ -28,6 +28,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.VirtualFileSystem;
+using IdentityServer4.Services;
 
 namespace Abp.VueTemplate
 {

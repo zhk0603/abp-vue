@@ -1,8 +1,12 @@
 ﻿@page
+@using Abp.VueTemplate.Localization
 @using Abp.VueTemplate.Pages
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Volo.Abp.Users
 @model IndexModel
 @inject ICurrentUser CurrentUser
+@inject IHtmlLocalizer<VueTemplateResource> L
+
 @if (CurrentUser.IsAuthenticated)
 {
     <div>
@@ -29,6 +33,6 @@
 {
     <div class="text-center">
         <i class="fa fa-user d-block" style="font-size: 10em; color: #aaa"></i><br/><br />
-        <a abp-button="Primary" asp-page="/Account/Login">Login</a>
+        <a abp-button="Primary" asp-page="/Account/Login">@L["Login"]</a>
     </div>
 }
