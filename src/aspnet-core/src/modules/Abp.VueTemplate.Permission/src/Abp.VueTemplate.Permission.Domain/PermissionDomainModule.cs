@@ -11,7 +11,6 @@ namespace Abp.VueTemplate.Permission
         )]
     public class PermissionDomainModule : AbpModule
     {
-
         public override void OnPreApplicationInitialization(ApplicationInitializationContext context)
         {
             var permissionOptions = context.ServiceProvider.GetRequiredService<AbpPermissionOptions>();

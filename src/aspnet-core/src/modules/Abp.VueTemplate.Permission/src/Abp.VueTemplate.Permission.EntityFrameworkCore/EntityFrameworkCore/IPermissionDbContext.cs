@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace Abp.VueTemplate.Permission.EntityFrameworkCore
@@ -9,5 +10,9 @@ namespace Abp.VueTemplate.Permission.EntityFrameworkCore
         /* Add DbSet for each Aggregate Root here. Example:
          * DbSet<Question> Questions { get; }
          */
+
+        DbSet<PermissionGroup> PermissionGroups { get; set; }
+        DbSet<PermissionPage> PermissionPages { get; set; }
+        DbSet<Menu> Menus { get; set; }
     }
 }

@@ -19,25 +19,26 @@ namespace Abp.VueTemplate.Permission.EntityFrameworkCore
 
             optionsAction?.Invoke(options);
 
-            /* Configure all entities here. Example:
+            // TODO 添加字段约束。
 
-            builder.Entity<Question>(b =>
-            {
-                //Configure table & schema name
-                b.ToTable(options.TablePrefix + "Questions", options.Schema);
-            
-                b.ConfigureFullAuditedAggregateRoot();
-            
-                //Properties
-                b.Property(q => q.Title).IsRequired().HasMaxLength(QuestionConsts.MaxTitleLength);
-                
-                //Relations
-                b.HasMany(question => question.Tags).WithOne().HasForeignKey(qt => qt.QuestionId);
+            builder.Entity<Menu>()
+                .HasMany(x => x.Children)
+                .WithOne(x => x.Parent)
+                .HasForeignKey(x => x.ParentId);
 
-                //Indexes
-                b.HasIndex(q => q.CreationTime);
-            });
-            */
+            var group = builder.Entity<PermissionGroup>();
+            group.HasMany(x => x.Children)
+                .WithOne(x => x.Parent)
+                .HasForeignKey(x => x.ParentId);
+            group.HasMany(x => x.Permissions)
+                .WithOne(x => x.Group)
+                .HasForeignKey(x => x.GroupId);
+
+            var page = builder.Entity<PermissionPage>();
+            page.HasMany(x => x.Children)
+                .WithOne(x => x.Parent)
+                .HasForeignKey(x => x.ParentId);
+
         }
     }
 }

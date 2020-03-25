@@ -23,5 +23,9 @@ namespace Abp.VueTemplate.Permission.EntityFrameworkCore
 
             builder.ConfigurePermission();
         }
+
+        public DbSet<PermissionGroup> PermissionGroups { get; set; }
+        public DbSet<PermissionPage> PermissionPages { get; set; }
+        public DbSet<Menu> Menus { get; set; }
     }
 }
