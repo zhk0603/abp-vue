@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Abp.VueTemplate.Permission</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="2.3.0" />
+    <PackageReference Include="Volo.Abp.Authorization" Version="2.3.0" />
+    <ProjectReference Include="..\Abp.VueTemplate.Permission.Domain.Shared\Abp.VueTemplate.Permission.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
