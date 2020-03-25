@@ -15,7 +15,6 @@ namespace Abp.VueTemplate.Permission
         public virtual string Name { get; protected set; }
         public virtual Guid? ParentId { get; set; }
         public virtual PermissionGroup Parent { get; set; }
-
         public virtual Collection<PermissionGroup> Children { get; set; }
         public virtual Collection<PermissionPage> Permissions { get; set; }
 
