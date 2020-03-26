@@ -15,10 +15,9 @@ namespace Abp.VueTemplate.Permission.EntityFrameworkCore
             context.Services.AddAbpDbContext<PermissionDbContext>(options =>
             {
                 options.AddDefaultRepositories<IPermissionDbContext>(true);
-
-                /* Add custom repositories here. Example:
-                 * options.AddRepository<Question, EfCoreQuestionRepository>();
-                 */
+                options.AddRepository<Menu, MenuRepository>();
+                options.AddRepository<PermissionGroup, PermissionGroupRepository>();
+                options.AddRepository<PermissionPage, PermissionPageRepository>();
             });
         }
     }

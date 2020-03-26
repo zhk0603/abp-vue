@@ -3,25 +3,26 @@ using Volo.Abp;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Modularity;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Abp.VueTemplate.Permission
 {
     [DependsOn(
-        typeof(PermissionDomainSharedModule)
+        typeof(PermissionDomainSharedModule),
+        typeof(Volo.Abp.Authorization.AbpAuthorizationModule)
         )]
     public class PermissionDomainModule : AbpModule
     {
         public override void OnPreApplicationInitialization(ApplicationInitializationContext context)
         {
-            var permissionOptions = context.ServiceProvider.GetRequiredService<AbpPermissionOptions>();
-
+            var permissionOptions = context.ServiceProvider.GetRequiredService<IOptions<AbpPermissionOptions>>().Value;
             /*
-             * 确保  PagePermissionDefinitionProvider 在最后一个。
-             *  abp 的 PermissionGroupDefinition 构造函数是 internal 不能在外部初始化，所以通过继承 PermissionDefinitionManager 的方式行不通，
-             *  只能通过 “DefinitionProvider”去附加我们自定义的“Permission”
-             */ 
+            * 确保  PagePermissionDefinitionProvider 在最后一个。
+            *  abp 的 PermissionGroupDefinition 构造函数是 internal 不能在外部初始化，所以通过继承 PermissionDefinitionManager 的方式行不通，
+            *  只能通过 “DefinitionProvider”去附加我们自定义的“Permission”
+            */
             var type = typeof(PagePermissionDefinitionProvider);
-            if (permissionOptions.DefinitionProviders.Any(x=> x == type))
+            if (permissionOptions.DefinitionProviders.Any(x => x == type))
             {
                 permissionOptions.DefinitionProviders.Remove(type);
             }

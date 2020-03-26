@@ -140,6 +140,21 @@ export const constantRoutes = [
       }
     ]
   },
+
+  {
+    path: '/users',
+    component: Layout,
+    redirect: '/users/index',
+    children: [
+      {
+        path: 'index',
+        name: 'UserIndex',
+        component: () => import('@/views/users/index'),
+        meta: { title: '用户管理', icon: 'dashboard' }
+      }
+    ]
+  },
+
   {
     path: '/signin-oidc',
     component: () => import('@/views/signin-oidc'),

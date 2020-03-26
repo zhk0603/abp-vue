@@ -1,14 +1,12 @@
 import request from '@/utils/request'
 
-export function login(data) {
-  return request({
-    url: '/user/login',
-    method: 'post',
-    data
-  })
+const userApi = {}
+
+userApi.list = (query) => {
+  return request.get('/api/identity/users', query)
 }
 
-export function getInfo(token) {
+userApi.getInfo = (token) => {
   return request({
     url: '/user/info',
     method: 'get',
@@ -16,9 +14,19 @@ export function getInfo(token) {
   })
 }
 
-export function logout() {
+userApi.login = (data) => {
+  return request({
+    url: '/user/login',
+    method: 'post',
+    data
+  })
+}
+
+userApi.logout = () => {
   return request({
     url: '/user/logout',
     method: 'post'
   })
 }
+
+export default userApi

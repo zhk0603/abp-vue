@@ -8,9 +8,6 @@ namespace Abp.VueTemplate.Permission.Authorization
     {
         public override void Define(IPermissionDefinitionContext context)
         {
-            var moduleGroup = context.AddGroup(PermissionPermissions.GroupName, L("Permission:Permission"));
-
-            var p = moduleGroup.AddPermission("");
         }
 
         private static LocalizableString L(string name)
