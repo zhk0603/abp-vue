@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Account;
+﻿using Abp.VueTemplate.Permission;
+using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
@@ -8,6 +9,7 @@ using Volo.Abp.TenantManagement;
 namespace Abp.VueTemplate
 {
     [DependsOn(
+        typeof(PermissionHttpApiModule),
         typeof(VueTemplateApplicationContractsModule),
         typeof(AbpAccountHttpApiModule),
         typeof(AbpIdentityHttpApiModule),

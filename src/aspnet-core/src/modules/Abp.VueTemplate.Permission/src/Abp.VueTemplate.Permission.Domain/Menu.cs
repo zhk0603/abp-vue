@@ -12,6 +12,7 @@ namespace Abp.VueTemplate.Permission
         public virtual Guid? TenantId { get; protected set; }
         public virtual string Name { get; protected set; }
         public virtual string DisplayName { get; protected set; }
+        public virtual MenuEnumType MenuType { get; protected set; }
         public virtual string ComponentPath { get; set; }
         public virtual string RouterPath { get; set; }
         public virtual Guid? ParentId { get; set; }
@@ -21,17 +22,19 @@ namespace Abp.VueTemplate.Permission
         public virtual string TargetUrl { get; set; } // window.open _blank 
         //public virtual Guid ApplicationId { get; set; }
         //public virtual Application Application { get; set; }
+        public virtual string PermissionKey { get; set; } // 此菜单关联的权限key.
         public virtual Collection<Menu> Children { get; set; }
 
         protected Menu()
         {
         }
 
-        public Menu(Guid id, string name, string displayName, Guid? tenantId)
+        public Menu(Guid id, string name, string displayName,MenuEnumType menuType, Guid? tenantId)
         {
             Id = id;
             Name = name;
             DisplayName = displayName;
+            MenuType = menuType;
             TenantId = tenantId;
 
             Children = new Collection<Menu>();

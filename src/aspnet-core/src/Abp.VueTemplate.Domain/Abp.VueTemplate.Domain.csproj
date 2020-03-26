@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Abp.VueTemplate.Domain.Shared\Abp.VueTemplate.Domain.Shared.csproj" />
+    <ProjectReference Include="..\modules\Abp.VueTemplate.Permission\src\Abp.VueTemplate.Permission.Domain\Abp.VueTemplate.Permission.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

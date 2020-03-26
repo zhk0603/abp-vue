@@ -1,6 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Volo.Abp;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace Abp.VueTemplate.Permission.EntityFrameworkCore
 {
@@ -21,24 +22,46 @@ namespace Abp.VueTemplate.Permission.EntityFrameworkCore
 
             // TODO 添加字段约束。
 
-            builder.Entity<Menu>()
-                .HasMany(x => x.Children)
+            builder.Entity<Menu>(x =>
+            {
+                x.ToTable(options.TablePrefix + "Menus", options.Schema);
+                x.HasMany(x => x.Children)
                 .WithOne(x => x.Parent)
                 .HasForeignKey(x => x.ParentId);
 
-            var group = builder.Entity<PermissionGroup>();
-            group.HasMany(x => x.Children)
+                x.ConfigureByConvention();
+            });
+
+
+            var group = builder.Entity<PermissionGroup>(x =>
+            {
+                x.ToTable(options.TablePrefix + "PermissionGroups", options.Schema);
+                x.HasMany(x => x.Children)
                 .WithOne(x => x.Parent)
                 .HasForeignKey(x => x.ParentId);
-            group.HasMany(x => x.Permissions)
+                x.HasMany(x => x.Permissions)
                 .WithOne(x => x.Group)
                 .HasForeignKey(x => x.GroupId);
 
-            var page = builder.Entity<PermissionPage>();
-            page.HasMany(x => x.Children)
+                x.ConfigureByConvention();
+            });
+
+            var page = builder.Entity<PermissionPage>(x =>
+            {
+
+                x.ToTable(options.TablePrefix + "PermissionPages", options.Schema);
+                x.HasMany(x => x.Children)
                 .WithOne(x => x.Parent)
                 .HasForeignKey(x => x.ParentId);
 
+                x.ConfigureByConvention();
+            });
+
+            builder.Entity<MenuGrant>(x =>
+            {
+                x.ToTable(options.TablePrefix + "MenuGrants", options.Schema);
+                x.HasIndex(x => new { x.MenuId, x.ProviderKey, x.ProviderName });
+            });
         }
     }
 }

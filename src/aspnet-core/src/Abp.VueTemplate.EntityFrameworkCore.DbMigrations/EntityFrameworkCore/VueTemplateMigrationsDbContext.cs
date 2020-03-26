@@ -9,6 +9,7 @@ using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Abp.VueTemplate.Permission.EntityFrameworkCore;
 
 namespace Abp.VueTemplate.EntityFrameworkCore
 {
@@ -50,6 +51,7 @@ namespace Abp.VueTemplate.EntityFrameworkCore
             /* Configure your own tables/entities inside the ConfigureVueTemplate method */
 
             builder.ConfigureVueTemplate();
+            builder.ConfigurePermission();
         }
     }
 }

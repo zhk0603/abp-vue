@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Abp.VueTemplate.Permission.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 namespace Abp.VueTemplate.EntityFrameworkCore
 {
     [DependsOn(
+        typeof(PermissionEntityFrameworkCoreModule),
         typeof(VueTemplateDomainModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),

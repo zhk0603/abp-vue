@@ -36,7 +36,7 @@ namespace Abp.VueTemplate.Permission
         {
             if (Children.Any(x => x.Key == key))
             {
-                throw new Volo.Abp.UserFriendlyException("分组名重复");
+                throw new Volo.Abp.UserFriendlyException("权限名重复");
             }
 
             var page = new PermissionPage(id, key, name, this.Group);

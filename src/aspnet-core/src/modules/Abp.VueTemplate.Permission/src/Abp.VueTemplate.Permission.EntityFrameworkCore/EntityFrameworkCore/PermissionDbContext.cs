@@ -27,5 +27,6 @@ namespace Abp.VueTemplate.Permission.EntityFrameworkCore
         public DbSet<PermissionGroup> PermissionGroups { get; set; }
         public DbSet<PermissionPage> PermissionPages { get; set; }
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<MenuGrant> MenuGrants { get; set; }
     }
 }

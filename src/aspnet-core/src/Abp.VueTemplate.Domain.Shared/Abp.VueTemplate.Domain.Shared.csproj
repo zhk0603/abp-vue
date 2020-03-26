@@ -23,4 +23,8 @@
     <Content Remove="Localization\VueTemplate\*.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\modules\Abp.VueTemplate.Permission\src\Abp.VueTemplate.Permission.Domain.Shared\Abp.VueTemplate.Permission.Domain.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

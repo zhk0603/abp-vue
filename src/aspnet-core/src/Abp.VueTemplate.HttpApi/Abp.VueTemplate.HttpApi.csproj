@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Abp.VueTemplate.Application.Contracts\Abp.VueTemplate.Application.Contracts.csproj" />
+    <ProjectReference Include="..\modules\Abp.VueTemplate.Permission\src\Abp.VueTemplate.Permission.HttpApi\Abp.VueTemplate.Permission.HttpApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

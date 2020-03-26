@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200326073310_AddPermissionModule.cs" />
+    <Compile Remove="Migrations\20200326073310_AddPermissionModule.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Abp.VueTemplate.EntityFrameworkCore\Abp.VueTemplate.EntityFrameworkCore.csproj" />
   </ItemGroup>
 

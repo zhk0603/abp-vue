@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Abp.VueTemplate.Permission;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -9,6 +10,7 @@ using Volo.Abp.TenantManagement;
 namespace Abp.VueTemplate
 {
     [DependsOn(
+        typeof(PermissionHttpApiClientModule),
         typeof(VueTemplateApplicationContractsModule),
         typeof(AbpAccountHttpApiClientModule),
         typeof(AbpIdentityHttpApiClientModule),

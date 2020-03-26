@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Abp.VueTemplate.Domain\Abp.VueTemplate.Domain.csproj" />
     <ProjectReference Include="..\Abp.VueTemplate.Application.Contracts\Abp.VueTemplate.Application.Contracts.csproj" />
+    <ProjectReference Include="..\modules\Abp.VueTemplate.Permission\src\Abp.VueTemplate.Permission.Application\Abp.VueTemplate.Permission.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
