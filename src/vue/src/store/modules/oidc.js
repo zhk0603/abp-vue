@@ -1,5 +1,6 @@
 import { vuexOidcCreateStoreModule } from 'vuex-oidc'
 import setting from '@/settings.js'
+import store from '@/store'
 
 const oidcStoreSetting = {
   namespaced: true,
@@ -15,7 +16,11 @@ const oidcEventListeners = {
   accessTokenExpiring: () => console.log('Access token will expire'),
   accessTokenExpired: () => console.log('Access token did expire'),
   silentRenewError: () => console.log('OIDC user is unloaded'),
-  userSignedOut: () => console.log('OIDC user is signed out'),
+  userSignedOut: () => {
+    console.log('OIDC user is signed out')
+    // 清理token
+    store.dispatch('oidc/removeUser')
+  },
   oidcError: payload => console.log('OIDC error', payload)
 }
 

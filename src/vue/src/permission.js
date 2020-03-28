@@ -9,7 +9,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
-
+  console.log('store', store)
   // set page title
   document.title = getPageTitle(to.meta.title)
   store.dispatch('oidc/oidcCheckAccess', to).then(hasAccess => {

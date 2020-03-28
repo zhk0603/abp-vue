@@ -7,12 +7,12 @@
     </p>
     <div style="width:100%;max-width:640px;height: 200px;margin: 0 auto;font-family: monospace;" v-html="userDisplay" />
     <p>
-      Id token
+      access token
     </p>
     <p>
       expires {{ new Date(oidcIdTokenExp).toISOString() }}
     </p>
-    <textarea v-model="oidcIdToken" readonly style="width:100%;max-width:640px;height: 200px;margin: 0 auto;font-family: monospace;" />
+    <textarea v-model="oidcAccessToken" readonly style="width:100%;max-width:640px;height: 200px;margin: 0 auto;font-family: monospace;" />
 
     <p>
       <button @click="authenticateOidcSilent">Reauthenticate silently</button>
@@ -34,7 +34,7 @@ export default {
       'oidcIsAuthenticated',
       'oidcAuthenticationIsChecked',
       'oidcUser',
-      'oidcIdToken',
+      'oidcAccessToken',
       'oidcIdTokenExp'
     ]),
     userDisplay: function() {

@@ -2,8 +2,10 @@ import request from '@/utils/request'
 
 const userApi = {}
 
-userApi.list = (query) => {
-  return request.get('/api/identity/users', query)
+userApi.list = (params) => {
+  return request.get('/api/identity/users', {
+    params
+  })
 }
 
 userApi.getInfo = (token) => {
