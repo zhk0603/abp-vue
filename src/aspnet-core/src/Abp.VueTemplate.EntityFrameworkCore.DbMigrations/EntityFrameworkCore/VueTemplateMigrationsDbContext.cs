@@ -51,7 +51,10 @@ namespace Abp.VueTemplate.EntityFrameworkCore
             /* Configure your own tables/entities inside the ConfigureVueTemplate method */
 
             builder.ConfigureVueTemplate();
-            builder.ConfigurePermission();
+            builder.ConfigurePermission(options =>
+            {
+                options.TablePrefix = "App";
+            });
         }
     }
 }

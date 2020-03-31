@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Abp.VueTemplate.Migrations
 {
     [DbContext(typeof(VueTemplateMigrationsDbContext))]
-    [Migration("20200326074148_AddPermissionModule")]
+    [Migration("20200331154827_AddPermissionModule")]
     partial class AddPermissionModule
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,7 +81,7 @@ namespace Abp.VueTemplate.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("PermissionMenus");
+                    b.ToTable("AppMenus");
                 });
 
             modelBuilder.Entity("Abp.VueTemplate.Permission.MenuGrant", b =>
@@ -106,7 +106,7 @@ namespace Abp.VueTemplate.Migrations
 
                     b.HasIndex("MenuId", "ProviderKey", "ProviderName");
 
-                    b.ToTable("PermissionMenuGrants");
+                    b.ToTable("AppMenuGrants");
                 });
 
             modelBuilder.Entity("Abp.VueTemplate.Permission.PermissionGroup", b =>
@@ -148,7 +148,7 @@ namespace Abp.VueTemplate.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("PermissionPermissionGroups");
+                    b.ToTable("AppPermissionGroups");
                 });
 
             modelBuilder.Entity("Abp.VueTemplate.Permission.PermissionPage", b =>
@@ -195,7 +195,7 @@ namespace Abp.VueTemplate.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("PermissionPermissionPages");
+                    b.ToTable("AppPermissionPages");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

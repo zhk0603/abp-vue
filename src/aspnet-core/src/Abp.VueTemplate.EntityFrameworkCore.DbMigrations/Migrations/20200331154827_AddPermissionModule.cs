@@ -8,7 +8,7 @@ namespace Abp.VueTemplate.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "PermissionMenuGrants",
+                name: "AppMenuGrants",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -19,11 +19,11 @@ namespace Abp.VueTemplate.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PermissionMenuGrants", x => x.Id);
+                    table.PrimaryKey("PK_AppMenuGrants", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PermissionMenus",
+                name: "AppMenus",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -45,17 +45,17 @@ namespace Abp.VueTemplate.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PermissionMenus", x => x.Id);
+                    table.PrimaryKey("PK_AppMenus", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PermissionMenus_PermissionMenus_ParentId",
+                        name: "FK_AppMenus_AppMenus_ParentId",
                         column: x => x.ParentId,
-                        principalTable: "PermissionMenus",
+                        principalTable: "AppMenus",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PermissionPermissionGroups",
+                name: "AppPermissionGroups",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -70,17 +70,17 @@ namespace Abp.VueTemplate.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PermissionPermissionGroups", x => x.Id);
+                    table.PrimaryKey("PK_AppPermissionGroups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PermissionPermissionGroups_PermissionPermissionGroups_ParentId",
+                        name: "FK_AppPermissionGroups_AppPermissionGroups_ParentId",
                         column: x => x.ParentId,
-                        principalTable: "PermissionPermissionGroups",
+                        principalTable: "AppPermissionGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PermissionPermissionPages",
+                name: "AppPermissionPages",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -96,60 +96,60 @@ namespace Abp.VueTemplate.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PermissionPermissionPages", x => x.Id);
+                    table.PrimaryKey("PK_AppPermissionPages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PermissionPermissionPages_PermissionPermissionGroups_GroupId",
+                        name: "FK_AppPermissionPages_AppPermissionGroups_GroupId",
                         column: x => x.GroupId,
-                        principalTable: "PermissionPermissionGroups",
+                        principalTable: "AppPermissionGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PermissionPermissionPages_PermissionPermissionPages_ParentId",
+                        name: "FK_AppPermissionPages_AppPermissionPages_ParentId",
                         column: x => x.ParentId,
-                        principalTable: "PermissionPermissionPages",
+                        principalTable: "AppPermissionPages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PermissionMenuGrants_MenuId_ProviderKey_ProviderName",
-                table: "PermissionMenuGrants",
+                name: "IX_AppMenuGrants_MenuId_ProviderKey_ProviderName",
+                table: "AppMenuGrants",
                 columns: new[] { "MenuId", "ProviderKey", "ProviderName" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PermissionMenus_ParentId",
-                table: "PermissionMenus",
+                name: "IX_AppMenus_ParentId",
+                table: "AppMenus",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PermissionPermissionGroups_ParentId",
-                table: "PermissionPermissionGroups",
+                name: "IX_AppPermissionGroups_ParentId",
+                table: "AppPermissionGroups",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PermissionPermissionPages_GroupId",
-                table: "PermissionPermissionPages",
+                name: "IX_AppPermissionPages_GroupId",
+                table: "AppPermissionPages",
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PermissionPermissionPages_ParentId",
-                table: "PermissionPermissionPages",
+                name: "IX_AppPermissionPages_ParentId",
+                table: "AppPermissionPages",
                 column: "ParentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PermissionMenuGrants");
+                name: "AppMenuGrants");
 
             migrationBuilder.DropTable(
-                name: "PermissionMenus");
+                name: "AppMenus");
 
             migrationBuilder.DropTable(
-                name: "PermissionPermissionPages");
+                name: "AppPermissionPages");
 
             migrationBuilder.DropTable(
-                name: "PermissionPermissionGroups");
+                name: "AppPermissionGroups");
         }
     }
 }

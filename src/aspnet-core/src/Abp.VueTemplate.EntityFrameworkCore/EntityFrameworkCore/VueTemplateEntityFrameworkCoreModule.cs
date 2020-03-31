@@ -1,4 +1,5 @@
-﻿using Abp.VueTemplate.Permission.EntityFrameworkCore;
+﻿using Abp.VueTemplate.Permission;
+using Abp.VueTemplate.Permission.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -31,6 +32,8 @@ namespace Abp.VueTemplate.EntityFrameworkCore
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            PermissionDbProperties.DbTablePrefix = "App";
+
             context.Services.AddAbpDbContext<VueTemplateDbContext>(options =>
             {
                 /* Remove "includeAllEntities: true" to create

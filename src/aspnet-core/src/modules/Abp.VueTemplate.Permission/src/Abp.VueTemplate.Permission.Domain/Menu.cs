@@ -7,7 +7,7 @@ using Volo.Abp.MultiTenancy;
 
 namespace Abp.VueTemplate.Permission
 {
-    public class Menu: AuditedEntity<Guid>, IMultiTenant
+    public class Menu : AuditedEntity<Guid>, IMultiTenant
     {
         public virtual Guid? TenantId { get; protected set; }
         public virtual string Name { get; protected set; }
@@ -19,7 +19,9 @@ namespace Abp.VueTemplate.Permission
         public virtual Menu Parent { get; set; }
         public virtual string Icon { get; set; }
         public virtual string Sort { get; set; }
+
         public virtual string TargetUrl { get; set; } // window.open _blank 
+
         //public virtual Guid ApplicationId { get; set; }
         //public virtual Application Application { get; set; }
         public virtual string PermissionKey { get; set; } // 此菜单关联的权限key.
@@ -29,7 +31,7 @@ namespace Abp.VueTemplate.Permission
         {
         }
 
-        public Menu(Guid id, string name, string displayName,MenuEnumType menuType, Guid? tenantId)
+        public Menu(Guid id, string name, string displayName, MenuEnumType menuType, Guid? tenantId)
         {
             Id = id;
             Name = name;

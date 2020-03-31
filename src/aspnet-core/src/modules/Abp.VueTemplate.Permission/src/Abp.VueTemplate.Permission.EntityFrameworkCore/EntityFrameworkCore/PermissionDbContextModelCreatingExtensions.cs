@@ -22,45 +22,45 @@ namespace Abp.VueTemplate.Permission.EntityFrameworkCore
 
             // TODO 添加字段约束。
 
-            builder.Entity<Menu>(x =>
+            builder.Entity<Menu>(b =>
             {
-                x.ToTable(options.TablePrefix + "Menus", options.Schema);
-                x.HasMany(x => x.Children)
-                .WithOne(x => x.Parent)
-                .HasForeignKey(x => x.ParentId);
+                b.ToTable(options.TablePrefix + "Menus", options.Schema);
+                b.HasMany(x => x.Children)
+                    .WithOne(x => x.Parent)
+                    .HasForeignKey(x => x.ParentId);
 
-                x.ConfigureByConvention();
+                b.ConfigureByConvention();
             });
 
 
-            var group = builder.Entity<PermissionGroup>(x =>
+            builder.Entity<PermissionGroup>(b =>
             {
-                x.ToTable(options.TablePrefix + "PermissionGroups", options.Schema);
-                x.HasMany(x => x.Children)
-                .WithOne(x => x.Parent)
-                .HasForeignKey(x => x.ParentId);
-                x.HasMany(x => x.Permissions)
-                .WithOne(x => x.Group)
-                .HasForeignKey(x => x.GroupId);
+                b.ToTable(options.TablePrefix + "PermissionGroups", options.Schema);
+                b.HasMany(x => x.Children)
+                    .WithOne(x => x.Parent)
+                    .HasForeignKey(x => x.ParentId);
+                b.HasMany(x => x.Permissions)
+                    .WithOne(x => x.Group)
+                    .HasForeignKey(x => x.GroupId);
 
-                x.ConfigureByConvention();
+                b.ConfigureByConvention();
             });
 
-            var page = builder.Entity<PermissionPage>(x =>
+            builder.Entity<PermissionPage>(b =>
             {
 
-                x.ToTable(options.TablePrefix + "PermissionPages", options.Schema);
-                x.HasMany(x => x.Children)
-                .WithOne(x => x.Parent)
-                .HasForeignKey(x => x.ParentId);
+                b.ToTable(options.TablePrefix + "PermissionPages", options.Schema);
+                b.HasMany(x => x.Children)
+                    .WithOne(x => x.Parent)
+                    .HasForeignKey(x => x.ParentId);
 
-                x.ConfigureByConvention();
+                b.ConfigureByConvention();
             });
 
-            builder.Entity<MenuGrant>(x =>
+            builder.Entity<MenuGrant>(b =>
             {
-                x.ToTable(options.TablePrefix + "MenuGrants", options.Schema);
-                x.HasIndex(x => new { x.MenuId, x.ProviderKey, x.ProviderName });
+                b.ToTable(options.TablePrefix + "MenuGrants", options.Schema);
+                b.HasIndex(x => new {x.MenuId, x.ProviderKey, x.ProviderName});
             });
         }
     }

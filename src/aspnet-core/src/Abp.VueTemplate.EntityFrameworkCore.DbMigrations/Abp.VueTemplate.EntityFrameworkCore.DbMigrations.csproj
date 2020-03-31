@@ -10,6 +10,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200326073310_AddPermissionModule.cs" />
     <Compile Remove="Migrations\20200326073310_AddPermissionModule.Designer.cs" />
+    <Compile Remove="Migrations\20200326074148_AddPermissionModule.cs" />
+    <Compile Remove="Migrations\20200326074148_AddPermissionModule.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
