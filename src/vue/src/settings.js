@@ -34,5 +34,5 @@ module.exports = {
   /**
    * 公开路径，不需要权限
    */
-  publicRoutePaths: ['/404', '/login']
+  publicRoutePaths: ['/404', '/login', '/dashboard']
 }

@@ -2,14 +2,13 @@
   <div class="app-container-full">
     <div class="app-full-header">
       <el-input
-        v-model="query.userName"
+        v-model="query.filter"
         placeholder="客户名称"
         clearable
         class="header-item"
         size="mini"
       />
-      <el-button class="header-item-btn" type="primary" size="mini">搜索</el-button>
-      <el-button class="header-item-btn" type="primary" size="mini">新增</el-button>
+      <el-button class="header-item-btn" type="primary" size="mini" @click="getList">搜索</el-button>
     </div>
     <div class="app-full-body">
       <el-table
@@ -31,6 +30,14 @@
           label="手机号"
           sortable
         />
+        <el-table-column
+          label="操作"
+        >
+          <template slot-scope="scope">
+            <el-link icon="el-icon-edit">编辑</el-link>
+            <el-link>查看<i class="el-icon-view el-icon--right" /> </el-link>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <div class="app-full-footer">
@@ -53,14 +60,19 @@ export default {
     return {
       tableData: [],
       query: {
-        userName: ''
+        filter: ''
       }
     }
   },
   created() {
-    userApi.list(this.query).then(res => {
-      this.tableData = res.items
-    })
+    this.getList()
+  },
+  methods: {
+    getList() {
+      userApi.list(this.query).then(res => {
+        this.tableData = res.items
+      })
+    }
   }
 }
 </script>
