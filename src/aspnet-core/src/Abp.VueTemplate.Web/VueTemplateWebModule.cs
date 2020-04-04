@@ -41,7 +41,6 @@ using Volo.Abp.VirtualFileSystem;
 namespace Abp.VueTemplate.Web
 {
     [DependsOn(
-        typeof(VueTemplateHttpApiModule),
         typeof(VueTemplateHttpApiClientModule),
         typeof(AbpAspNetCoreAuthenticationOAuthModule),
         typeof(AbpAspNetCoreMvcClientModule),

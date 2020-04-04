@@ -1,12 +1,17 @@
-﻿{
+{
   "profiles": {
     "Abp.VueTemplate.HttpApi.Host": {
       "commandName": "Project",
-      "launchBrowser": false,
-      "applicationUrl": "https://localhost:44314",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:44314"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true,
+      "useSSL": true
     }
   }
 }

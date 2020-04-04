@@ -1,0 +1,50 @@
+
+.app-full-container{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  .app-full-header{
+    padding: 10px;
+    border-bottom: 1px solid #cfd7e5;
+    background: #fff;
+  
+    .header-item{
+        width: 200px;
+        margin-bottom: 5px;
+    }
+    .header-item-btn{
+        margin-bottom: 5px;
+    }
+  }
+  .app-full-body{
+    flex-grow: 1;
+    height: 100%;
+    padding: 10px;
+    overflow: auto;
+    position: relative;
+  
+    .el-table{
+      border: 1px solid #eee;
+    }
+  }
+  .app-full-footer{
+    padding: 10px;
+    border-top: 1px solid #cfd7e5;
+    background: #fff;
+  }
+}
+  
+  .el-table__row{
+    .el-link{
+      margin-right: 10px;
+    }
+  }
+
+  .from-footer{
+    text-align:right;
+  }

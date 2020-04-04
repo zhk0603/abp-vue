@@ -36,7 +36,6 @@
     <PackageReference Include="Volo.Abp.Identity.Web" Version="2.3.0" />
     <PackageReference Include="Volo.Abp.TenantManagement.Web" Version="2.3.0" />
     <PackageReference Include="Volo.Abp.FeatureManagement.Web" Version="2.3.0" />
-    <ProjectReference Include="..\Abp.VueTemplate.HttpApi\Abp.VueTemplate.HttpApi.csproj" />
     <ProjectReference Include="..\Abp.VueTemplate.HttpApi.Client\Abp.VueTemplate.HttpApi.Client.csproj" />
   </ItemGroup>
 
