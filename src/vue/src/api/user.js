@@ -21,8 +21,12 @@ userApi.post = (data) => {
 /**
  * 更新
  */
-userApi.put = (data) => {
-  return request.put('/api/identity/users', data)
+userApi.put = (id, data) => {
+  return request.put(`/api/identity/users/${id}`, data)
+}
+
+userApi.get = id => {
+  return request.get(`/api/identity/users/${id}`)
 }
 
 userApi.getInfo = (token) => {

@@ -5,13 +5,14 @@
     :before-close="beforeClose"
     @close="closeDialog"
   >
-    <create-or-edit-from />
+    <create-or-edit-from :user-id="userId" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 
 <script>
 import CreateOrEditFrom from './CreateOrEditFrom'
 import dialogMixin from '@/mixins/dialogMixin'
+
 export default {
   name: 'EditDialog',
   components: { CreateOrEditFrom },
@@ -20,11 +21,6 @@ export default {
     userId: {
       type: String,
       default: ''
-    }
-  },
-  watch: {
-    userId: function(val) {
-      console.log(val)
     }
   }
 }

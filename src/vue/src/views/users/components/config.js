@@ -1,4 +1,16 @@
-export default {
+export const viewModel = {
+  userName: '',
+  name: '',
+  surname: '',
+  password: '',
+  email: '',
+  phoneNumber: '',
+  lockoutEnabled: true,
+  twoFactorEnabled: true,
+  roleNames: []
+}
+
+export const rules = {
   userName: [
     { required: true, message: '请输入用户名称', trigger: 'blur' },
     { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
@@ -10,3 +22,4 @@ export default {
     { required: true, message: '请输入邮箱地址', trigger: 'blur' }
   ]
 }
+

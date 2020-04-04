@@ -41,10 +41,14 @@
   
   .el-table__row{
     .el-link{
-      margin-right: 10px;
+      margin-right: 5px;
     }
   }
 
   .from-footer{
     text-align:right;
+  }
+
+  .el-link [class*=el-icon-]+span{
+      margin-left: 2px;
   }

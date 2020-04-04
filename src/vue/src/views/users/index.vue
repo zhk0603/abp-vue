@@ -43,33 +43,45 @@
       </el-table>
     </div>
     <div class="app-full-footer">
-      <el-pagination
-        :page-size="20"
-        :pager-count="11"
-        layout="prev, pager, next"
-        :total="1000"
+      <pagination
+        :total="pagination.totalCount"
+        :page.sync="pagination.pageIndex"
+        :limit.sync="query.maxResultCount"
+        @pagination="onPagination"
       />
     </div>
 
-    <CreateDialog :visible.sync="createDialogVisible" :close-confirm="true" dialog-width="500px" />
-    <EditDialog :visible.sync="editDialogVisible" :user-id="editUserid" />
+    <CreateDialog
+      :visible.sync="createDialogVisible"
+      :close-confirm="true"
+      dialog-width="500px"
+      @close="dialogClose"
+    />
+    <EditDialog
+      :visible.sync="editDialogVisible"
+      :user-id="editUserid"
+      @close="dialogClose"
+    />
   </div>
 </template>
 
 <script>
+import listMixin from '@/mixins/listMixin'
 import userApi from '@/api/user'
 import CreateDialog from './components/CreateDialog'
 import EditDialog from './components/EditDialog'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'Index',
-  components: { CreateDialog, EditDialog },
+  components: { CreateDialog, EditDialog, Pagination },
+  mixins: [listMixin],
   data() {
     return {
       createDialogVisible: false,
       editDialogVisible: false,
       editUserid: '',
-      tableData: [],
+
       query: {
         filter: ''
       }
@@ -82,15 +94,20 @@ export default {
     getList() {
       userApi.list(this.query).then(res => {
         this.tableData = res.items
+        this.updateTotalCount(res.totalCount)
       })
     },
     create() {
       this.createDialogVisible = true
     },
     edit(row) {
-      debugger
       this.editUserid = row.id
       this.editDialogVisible = true
+    },
+    dialogClose(refresh) {
+      if (refresh) {
+        this.getList()
+      }
     }
   }
 }

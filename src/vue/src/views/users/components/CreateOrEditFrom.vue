@@ -74,7 +74,7 @@
 
     </el-row>
     <div class="from-footer">
-      <el-button size="mini" @click="closeDialog">取消</el-button>
+      <el-button size="mini" @click="cancel">取消</el-button>
       <el-button type="primary" size="mini" @click="submitForm">提交</el-button>
     </div>
   </el-form>
@@ -83,14 +83,14 @@
 
 <script>
 import fromMixin from '@/mixins/formMixin'
-import rules from './CreateOrEditFormRules'
 import userApi from '@/api/user'
+import { viewModel, rules } from './config'
 
 export default {
   name: 'CreateOrEditFrom',
   mixins: [fromMixin],
   props: {
-    id: {
+    userId: {
       type: String,
       default: ''
     }
@@ -98,39 +98,60 @@ export default {
   data() {
     return {
       roles: ['admin', 'abc'],
-      fromData: {
-        userName: '',
-        name: '',
-        surname: '',
-        password: '',
-        email: '',
-        phoneNumber: '',
-        lockoutEnabled: true,
-        twoFactorEnabled: true,
-        roleNames: []
-      },
+      fromData: Object.assign({}, viewModel),
       rules
     }
   },
+  computed: {
+    isCreate() {
+      return !this.userId
+    }
+  },
   watch: {
-    id: function(val) {
-      // todo
+    userId: {
+      immediate: true,
+      handler: function() {
+        this.get()
+      }
     }
   },
   methods: {
+    get() {
+      if (this.userId) {
+        rules['password'][0].required = false
+        userApi.get(this.userId).then(res => {
+          this.fromData = Object.assign(this.fromData, res)
+        })
+      }
+    },
     submitForm() {
       this.$refs.from.validate((valid) => {
         if (valid) {
-          userApi.post(this.fromData).then(() => {
+          let action = null
+          if (this.isCreate) {
+            action = this.doPost()
+          } else {
+            action = this.doPut()
+          }
+
+          action.then(() => {
             this.$message('提交成功')
+            this.$emit('successful')
+            this.fromData = Object.assign({}, viewModel)
           })
         } else {
           return false
         }
       })
     },
-    closeDialog() {
-      this.$emit('closeDialog')
+    doPost() {
+      return userApi.post(this.fromData)
+    },
+    doPut() {
+      return userApi.put(this.userId, this.fromData)
+    },
+    cancel() {
+      this.$emit('cancel')
     }
   }
 }

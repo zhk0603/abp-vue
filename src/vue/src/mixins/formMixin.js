@@ -4,9 +4,8 @@ const formMixin = {
       labelWidth: 120
     }
   },
-  computed: {
-  },
   methods: {
+
   }
 }
 
