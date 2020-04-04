@@ -37,7 +37,9 @@
           <template slot-scope="scope">
             <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>
             <el-link type="primary" icon="el-icon-setting">权限</el-link>
-            <el-link type="danger" icon="el-icon-delete">删除</el-link>
+            <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
+              <el-link slot="reference" type="danger" icon="el-icon-delete">删除</el-link>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -60,6 +62,7 @@
     <EditDialog
       :visible.sync="editDialogVisible"
       :user-id="editUserid"
+      :close-confirm="true"
       @close="dialogClose"
     />
   </div>
@@ -104,10 +107,17 @@ export default {
       this.editUserid = row.id
       this.editDialogVisible = true
     },
+    del(row) {
+      userApi.delete(row.id).then(() => {
+        this.$message('删除成功')
+        this.getList()
+      })
+    },
     dialogClose(refresh) {
       if (refresh) {
         this.getList()
       }
+      this.editUserid = null
     }
   }
 }

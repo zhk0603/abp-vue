@@ -29,6 +29,10 @@ userApi.get = id => {
   return request.get(`/api/identity/users/${id}`)
 }
 
+userApi.delete = id => {
+  return request.delete(`/api/identity/users/${id}`)
+}
+
 userApi.getInfo = (token) => {
   return request({
     url: '/user/info',
