@@ -36,7 +36,7 @@
         >
           <template slot-scope="scope">
             <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>
-            <el-link type="primary" icon="el-icon-setting">权限</el-link>
+            <el-link type="primary" icon="el-icon-setting" @click="permissionGrant(scope.row)">权限</el-link>
             <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
               <el-link slot="reference" type="danger" icon="el-icon-delete">删除</el-link>
             </el-popconfirm>
@@ -65,6 +65,15 @@
       :user-id="editUserid"
       :close-confirm="true"
       :roles="allRoles"
+      dialog-width="700px"
+      @close="dialogClose"
+    />
+    <PermissionGrantDialog
+      :visible.sync="permissionGrantDialogVisible"
+      :close-confirm="true"
+      :user-id="permissionGrantUserId"
+      :name="permissionGrantUserName"
+      dialog-width="700px"
       @close="dialogClose"
     />
   </div>
@@ -74,19 +83,23 @@
 import listMixin from '@/mixins/listMixin'
 import userApi from '@/api/user'
 import roleApi from '@/api/role'
-import CreateDialog from './components/CreateDialog'
-import EditDialog from './components/EditDialog'
+import CreateDialog from './components/UserCreateDialog'
+import EditDialog from './components/UserEditDialog'
+import PermissionGrantDialog from './components/PermissionGrantDialog'
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'Index',
-  components: { CreateDialog, EditDialog, Pagination },
+  components: { CreateDialog, EditDialog, PermissionGrantDialog, Pagination },
   mixins: [listMixin],
   data() {
     return {
       createDialogVisible: false,
       editDialogVisible: false,
+      permissionGrantDialogVisible: false,
       editUserid: '',
+      permissionGrantUserName: '',
+      permissionGrantUserId: '',
       /**
        * 所有角色。
        */
@@ -126,11 +139,19 @@ export default {
         this.getList()
       })
     },
+    permissionGrant(row) {
+      this.permissionGrantUserId = row.id
+      this.permissionGrantUserName = row.name
+      this.permissionGrantDialogVisible = true
+    },
     dialogClose(refresh) {
       if (refresh) {
         this.getList()
       }
       this.editUserid = null
+
+      this.permissionGrantUserId = null
+      this.permissionGrantUserName = ''
     }
   }
 }

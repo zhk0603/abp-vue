@@ -14,6 +14,7 @@ using Abp.VueTemplate.EntityFrameworkCore;
 using Abp.VueTemplate.MultiTenancy;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -27,6 +28,7 @@ using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
 using Microsoft.Extensions.PlatformAbstractions;
+using Volo.Abp.PermissionManagement;
 
 namespace Abp.VueTemplate
 {
@@ -228,6 +230,8 @@ namespace Abp.VueTemplate
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseMvcWithDefaultRouteAndArea();
+
+            //Test
         }
     }
 

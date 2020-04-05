@@ -43,6 +43,11 @@ const listMixin = {
     },
     updateTotalCount(count) {
       this.pagination.totalCount = count
+    },
+    dialogClose(refresh) {
+      if (refresh) {
+        this.getList()
+      }
     }
   }
 }

@@ -9,9 +9,8 @@ namespace Abp.VueTemplate.Permissions
         public override void Define(IPermissionDefinitionContext context)
         {
             var myGroup = context.AddGroup(VueTemplatePermissions.GroupName);
-
             //Define your own permissions here. Example:
-            //myGroup.AddPermission(VueTemplatePermissions.MyPermission1, L("Permission:MyPermission1"));
+            // myGroup.AddPermission("", L("Permission:MyPermission1"));
         }
 
         private static LocalizableString L(string name)

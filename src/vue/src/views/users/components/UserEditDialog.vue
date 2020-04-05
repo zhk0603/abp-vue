@@ -1,24 +1,28 @@
 <template>
   <el-dialog
-    title="新增用户"
+    title="编辑用户"
     :visible="dialogVisible"
     :before-close="beforeClose"
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <create-or-edit-from :roles="roles" :is-create="true" @cancel="onCancel" @successful="onSuccessful" />
+    <user-create-or-edit-form :user-id="userId" :roles="roles" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 
 <script>
-import CreateOrEditFrom from './CreateOrEditFrom'
+import UserCreateOrEditForm from './UserCreateOrEditForm'
 import dialogMixin from '@/mixins/dialogMixin'
 
 export default {
-  name: 'CreateDialog',
-  components: { CreateOrEditFrom },
+  name: 'UserEditDialog',
+  components: { UserCreateOrEditForm },
   mixins: [dialogMixin],
   props: {
+    userId: {
+      type: String,
+      default: ''
+    },
     roles: {
       type: Array,
       default: function() {

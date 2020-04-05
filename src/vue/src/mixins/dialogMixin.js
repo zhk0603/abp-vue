@@ -51,8 +51,8 @@ const dialogMixin = {
       this.$emit('close', refresh)
       this.updateVisible(false)
     },
-    onSuccessful() {
-      this.closeDialog(true)
+    onSuccessful(refresh = true) {
+      this.closeDialog(refresh)
     },
     onCancel() {
       this.closeDialog()

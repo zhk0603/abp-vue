@@ -83,28 +83,28 @@
           size="mini"
         >
           <el-form-item>
-            <el-checkbox-group v-model="formData.roleNames" @change="onRoleChange">
+            <el-checkbox-group v-model="formData.roleNames">
               <el-checkbox v-for="(item,index) in roles" :key="index" :label="item.name" name="role" />
             </el-checkbox-group>
           </el-form-item>
         </el-form>
       </el-tab-pane>
+      <el-divider />
       <div class="from-footer">
         <el-button size="mini" @click="cancel">取消</el-button>
         <el-button type="primary" size="mini" @click="submitForm">提交</el-button>
       </div>
-    </el-tabs></section>
-  </el-tabs>
-
+    </el-tabs>
+  </section>
 </template>
 
 <script>
 import fromMixin from '@/mixins/formMixin'
 import userApi from '@/api/user'
-import { viewModel, rules } from './config'
+import { viewModel, rules } from './UserConfig'
 
 export default {
-  name: 'CreateOrEditFrom',
+  name: 'UserCreateOrEditForm',
   mixins: [fromMixin],
   props: {
     isCreate: {
@@ -178,9 +178,6 @@ export default {
     },
     cancel() {
       this.$emit('cancel')
-    },
-    onRoleChange(roles) {
-      // this.formData.roleNames = roles
     }
   }
 }
