@@ -33,6 +33,10 @@ userApi.delete = id => {
   return request.delete(`/api/identity/users/${id}`)
 }
 
+userApi.getRoles = id => {
+  return request.get(`/api/identity/users/${id}/roles`)
+}
+
 userApi.getInfo = (token) => {
   return request({
     url: '/user/info',

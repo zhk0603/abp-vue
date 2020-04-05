@@ -7,6 +7,10 @@
     <RootNamespace>Abp.VueTemplate.Permission</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Workspaces\github\zhk0603\abp-vue\src\aspnet-core\src\modules\Abp.VueTemplate.Permission\src\Abp.VueTemplate.Permission.HttpApi\Abp.VueTemplate.Permission.HttpApi.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="2.3.0" />
     <ProjectReference Include="..\Abp.VueTemplate.Permission.Application.Contracts\Abp.VueTemplate.Permission.Application.Contracts.csproj" />

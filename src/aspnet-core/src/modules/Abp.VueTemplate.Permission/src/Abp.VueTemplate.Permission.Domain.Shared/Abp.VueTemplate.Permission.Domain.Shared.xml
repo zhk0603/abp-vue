@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Abp.VueTemplate.Permission.Domain.Shared</name>
+    </assembly>
+    <members>
+        <member name="F:Abp.VueTemplate.Permission.MenuEnumType.Router">
+            <summary>
+            路由
+            </summary>
+        </member>
+        <member name="F:Abp.VueTemplate.Permission.MenuEnumType.Page">
+            <summary>
+            页面
+            </summary>
+        </member>
+        <member name="F:Abp.VueTemplate.Permission.PermissionEnumType.Api">
+            <summary>
+            api权限
+            </summary>
+        </member>
+        <member name="F:Abp.VueTemplate.Permission.PermissionEnumType.Page">
+            <summary>
+            页面功能权限
+            </summary>
+        </member>
+    </members>
+</doc>

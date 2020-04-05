@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
@@ -10,8 +12,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Abp.VueTemplate.EntityFrameworkCore;
 using Abp.VueTemplate.MultiTenancy;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
@@ -21,6 +26,7 @@ using Volo.Abp.Caching;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Abp.VueTemplate
 {
@@ -101,6 +107,45 @@ namespace Abp.VueTemplate
                 {
                     options.SwaggerDoc("v1", new OpenApiInfo {Title = "VueTemplate API", Version = "v1"});
                     options.DocInclusionPredicate((docName, description) => true);
+
+                    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                    {
+                        Description = "在下框中输入请求头中需要添加 Jwt Token：Bearer Token",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.ApiKey,
+                        BearerFormat = "JWT",
+                        Scheme = "Bearer"
+                    });
+
+                    //全局加
+                    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        [
+                                new OpenApiSecurityScheme
+                                {
+                                    Reference = new OpenApiReference
+                                        {Type = ReferenceType.SecurityScheme, Id = "Bearer"}
+                                }
+                            ]
+                            = new string[] { }
+                    });
+
+                    options.OperationFilter<HttpHeaderOperationFilter>();
+
+                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Application.xml"));
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Application.Contracts.xml"));
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Domain.xml"));
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Domain.Shared.xml"));
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.HttpApi.xml"));
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.HttpApi.Host.xml"));
+
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Application.xml"));
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Application.Contracts.xml"));
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Domain.xml"));
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Domain.Shared.xml"));
+                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.HttpApi.xml"));
                 });
         }
 
@@ -183,6 +228,49 @@ namespace Abp.VueTemplate
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseMvcWithDefaultRouteAndArea();
+        }
+    }
+
+    public class HttpHeaderOperationFilter : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            // Policy names map to scopes
+            var requiredAuth = RequiredAuthorize(context);
+
+            if (requiredAuth)
+            {
+                operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
+                operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
+
+                var oAuthScheme = new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                };
+
+                operation.Security = new List<OpenApiSecurityRequirement>
+                {
+                    new OpenApiSecurityRequirement
+                    {
+                        [oAuthScheme] = new string[] { }
+                    }
+                };
+            }
+        }
+
+        private bool RequiredAuthorize(OperationFilterContext context)
+        {
+            var required = context.MethodInfo
+                .GetCustomAttribute<AuthorizeAttribute>(true) != null;
+
+            if (!required && context.MethodInfo.GetCustomAttribute<AllowAnonymousAttribute>(true) == null)
+            {
+                required = ((ControllerActionDescriptor)context.ApiDescription.ActionDescriptor)
+                    .ControllerTypeInfo
+                    .GetCustomAttribute<AuthorizeAttribute>(true) != null;
+            }
+
+            return required;
         }
     }
 }

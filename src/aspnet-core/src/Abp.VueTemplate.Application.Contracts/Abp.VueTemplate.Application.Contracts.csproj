@@ -7,6 +7,10 @@
     <RootNamespace>Abp.VueTemplate</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Workspaces\github\zhk0603\abp-vue\src\aspnet-core\src\Abp.VueTemplate.Application.Contracts\Abp.VueTemplate.Application.Contracts.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Abp.VueTemplate.Domain.Shared\Abp.VueTemplate.Domain.Shared.csproj" />
     <ProjectReference Include="..\modules\Abp.VueTemplate.Permission\src\Abp.VueTemplate.Permission.Application.Contracts\Abp.VueTemplate.Permission.Application.Contracts.csproj" />

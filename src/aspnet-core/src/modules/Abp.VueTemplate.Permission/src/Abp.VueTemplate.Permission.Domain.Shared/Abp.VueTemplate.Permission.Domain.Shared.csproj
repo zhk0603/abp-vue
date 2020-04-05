@@ -7,6 +7,10 @@
     <RootNamespace>Abp.VueTemplate.Permission</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Workspaces\github\zhk0603\abp-vue\src\aspnet-core\src\modules\Abp.VueTemplate.Permission\src\Abp.VueTemplate.Permission.Domain.Shared\Abp.VueTemplate.Permission.Domain.Shared.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Validation" Version="2.3.0" />
   </ItemGroup>

@@ -7,6 +7,10 @@
     <RootNamespace>Abp.VueTemplate</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Workspaces\github\zhk0603\abp-vue\src\aspnet-core\src\Abp.VueTemplate.Domain.Shared\Abp.VueTemplate.Domain.Shared.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Identity.Domain.Shared" Version="2.3.0" />
     <PackageReference Include="Volo.Abp.IdentityServer.Domain.Shared" Version="2.3.0" />

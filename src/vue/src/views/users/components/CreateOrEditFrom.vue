@@ -1,83 +1,100 @@
 <template>
-  <el-form
-    ref="from"
-    :model="fromData"
-    :rules="rules"
-    label-position="top"
-    size="mini"
-  >
-    <el-row>
-      <el-col :span="24">
-        <el-form-item
-          prop="userName"
-          label="用户名称"
+  <section>
+    <el-tabs v-model="activeTabName">
+      <el-tab-pane label="用户信息" name="userinfo">
+        <el-form
+          ref="from"
+          :model="formData"
+          :rules="rules"
+          label-position="top"
+          size="mini"
         >
-          <el-input v-model="fromData.userName" size="mini" clearable />
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item
-          prop="surname"
-          label="姓"
-        >
-          <el-input v-model="fromData.surname" size="mini" clearable />
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item
-          prop="name"
-          label="名"
-        >
-          <el-input v-model="fromData.name" size="mini" clearable />
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item
-          prop="password"
-          label="密码"
-        >
-          <el-input v-model="fromData.password" size="mini" clearable />
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item
-          prop="email"
-          label="邮箱地址"
-        >
-          <el-input v-model="fromData.email" size="mini" clearable />
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item
-          prop="contractType"
-          label="手机号"
-        >
-          <el-input v-model="fromData.phoneNumber" size="mini" clearable />
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item
-          prop="lockoutEnabled"
-          label="登录失败,账户被锁定"
-        >
-          <el-switch v-model="fromData.lockoutEnabled" />
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item
-          prop="twoFactorEnabled"
-          label="二次认证"
-        >
-          <el-switch v-model="fromData.twoFactorEnabled" />
-        </el-form-item>
-      </el-col>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item
+                prop="userName"
+                label="用户名称"
+              >
+                <el-input v-model="formData.userName" size="mini" clearable />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item
+                prop="surname"
+                label="姓"
+              >
+                <el-input v-model="formData.surname" size="mini" clearable />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item
+                prop="name"
+                label="名"
+              >
+                <el-input v-model="formData.name" size="mini" clearable />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item
+                prop="password"
+                label="密码"
+              >
+                <el-input v-model="formData.password" size="mini" clearable />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item
+                prop="email"
+                label="邮箱地址"
+              >
+                <el-input v-model="formData.email" size="mini" clearable />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item
+                prop="contractType"
+                label="手机号"
+              >
+                <el-input v-model="formData.phoneNumber" size="mini" clearable />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item
+                prop="lockoutEnabled"
+                label="登录失败,账户被锁定"
+              >
+                <el-switch v-model="formData.lockoutEnabled" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item
+                prop="twoFactorEnabled"
+                label="二次认证"
+              >
+                <el-switch v-model="formData.twoFactorEnabled" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
 
-    </el-row>
-    <div class="from-footer">
-      <el-button size="mini" @click="cancel">取消</el-button>
-      <el-button type="primary" size="mini" @click="submitForm">提交</el-button>
-    </div>
-  </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="角色" name="roles">
+        <el-form
+          size="mini"
+        >
+          <el-form-item>
+            <el-checkbox-group v-model="formData.roleNames" @change="onRoleChange">
+              <el-checkbox v-for="(item,index) in roles" :key="index" :label="item.name" name="role" />
+            </el-checkbox-group>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <div class="from-footer">
+        <el-button size="mini" @click="cancel">取消</el-button>
+        <el-button type="primary" size="mini" @click="submitForm">提交</el-button>
+      </div>
+    </el-tabs></section>
+  </el-tabs>
 
 </template>
 
@@ -90,21 +107,26 @@ export default {
   name: 'CreateOrEditFrom',
   mixins: [fromMixin],
   props: {
+    isCreate: {
+      type: Boolean,
+      default: false
+    },
     userId: {
       type: String,
       default: ''
+    },
+    roles: {
+      type: Array,
+      default: function() {
+        return []
+      }
     }
   },
   data() {
     return {
-      roles: ['admin', 'abc'],
-      fromData: Object.assign({}, viewModel),
+      activeTabName: 'userinfo',
+      formData: Object.assign({ }, viewModel),
       rules
-    }
-  },
-  computed: {
-    isCreate() {
-      return !this.userId
     }
   },
   watch: {
@@ -116,11 +138,14 @@ export default {
     }
   },
   methods: {
-    get() {
+    async get() {
       if (this.userId) {
         rules['password'][0].required = false
-        userApi.get(this.userId).then(res => {
-          this.fromData = Object.assign(this.fromData, res)
+        await userApi.get(this.userId).then(res => {
+          this.formData = Object.assign(this.formData, res)
+        })
+        await userApi.getRoles(this.userId).then(res => {
+          this.formData.roleNames = res.items.map(x => x.name)
         })
       }
     },
@@ -137,7 +162,8 @@ export default {
           action.then(() => {
             this.$message('提交成功')
             this.$emit('successful')
-            this.fromData = Object.assign({}, viewModel)
+            this.formData = Object.assign({}, viewModel)
+            this.$refs.from.resetFields()
           })
         } else {
           return false
@@ -145,13 +171,16 @@ export default {
       })
     },
     doPost() {
-      return userApi.post(this.fromData)
+      return userApi.post(this.formData)
     },
     doPut() {
-      return userApi.put(this.userId, this.fromData)
+      return userApi.put(this.userId, this.formData)
     },
     cancel() {
       this.$emit('cancel')
+    },
+    onRoleChange(roles) {
+      // this.formData.roleNames = roles
     }
   }
 }

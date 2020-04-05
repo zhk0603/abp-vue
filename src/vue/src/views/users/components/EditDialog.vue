@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     @close="closeDialog"
   >
-    <create-or-edit-from :user-id="userId" @cancel="onCancel" @successful="onSuccessful" />
+    <create-or-edit-from :user-id="userId" :roles="roles" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 
@@ -21,6 +21,12 @@ export default {
     userId: {
       type: String,
       default: ''
+    },
+    roles: {
+      type: Array,
+      default: function() {
+        return []
+      }
     }
   }
 }

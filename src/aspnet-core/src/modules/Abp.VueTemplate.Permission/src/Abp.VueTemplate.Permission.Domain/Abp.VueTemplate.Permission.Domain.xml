@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Abp.VueTemplate.Permission.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:Abp.VueTemplate.Permission.PagePermissionDefinitionProvider">
+            <summary>
+            将 <see cref="T:Abp.VueTemplate.Permission.PermissionGroup"/>、<see cref="T:Abp.VueTemplate.Permission.PermissionPage"/> 附加到 PermissionDefinitionContext 中。
+            </summary>
+        </member>
+    </members>
+</doc>

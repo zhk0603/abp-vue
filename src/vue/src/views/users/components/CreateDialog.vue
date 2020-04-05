@@ -6,7 +6,7 @@
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <create-or-edit-from @cancel="onCancel" @successful="onSuccessful" />
+    <create-or-edit-from :roles="roles" :is-create="true" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 
@@ -17,6 +17,14 @@ import dialogMixin from '@/mixins/dialogMixin'
 export default {
   name: 'CreateDialog',
   components: { CreateOrEditFrom },
-  mixins: [dialogMixin]
+  mixins: [dialogMixin],
+  props: {
+    roles: {
+      type: Array,
+      default: function() {
+        return []
+      }
+    }
+  }
 }
 </script>

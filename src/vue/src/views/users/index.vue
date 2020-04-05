@@ -56,6 +56,7 @@
     <CreateDialog
       :visible.sync="createDialogVisible"
       :close-confirm="true"
+      :roles="allRoles"
       dialog-width="500px"
       @close="dialogClose"
     />
@@ -63,6 +64,7 @@
       :visible.sync="editDialogVisible"
       :user-id="editUserid"
       :close-confirm="true"
+      :roles="allRoles"
       @close="dialogClose"
     />
   </div>
@@ -71,6 +73,7 @@
 <script>
 import listMixin from '@/mixins/listMixin'
 import userApi from '@/api/user'
+import roleApi from '@/api/role'
 import CreateDialog from './components/CreateDialog'
 import EditDialog from './components/EditDialog'
 import Pagination from '@/components/Pagination'
@@ -84,6 +87,10 @@ export default {
       createDialogVisible: false,
       editDialogVisible: false,
       editUserid: '',
+      /**
+       * 所有角色。
+       */
+      allRoles: [],
 
       query: {
         filter: ''
@@ -92,8 +99,14 @@ export default {
   },
   created() {
     this.getList()
+    this.getRoleAll()
   },
   methods: {
+    getRoleAll() {
+      roleApi.getAll().then(res => {
+        this.allRoles = res.items
+      })
+    },
     getList() {
       userApi.list(this.query).then(res => {
         this.tableData = res.items
