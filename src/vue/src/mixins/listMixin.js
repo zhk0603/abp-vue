@@ -25,7 +25,11 @@ const listMixin = {
       pagination: {
         totalCount: 0,
         pageIndex: 0
-      }
+      },
+      sortMethodMap: new Map([
+        ['ascending', 'asc'],
+        ['descending', 'desc']
+      ])
     }
   },
   methods: {
@@ -36,10 +40,8 @@ const listMixin = {
       throw new Error('您需要在您的组件中重写此方法。')
     },
     onPagination({ page }) {
-      if (page > 1) {
-        this.query.skipCount = (page - 1) * this.query.maxResultCount
-        this.getList()
-      }
+      this.query.skipCount = (page - 1) * this.query.maxResultCount
+      this.getList()
     },
     updateTotalCount(count) {
       this.pagination.totalCount = count
@@ -48,6 +50,15 @@ const listMixin = {
       if (refresh) {
         this.getList()
       }
+    },
+    onSortChange({ column, prop, order }) {
+      console.log(arguments)
+      if (order) {
+        this.query.sorting = `${prop} ${this.sortMethodMap.get(order)}`
+      } else {
+        this.query.sorting = ''
+      }
+      this.getList()
     }
   }
 }

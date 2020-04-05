@@ -14,23 +14,34 @@
     <div class="app-full-body">
       <el-table
         :data="tableData"
+        :default-sort="{prop: 'creationTime', order: 'descending'}"
         highlight-current-row
+        @sort-change="onSortChange"
       >
         <el-table-column
           prop="userName"
           label="姓名"
-          sortable
+          sortable="custom"
         />
         <el-table-column
           prop="email"
           label="邮箱地址"
-          sortable
+          sortable="custom"
         />
         <el-table-column
           prop="phoneNumber"
           label="手机号"
-          sortable
+          sortable="custom"
         />
+        <el-table-column
+          prop="creationTime"
+          label="创建时间"
+          sortable="custom"
+        >
+          <template slot-scope="scope">
+            {{ scope.row.creationTime | formatDate }}
+          </template>
+        </el-table-column>
         <el-table-column
           label="操作"
         >
