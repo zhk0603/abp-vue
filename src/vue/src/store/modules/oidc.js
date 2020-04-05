@@ -20,6 +20,7 @@ const oidcEventListeners = {
     console.log('OIDC user is signed out')
     // 清理token
     store.dispatch('oidc/removeUser')
+    store.dispatch('app/toggleUnauthorizedDialogVisible', true)
   },
   oidcError: payload => console.log('OIDC error', payload)
 }

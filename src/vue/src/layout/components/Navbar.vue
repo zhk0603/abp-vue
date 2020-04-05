@@ -50,11 +50,9 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     logout() {
-      this.removeOidcUser().then(() => {
-        this.$router.push('/')
-      })
+      this.signOutOidc()
     },
-    ...mapActions('oidc', ['removeOidcUser'])
+    ...mapActions('oidc', ['signOutOidc', 'removeOidcUser'])
   }
 }
 </script>
