@@ -5,7 +5,12 @@ using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Text;
 using System.Threading.Tasks;
+using AbpVueCli.Extensions;
 using AbpVueCli.Steps;
+using AbpVueCli.Utils;
+using Elsa.Activities;
+using Elsa.Expressions;
+using Elsa.Scripting.JavaScript;
 
 namespace AbpVueCli.Commands
 {
@@ -18,27 +23,53 @@ namespace AbpVueCli.Commands
                 Argument = new Argument<string>()
             });
 
-            Handler = CommandHandler.Create((CommandOption optionType) => Run(optionType));
+            AddOption(new Option(new string[] { "-u", "--userName" }, "用户名。")
+            {
+                Argument = new Argument<string>()
+            });
+
+            AddOption(new Option(new string[] { "-e", "--email" }, "邮箱。")
+            {
+                Argument = new Argument<string>()
+            });
+
+            AddOption(new Option(new string[] { "-d", "--directory" }, "项目目录。")
+            {
+                Argument = new Argument<string>()
+            });
+
+            Handler = CommandHandler.Create((InitCommandOption optionType) => Run(optionType));
         }
 
-        private async Task Run(CommandOption option)
+        private async Task Run(InitCommandOption option)
         {
-            Logger.LogDebug(option.OpenApiAddr);
-
             await RunWorkflow(builder =>
             {
-                builder.StartWith<ProjectInfoProviderStep>();
+                builder
+                    .SetStartupDirectoryVariable(option.Directory)
+                    .InitRequiredVariable()
+                    .Then<SetVariable>(step =>
+                    {
+                        step.VariableName = "Option";
+                        step.ValueExpression = new JavaScriptExpression<InitCommandOption>($"({option.ToJson()})");
+                    })
+                    .Then<ProjectInfoProviderStep>()
+                    .Then<InitStep>();
 
                 return builder.Build();
             });
         }
+    }
 
-        private class CommandOption
-        {
-            /// <summary>
-            ///     接口地址
-            /// </summary>
-            public string OpenApiAddr { get; set; }
-        }
+    public class InitCommandOption
+    {
+        /// <summary>
+        ///     接口地址
+        /// </summary>
+        public string OpenApiAddr { get; set; }
+
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Directory { get; set; }
     }
 }

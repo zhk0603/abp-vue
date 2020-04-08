@@ -38,7 +38,16 @@ namespace AbpVueCli
                 .UseDefaults()
                 .Build();
 
-            args = new string[] {"init"};
+#if DEBUG
+            args = new string[]
+            {
+                "init",
+                "-o", "http://baidu.com",
+                "-u", "zhaokun",
+                "-e", "abc@abc.com",
+                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views"
+            };
+#endif
 
             await parser.InvokeAsync(args);
 
