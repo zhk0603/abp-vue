@@ -53,7 +53,7 @@ namespace AbpVueCli.Commands
                         step.VariableName = "Option";
                         step.ValueExpression = new JavaScriptExpression<InitCommandOption>($"({option.ToJson()})");
                     })
-                    .Then<ProjectInfoProviderStep>()
+                    .Then<ProjectFinderStep>()
                     .Then<InitStep>();
 
                 return builder.Build();

@@ -35,16 +35,25 @@ namespace AbpVueCli
 
             var parser = new CommandLineBuilder(application.ServiceProvider, "abpvue")
                 .AddCommand<InitCommand>()
+                .AddCommand<GenerateCommand>()
                 .UseDefaults()
                 .Build();
 
 #if DEBUG
+            //args = new string[]
+            //{
+            //    "init",
+            //    "-o", "http://baidu.com",
+            //    "-u", "zhaokun",
+            //    "-e", "abc@abc.com",
+            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views"
+            //};
+
             args = new string[]
             {
-                "init",
-                "-o", "http://baidu.com",
-                "-u", "zhaokun",
-                "-e", "abc@abc.com",
+                "generate",
+                "crud",
+                "User",
                 "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views"
             };
 #endif

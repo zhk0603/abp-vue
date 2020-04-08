@@ -1,5 +1,5 @@
 {
-  "openApiAddr": "http://baidu.com",
+  "openApiAddr": "https://localhost:44314/swagger/v1/swagger.json",
   "userName": "zhaokun",
   "email": "abc@abc.com"
 }
