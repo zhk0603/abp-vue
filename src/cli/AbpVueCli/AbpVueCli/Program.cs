@@ -53,8 +53,8 @@ namespace AbpVueCli
             {
                 "generate",
                 "crud",
-                "user",
-                "/api/identity/users",
+                "project",
+                "/api/Project",
                 "-d", @"D:\Workspaces\02.ty-tfs\sy-project-collection\sy-project\sy-project-ops"
             };
 #endif

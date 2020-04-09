@@ -23,10 +23,10 @@ namespace AbpVueCli.Steps
             Logger.LogInformation("正在获取 OpenApi 文档，url:{url}。", projectInfo.OpenApiAddr);
             var responseStream = await httpClient.GetStreamAsync(projectInfo.OpenApiAddr);
             var openApiDocument = new OpenApiStreamReader().Read(responseStream, out OpenApiDiagnostic diagnostic);
-            if (diagnostic.Errors.Count > 0)
-            {
-                throw new InvalidOperationException();
-            }
+            //if (diagnostic.Errors.Count > 0)
+            //{
+            //    throw new InvalidOperationException();
+            //}
 
             Logger.LogInformation("读取 OpenApi 文档成功。");
             context.SetVariable("OpenApiDocument", openApiDocument);

@@ -61,12 +61,17 @@ namespace AbpVueCli.Generator
             else
             {
                 var path = api.Url.Substring(options.ModulePrefix.Length)
-                        .Split(new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries)
-                    //.Where(x => !x.StartsWith("{"))
-                    ;
+                        .Split(new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                funcName =
-                    $"{api.Method.ToLower()}{string.Join("", path.Where(x => !x.StartsWith("{")).Select(Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase))}"
+                if (path.Count > 0 && !(path[0].StartsWith("get", StringComparison.OrdinalIgnoreCase) ||
+                                        path[0].StartsWith("delete", StringComparison.OrdinalIgnoreCase) ||
+                                        path[0].StartsWith("post", StringComparison.OrdinalIgnoreCase) ||
+                                        path[0].StartsWith("put", StringComparison.OrdinalIgnoreCase) ))
+                {
+                    path.Insert(0, api.Method.ToLower());
+                }
+
+                funcName = $"{string.Join("", path.Where(x => !x.StartsWith("{")))}".ToCamelCase()
                         .Replace("-", "")
                         .Replace(".", "");
 

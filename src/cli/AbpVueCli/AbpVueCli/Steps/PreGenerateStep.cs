@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AbpVueCli.Commands;
@@ -17,17 +18,19 @@ namespace AbpVueCli.Steps
         {
             var openApiDocument = context.GetVariable<OpenApiDocument>("OpenApiDocument");
             var options = context.GetVariable<GenerateCommandOptionBasic>("Option");
-            //var moduleApiPathItems =
-            //    (from item in openApiDocument.Paths
-            //        let haveTag = item.Value.Operations.Any(x => x.Value.Tags.Any(y => y.Name == options.Module))
-            //        where haveTag
-            //        select item).ToList();
 
             var moduleApiPathItems =
                 (from item in openApiDocument.Paths
-                    let match = item.Key.StartsWith(options.ModulePrefix)
-                    where match
-                    select item).ToList();
+                 let haveTag = item.Value.Operations.Any(x => x.Value.Tags
+                     .Any(y => y.Name.Equals(options.Module, StringComparison.OrdinalIgnoreCase) ))
+                 where haveTag
+                 select item).ToList();
+
+            //var moduleApiPathItems =
+            //    (from item in openApiDocument.Paths
+            //        let match = item.Key.StartsWith(options.ModulePrefix)
+            //        where match
+            //        select item).ToList();
 
             if (moduleApiPathItems.Count == 0)
             {
