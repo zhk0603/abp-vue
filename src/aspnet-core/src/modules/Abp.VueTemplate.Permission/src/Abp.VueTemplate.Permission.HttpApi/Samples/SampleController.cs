@@ -16,12 +16,20 @@ namespace Abp.VueTemplate.Permission.Samples
             _sampleAppService = sampleAppService;
         }
 
+        /// <summary>
+        /// ceshi...
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<SampleDto> GetAsync()
         {
             return await _sampleAppService.GetAsync();
         }
 
+        /// <summary>
+        /// 测试。。。。
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("authorized")]
         [Authorize]

@@ -1,0 +1,20 @@
+﻿import request from '@/utils/request'
+
+const {{ Name }}Api = {}
+
+{{ for api in ModuleApis }}
+/**
+ * {{api.Operation.Summary | object.default "Created by AbpVueCli" }}
+ * @author {{ProjectInfo.UserName}}
+ * @date {{date.to_string date.now `%F %T`}}
+ * @version V1.0.0
+ */
+{{ Name }}Api.{{ helper.generate_api_func_name Option api }} => {
+  return request({
+    url: `{{helper.generate_api_url api.Url}}`,
+    method: '{{api.Method | string.downcase }}'{{helper.generate_api_params api}}
+  })
+}
+{{ end }}
+
+export default {{ Name }}Api

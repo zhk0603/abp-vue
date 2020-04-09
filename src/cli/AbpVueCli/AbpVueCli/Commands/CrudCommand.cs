@@ -16,6 +16,7 @@ namespace AbpVueCli.Commands
         public CrudCommand(IServiceProvider serviceProvider) : base(serviceProvider, "crud", "crud")
         {
             AddArgument(new Argument<string>("module") {Description = "模块名称"});
+            AddArgument(new Argument<string>("modulePrefix") {Description = "模块api路径的前缀"});
 
             AddOption(new Option(new string[] { "-d", "--directory" }, "项目目录。")
             {
@@ -41,7 +42,7 @@ namespace AbpVueCli.Commands
                     .Then<ProjectInfoProviderStep>()
                     .Then<OpenApiDocumentProviderStep>()
                     .Then<PreGenerateStep>()
-                    .Then<GenerateStep>();
+                    .Then<GenerateApiStep>();
 
                 return builder.Build();
             });
@@ -50,6 +51,7 @@ namespace AbpVueCli.Commands
 
     public class GenerateCommandOptionBasic
     {
+        public string ModulePrefix { get; set; }
         public string Module { get; set; }
         public string Directory { get; set; }
     }

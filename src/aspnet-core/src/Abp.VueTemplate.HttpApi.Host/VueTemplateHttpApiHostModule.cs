@@ -230,8 +230,6 @@ namespace Abp.VueTemplate
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseMvcWithDefaultRouteAndArea();
-
-            //Test
         }
     }
 

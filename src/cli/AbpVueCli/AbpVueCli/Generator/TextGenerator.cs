@@ -29,7 +29,7 @@ namespace AbpVueCli.Generator
         {
             context = new TemplateContext();
             var scriptObject = new ScriptObject();
-            scriptObject.SetValue("abp", new AbpFunctions(), true);
+            scriptObject.SetValue("helper", new TemplateHelper(), true);
             scriptObject.Import(model, renamer: member => member.Name);
             context.PushGlobal(scriptObject);
             context.MemberRenamer = member => member.Name;

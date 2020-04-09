@@ -43,7 +43,7 @@ namespace AbpVueCli
             //args = new string[]
             //{
             //    "init",
-            //    "-o", "http://baidu.com",
+            //    "-o", "https://localhost:44314/swagger/v1/swagger.json",
             //    "-u", "zhaokun",
             //    "-e", "abc@abc.com",
             //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views"
@@ -53,8 +53,9 @@ namespace AbpVueCli
             {
                 "generate",
                 "crud",
-                "User",
-                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views"
+                "user",
+                "/api/identity/users",
+                "-d", @"D:\Workspaces\02.ty-tfs\sy-project-collection\sy-project\sy-project-ops"
             };
 #endif
 

@@ -1,4 +1,4 @@
-﻿namespace AbpVueCli.Steps
+﻿namespace AbpVueCli.Module
 {
     public class ProjectInfo
     {

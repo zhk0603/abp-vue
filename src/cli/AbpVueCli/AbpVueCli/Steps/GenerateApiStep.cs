@@ -1,56 +1,40 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AbpVueCli.Commands;
 using AbpVueCli.Generator;
+using AbpVueCli.Module;
 using Elsa.Results;
 using Elsa.Services.Models;
 using Microsoft.Extensions.Logging;
-using Scriban;
 
 namespace AbpVueCli.Steps
 {
-    public class InitStep : Step
+    public class GenerateApiStep : Step
     {
         protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context,
             CancellationToken cancellationToken)
         {
-            var projectDir = context.GetVariable<string>("ProjectDirectory");
-
-            var haveAbpVueJsonFile =
-                Directory.EnumerateFiles(projectDir, "abpvue.json", SearchOption.TopDirectoryOnly).Any();
-
-            if (haveAbpVueJsonFile)
-            {
-                Logger.LogWarning("项目已经初始化，请勿重复执行。");
-                return Done();
-            }
-
-            var option = context.GetVariable<InitCommandOption>("Option");
+            var modelInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
 
             var appDir = AppDomain.CurrentDomain.BaseDirectory;
-            var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Init");
-
+            var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate");
             if (!Directory.Exists(tempDir))
                 throw new DirectoryNotFoundException($"Template group directory {tempDir} does not exist.");
+            var projectDir = context.GetVariable<string>("ProjectDirectory");
 
-            await GenerateFile(tempDir, projectDir, new
-            {
-                Option = option
-            }, false);
+            await GenerateApiFile(tempDir, projectDir, modelInfo, false);
 
             return Done();
         }
 
-        private async Task GenerateFile(string groupDirectory, string targetDirectory, object model, bool overwrite)
+        private async Task GenerateApiFile(string groupDirectory, string targetDirectory, object model, bool overwrite)
         {
             foreach (var file in Directory.EnumerateFiles(groupDirectory, "*.sbntxt", SearchOption.AllDirectories))
             {
                 Logger.LogDebug($"Generating using template file: {file}");
                 var targetFilePathNameTemplate = file.Replace(groupDirectory, targetDirectory);
-                var targetFilePathName = targetFilePathNameTemplate.RemovePostFix(".sbntxt");
+                var targetFilePathName = TextGenerator.GenerateByTemplateText(targetFilePathNameTemplate, model).RemovePostFix(".sbntxt");
                 if (File.Exists(targetFilePathName) && !overwrite)
                 {
                     Logger.LogInformation("File “{targetFilePathName}” already exists, skip generating.",
