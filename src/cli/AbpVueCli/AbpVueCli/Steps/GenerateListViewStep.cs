@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AbpVueCli.Generator;
@@ -7,32 +8,43 @@ using AbpVueCli.Models;
 using Elsa.Results;
 using Elsa.Services.Models;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 
 namespace AbpVueCli.Steps
 {
-    public class GenerateApiStep : Step
+    public class GenerateListViewStep : Step
     {
-        protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context,
-            CancellationToken cancellationToken)
+        protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context, CancellationToken cancellationToken)
         {
             var modelInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
 
             var appDir = AppDomain.CurrentDomain.BaseDirectory;
-            var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src",
-                "api");
+            var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src", "views");
             if (!Directory.Exists(tempDir))
                 throw new DirectoryNotFoundException($"Template group directory {tempDir} does not exist.");
-            var targetDirectory = Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "api");
+            var targetDirectory = Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "views");
 
-            await GenerateFile(tempDir, targetDirectory, modelInfo, false);
+            ModuleApiOperation postApi = context.GetVariable<ModuleApiOperation>("PostModuleApi");
+            var apiSchema = postApi.Operation.RequestBody.Content.First().Value.Schema;
+
+            var model = new
+            {
+                Name = modelInfo.Name,
+                CamelCaseName = modelInfo.CamelCaseName,
+                PascalCaseName = modelInfo.PascalCaseName,
+                Url = modelInfo.Option.ModulePrefix,
+                ApiSchema = apiSchema,
+                CenerateCreate = true,
+                CenerateEdit = false
+            };
+
+            await GenerateFile(tempDir, targetDirectory, model, true);
 
             return Done();
         }
 
         private async Task GenerateFile(string groupDirectory, string targetDirectory, object model, bool overwrite)
         {
-            foreach (var file in Directory.EnumerateFiles(groupDirectory, "*.sbntxt", SearchOption.AllDirectories))
+            foreach (var file in Directory.EnumerateFiles(groupDirectory, "*index.vue.sbntxt", SearchOption.AllDirectories))
             {
                 Logger.LogDebug("Generating using template file: {file}", file);
                 var targetFilePathNameTemplate = file.Replace(groupDirectory, targetDirectory);

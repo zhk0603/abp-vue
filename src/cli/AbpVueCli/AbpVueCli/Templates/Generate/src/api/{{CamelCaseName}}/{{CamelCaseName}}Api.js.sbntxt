@@ -1,6 +1,6 @@
 ﻿import request from '@/utils/request'
 
-const {{ Name }}Api = {}
+const {{ CamelCaseName }}Api = {}
 
 {{ for api in ModuleApis }}
 /**
@@ -9,7 +9,7 @@ const {{ Name }}Api = {}
  * @date {{date.to_string date.now `%F %T`}}
  * @version V1.0.0
  */
-{{ Name }}Api.{{ helper.generate_api_func_name Option api }} => {
+{{ CamelCaseName }}Api.{{ helper.generate_api_func_name Option api }} => {
   return request({
     url: `{{helper.generate_api_url api.Url}}`,
     method: '{{api.Method | string.downcase }}'{{helper.generate_api_params api}}
@@ -17,4 +17,4 @@ const {{ Name }}Api = {}
 }
 {{ end }}
 
-export default {{ Name }}Api
+export default {{ CamelCaseName }}Api

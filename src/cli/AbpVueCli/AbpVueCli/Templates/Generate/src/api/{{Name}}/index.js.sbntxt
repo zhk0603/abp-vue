@@ -1,4 +1,0 @@
-﻿import {{Name }}Api from './{{Name}}Api'
-import * as {{Name}}ExtensionApi from './{{Name}}ExtensionApi'
-
-export default Object.assign({{Name}}Api, {{Name}}ExtensionApi)

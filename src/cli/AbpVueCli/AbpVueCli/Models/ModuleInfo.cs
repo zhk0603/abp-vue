@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AbpVueCli.Commands;
 using Microsoft.OpenApi.Models;
 
-namespace AbpVueCli.Module
+namespace AbpVueCli.Models
 {
     public class ModuleInfo
     {
-        public string Name => Option.Module.ToLower();
-
+        public string Name => Option.Module;
+        public string CamelCaseName => Option.Module.ToCamelCase();
+        public string PascalCaseName => Option.Module.ToPascalCase();
         public GenerateCommandOptionBasic Option { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
         public List<ModuleApiOperation> ModuleApis { get; set; } = new List<ModuleApiOperation>();

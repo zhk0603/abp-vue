@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using AbpVueCli.Commands;
-using AbpVueCli.Module;
+using AbpVueCli.Extensions;
+using AbpVueCli.Models;
 using AbpVueCli.Steps;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Extensions;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Scriban.Runtime;
 
 namespace AbpVueCli.Generator
@@ -109,10 +115,72 @@ namespace AbpVueCli.Generator
             return @params;
         }
 
+        public static string GenerateViewModel(OpenApiSchema apiSchema)
+        {   
+            return apiSchema.ToJson();
+        }
+
+        public static string GenerateRules(OpenApiSchema apiSchema)
+        {
+            var rulesDic = new Dictionary<string, List<JObject>>();
+
+            foreach(var propertyItem in apiSchema.Properties)
+            {
+                var rules = new List<JObject>();
+
+                if (apiSchema.Required.Contains(propertyItem.Key))
+                {
+                    var requiredRule = new JObject();
+                    requiredRule["required"] = true;
+                    requiredRule["message"] = $"请输入{propertyItem.Value.Description}";
+                    requiredRule["trigger"] = "blur";
+                    rules.Add(requiredRule);
+                }
+
+                if (propertyItem.Value.MinLength.HasValue)
+                {
+                    var lenRule = new JObject();
+                    lenRule["min"] = propertyItem.Value.MinLength;
+                    lenRule["max"] = propertyItem.Value.MaxLength;
+                    lenRule["message"] = $"长度在 {propertyItem.Value.MinLength} 到 {propertyItem.Value.MaxLength} 个字符";
+                    lenRule["trigger"] = "blur";
+                    rules.Add(lenRule);
+                }
+
+                if (!propertyItem.Value.Type.IsNullOrWhiteSpace())
+                {
+                    var formatRule = new JObject();
+                    formatRule["type"] = GetJsFormatType(propertyItem.Value);
+                    formatRule["message"] = $"{propertyItem.Value.Description} 必须为 {formatRule["type"]}";
+                    formatRule["trigger"] = "change";
+                    rules.Add(formatRule);
+                }
+
+                if (rules.Count > 0)
+                {
+                    rulesDic.Add(propertyItem.Key, rules);
+                }
+            }
+
+            return JsonConvert.SerializeObject(rulesDic, Formatting.Indented);
+        }
+
+        private static string GetJsFormatType(OpenApiSchema propertySchema)
+        {
+            string type = propertySchema.Type;
+
+            if (propertySchema.Format == "date-time")
+            {
+                type = "date";
+            }
+
+            return type;
+        }
+
         private static void TryAddParams(List<string> @params, OpenApiOperation operation)
         {
-            var queryParams = operation.Parameters?.Where(x => x.In == ParameterLocation.Query);
-            if (queryParams != null && queryParams.Any())
+            var haveQueryParams = operation.Parameters?.Any(x => x.In == ParameterLocation.Query);
+            if (haveQueryParams == true)
             {
                 @params.AddIfNotContains("params");
             }

@@ -1,4 +1,4 @@
-﻿namespace AbpVueCli.Module
+﻿namespace AbpVueCli.Models
 {
     public class ProjectInfo
     {

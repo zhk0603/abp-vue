@@ -1,0 +1,3 @@
+﻿export const viewModel = {{helper.generate_view_model ApiSchema}}
+
+export const rules = {{helper.generate_rules ApiSchema}}
