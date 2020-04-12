@@ -25,7 +25,7 @@ namespace AbpVueCli.Steps
                 throw new DirectoryNotFoundException($"Template group directory {tempDir} does not exist.");
             var targetDirectory = Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "api");
 
-            await GenerateFile(tempDir, targetDirectory, modelInfo, false);
+            await GenerateFile(tempDir, targetDirectory, modelInfo, true);
 
             return Done();
         }

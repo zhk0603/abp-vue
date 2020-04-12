@@ -1,5 +1,19 @@
 {
   "openApiAddr": "https://localhost:44314/swagger/v1/swagger.json",
   "userName": "zhaokun",
-  "email": "abc@abc.com"
+  "email": "abc@abc.com",
+  "listQueryIgnoreParams": [
+    "pageSize",
+    "pageIndex",
+    "sortField",
+    "userId",
+    "beginDate",
+    "endDate",
+    "keyValues",
+    "sortDirection",
+    "sorting",
+    "skipCount",
+    "maxResultCount"
+  ],
+  "listPropertySchemaPath":"items"
 }

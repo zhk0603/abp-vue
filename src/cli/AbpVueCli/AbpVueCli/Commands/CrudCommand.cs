@@ -41,10 +41,15 @@ namespace AbpVueCli.Commands
                     .Then<ProjectFinderStep>()
                     .Then<ProjectInfoProviderStep>()
                     .Then<OpenApiDocumentProviderStep>()
+
                     .Then<PreGenerateStep>()
+
                     .Then<GenerateApiStep>()
+
                     .Then<PostApiFinderStep>()
                     .Then<GenerateModelStep>()
+
+                    .Then<GetListApiFinderStep>()
                     .Then<GenerateListViewStep>();
 
                 return builder.Build();

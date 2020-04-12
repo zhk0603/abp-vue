@@ -1,43 +1,34 @@
 ﻿<template>
   <div class="app-full-container">
     <div class="app-full-header">
+{{ for params in QueryParams }}
       <el-input
-        v-model="query.filter"
-        placeholder="关键字"
+        v-model="query.{{params.CamelCaseName}}"
+        placeholder="{{params.Description}}"
         clearable
         class="header-item"
         size="mini"
-      />
-      <el-button class="header-item-btn" type="primary" size="mini" @click="getList">搜索</el-button>
-{{ if CenerateCreate }}      <el-button class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>{{ end }}
+      />{{ end }}
+{{ if QueryParams != empty }}      <el-button class="header-item-btn" type="primary" size="mini" @click="getList">搜索</el-button>{{ end}}
+{{ if GenerateCreate }}      <el-button class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>{{ end }}
     </div>
     <div class="app-full-body">
       <el-table
         :data="tableData"
-        :default-sort="{prop: 'creationTime', order: 'descending'}"
         highlight-current-row
         @sort-change="onSortChange"
       >
+{{ for prop in ListProperty }}
         <el-table-column
-          prop="userName"
-          label="姓名"
+          prop="{{prop.Key}}"
+          label="{{prop.Value.Description | object.default prop.Key}}"
           sortable="custom"
-        />
-        <el-table-column
-          prop="email"
-          label="邮箱地址"
-          sortable="custom"
-        />
-        <el-table-column
-          prop="phoneNumber"
-          label="手机号"
-          sortable="custom"
-        />
+        />{{ end }}
         <el-table-column
           label="操作"
         >
           <template slot-scope="scope">
-{{ if CenerateEdit }}            <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>{{ end }}
+{{ if GenerateEdit }}            <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>{{ end }}
             <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
               <el-link slot="reference" type="danger" icon="el-icon-delete">删除</el-link>
             </el-popconfirm>
@@ -53,13 +44,13 @@
         @pagination="onPagination"
       />
     </div>
-{{ if CenerateCreate }}    <CreateDialog
+{{ if GenerateCreate }}    <CreateDialog
       :visible.sync="createDialogVisible"
       :close-confirm="true"
       dialog-width="500px"
       @close="dialogClose"
     />{{ end }}
-{{ if CenerateEdit }}    <EditDialog
+{{ if GenerateEdit }}    <EditDialog
       :visible.sync="editDialogVisible"
       :{{ CamelCaseName }}Id="edit{{ PascalCaseName }}Id"
       :close-confirm="true"
@@ -74,19 +65,20 @@
 import listMixin from '@/mixins/listMixin'
 import {{ CamelCaseName }}Api from '@/api/{{ CamelCaseName }}'
 import Pagination from '@/components/Pagination'
-{{ if CenerateCreate }}import CreateDialog from './components/{{ PascalCaseName }}CreateDialog'{{ end }}
-{{ if CenerateEdit }}import EditDialog from './components/{{ PascalCaseName }}EditDialog'{{ end }}
+{{ if GenerateCreate }}import CreateDialog from './components/{{ PascalCaseName }}CreateDialog'{{ end }}
+{{ if GenerateEdit }}import EditDialog from './components/{{ PascalCaseName }}EditDialog'{{ end }}
 
 export default {
   name: 'Index',
-  components: { {{ if CenerateCreate }}CreateDialog,{{ end }} {{ if CenerateEdit }}EditDialog, {{ end }}Pagination },
+  components: { {{ if GenerateCreate }}CreateDialog,{{ end }} {{ if GenerateEdit }}EditDialog, {{ end }}Pagination },
   mixins: [listMixin],
   data() {
     return {
-{{ if CenerateCreate }}      createDialogVisible: false,{{ end }}
-{{ if CenerateEdit }}      editDialogVisible: false,
+{{ if GenerateCreate }}      createDialogVisible: false,{{ end }}
+{{ if GenerateEdit }}      editDialogVisible: false,
       edit{{ PascalCaseName }}Id: '',{{ end }}
       query: {
+{{ for params in QueryParams }}        {{params.CamelCaseName}}: '',{{ end }}
         // 在这里写列表过滤属性
       }
     }
@@ -96,7 +88,7 @@ export default {
   },
   methods: {
     getList() {
-      {{ CamelCaseName }}Api.list(this.query).then(res => {
+      {{ CamelCaseName }}Api.getList(this.query).then(res => {
         this.tableData = res.items
         this.updateTotalCount(res.totalCount)
       })
@@ -106,11 +98,11 @@ export default {
         this.getList()
       }
       this.edit{{ PascalCaseName }}Id = null
-    },{{ if CenerateCreate }}
+    },{{ if GenerateCreate }}
     create() {
       this.createDialogVisible = true
     },{{ end }}
-{{ if CenerateEdit }}    edit(row) {
+{{ if GenerateEdit }}    edit(row) {
       this.edit{{ PascalCaseName }}Id = row.id
       this.editDialogVisible = true
     },{{ end }}

@@ -67,19 +67,22 @@ namespace AbpVueCli.Generator
             else
             {
                 var path = api.Url.Substring(options.ModulePrefix.Length)
-                        .Split(new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                    .Split(new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries)
+                    .SelectMany(x => x.Split(new char[] {'-'}, StringSplitOptions.RemoveEmptyEntries))
+                    .SelectMany(x => x.Split(new char[] {'.'}, StringSplitOptions.RemoveEmptyEntries))
+                    .Select(x => x.ToPascalCase())
+                    .ToList();
 
                 if (path.Count > 0 && !(path[0].StartsWith("get", StringComparison.OrdinalIgnoreCase) ||
                                         path[0].StartsWith("delete", StringComparison.OrdinalIgnoreCase) ||
                                         path[0].StartsWith("post", StringComparison.OrdinalIgnoreCase) ||
-                                        path[0].StartsWith("put", StringComparison.OrdinalIgnoreCase) ))
+                                        path[0].StartsWith("put", StringComparison.OrdinalIgnoreCase)))
                 {
                     path.Insert(0, api.Method.ToLower());
                 }
 
-                funcName = $"{string.Join("", path.Where(x => !x.StartsWith("{")))}".ToCamelCase()
-                        .Replace("-", "")
-                        .Replace(".", "");
+                funcName = $"{string.Join("", path.Where(x => !x.StartsWith("{")))}"
+                    .ToCamelCase();
 
                 @params = path.Where(x => x.StartsWith("{"))
                     .Select(x =>
@@ -91,7 +94,7 @@ namespace AbpVueCli.Generator
 
             TryAddParams(@params, api.Operation);
 
-            return $"{funcName} = ({string.Join(",", @params)})";
+            return $"{funcName} = ({string.Join(", ", @params)})";
         }
 
         public static string GenerateApiUrl(string url)
@@ -116,7 +119,7 @@ namespace AbpVueCli.Generator
         }
 
         public static string GenerateViewModel(OpenApiSchema apiSchema)
-        {   
+        {
             return apiSchema.ToJson();
         }
 
@@ -124,7 +127,7 @@ namespace AbpVueCli.Generator
         {
             var rulesDic = new Dictionary<string, List<JObject>>();
 
-            foreach(var propertyItem in apiSchema.Properties)
+            foreach (var propertyItem in apiSchema.Properties)
             {
                 var rules = new List<JObject>();
 
@@ -177,6 +180,16 @@ namespace AbpVueCli.Generator
             return type;
         }
 
+        public static IEnumerable<OpenApiParameterWrap> GetQueryParameters(ProjectInfo projectInfo,
+            OpenApiOperation apiOperation)
+        {
+            return apiOperation.Parameters
+                .Select(x => new OpenApiParameterWrap(x))
+                .Where(x =>
+                    x.Parameter.In == ParameterLocation.Query &&
+                    projectInfo.ListQueryIgnoreParams.All(y => y.ToLower() != x.Name.ToLower()));
+        }
+
         private static void TryAddParams(List<string> @params, OpenApiOperation operation)
         {
             var haveQueryParams = operation.Parameters?.Any(x => x.In == ParameterLocation.Query);
@@ -190,5 +203,22 @@ namespace AbpVueCli.Generator
                 @params.AddIfNotContains("body");
             }
         }
+    }
+
+    public class OpenApiParameterWrap
+    {
+        public OpenApiParameterWrap(OpenApiParameter parameter)
+        {
+            Parameter = parameter;
+        }
+
+        public OpenApiParameter Parameter { get; }
+
+        public string Name => Parameter.Name.Split('.').Last();
+
+        public string CamelCaseName => Name.ToCamelCase();
+        public string PascalCaseName => Name.ToPascalCase();
+
+        public string Description => Parameter.Description ?? PascalCaseName;
     }
 }

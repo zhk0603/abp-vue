@@ -11,31 +11,6 @@ using Microsoft.Extensions.Logging;
 
 namespace AbpVueCli.Steps
 {
-    public class PostApiFinderStep : Step
-    {
-        protected override ActivityExecutionResult OnExecute(WorkflowExecutionContext context)
-        {
-            var modelInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
-            ModuleApiOperation postApi = modelInfo.ModuleApis.FirstOrDefault(api =>
-                api.Url.Equals(modelInfo.Option.ModulePrefix, StringComparison.OrdinalIgnoreCase) &&
-                api.Method.Equals("post", StringComparison.OrdinalIgnoreCase));
-
-            if (postApi == null)
-            {
-                Logger.LogError("找不到 POST API");
-                return Fault("找不到 POST API");
-            }
-
-            var apiSchema = postApi.Operation.RequestBody.Content.First().Value.Schema;
-            Logger.LogInformation("POST API:{api}, Model:{model}", modelInfo.Option.ModulePrefix,
-                apiSchema.Reference.Id);
-
-            context.SetVariable("PostModuleApi", postApi);
-
-            return Done();
-        }
-    }
-
     public class GenerateModelStep : Step
     {
         protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context, CancellationToken cancellationToken)

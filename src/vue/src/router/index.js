@@ -156,6 +156,20 @@ export const constantRoutes = [
   },
 
   {
+    path: '/tenant',
+    component: Layout,
+    redirect: '/tenant/index',
+    children: [
+      {
+        path: 'index',
+        name: 'TenantIndex',
+        component: () => import('@/views/tenant/index'),
+        meta: { title: '租户管理', icon: 'dashboard' }
+      }
+    ]
+  },
+
+  {
     path: '/signin-oidc',
     component: () => import('@/views/signin-oidc'),
     hidden: true
