@@ -100,7 +100,9 @@ namespace AbpVueCli
                 "edit",
                 "tenant",
                 "/api/multi-tenancy/tenants",
-                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
+
+                "--no-overwrite"
             };
 #endif
 

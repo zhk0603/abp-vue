@@ -7,7 +7,7 @@ namespace AbpVueCli.Commands
     public class GenerateCommand : CommandBase
     {
         public GenerateCommand(IServiceProvider serviceProvider) : base(
-            serviceProvider, "generate", "generate")
+            serviceProvider, "generate", "生成文件")
         {
             AddCommand<CrudCommand>();
             AddCommand<ApiCommand>();

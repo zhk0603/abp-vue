@@ -16,7 +16,7 @@ namespace AbpVueCli.Commands
 {
     public class InitCommand : CommandBase
     {
-        public InitCommand(IServiceProvider serviceProvider) : base(serviceProvider, "init", "")
+        public InitCommand(IServiceProvider serviceProvider) : base(serviceProvider, "init", "初始化项目，添加AbpVue运行时需要的文件")
         {
             AddOption(new Option(new string[] {"-o", "--openApiAddr"}, "接口地址。")
             {

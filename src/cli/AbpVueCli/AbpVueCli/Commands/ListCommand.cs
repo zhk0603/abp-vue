@@ -12,7 +12,7 @@ namespace AbpVueCli.Commands
 {
     public class ListCommand : CommandBase
     {
-        public ListCommand(IServiceProvider serviceProvider) : base(serviceProvider, "list", "list")
+        public ListCommand(IServiceProvider serviceProvider) : base(serviceProvider, "list", "只生成List视图文件")
         {
             AddArgument(new Argument<string>("module") { Description = "模块名称" });
             AddArgument(new Argument<string>("modulePrefix") { Description = "模块api路径的前缀" });

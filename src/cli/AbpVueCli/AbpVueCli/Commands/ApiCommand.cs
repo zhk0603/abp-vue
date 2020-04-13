@@ -12,7 +12,7 @@ namespace AbpVueCli.Commands
 {
     public class ApiCommand : CommandBase
     {
-        public ApiCommand(IServiceProvider serviceProvider) : base(serviceProvider, "api", "api")
+        public ApiCommand(IServiceProvider serviceProvider) : base(serviceProvider, "api", "只生成API层的文件")
         {
             AddArgument(new Argument<string>("module") { Description = "模块名称" });
             AddArgument(new Argument<string>("modulePrefix") { Description = "模块api路径的前缀" });
@@ -20,6 +20,11 @@ namespace AbpVueCli.Commands
             AddOption(new Option(new string[] { "-d", "--directory" }, "项目目录。")
             {
                 Argument = new Argument<string>()
+            });
+
+            AddOption(new Option(new[] { "--no-overwrite" }, "指定不覆盖现有文件")
+            {
+                Argument = new Argument<bool>()
             });
 
             Handler = CommandHandler.Create((GenerateCommandOptionBasic options) => Run(options));
@@ -39,6 +44,12 @@ namespace AbpVueCli.Commands
                         step.ValueExpression =
                             new JavaScriptExpression<GenerateCommandOptionBasic>($"({options.ToJson()})");
                     })
+                    .Then<SetVariable>(
+                        step =>
+                        {
+                            step.VariableName = "Overwrite";
+                            step.ValueExpression = new JavaScriptExpression<bool>("!Option.NoOverwrite");
+                        })
                     .Then<ProjectFinderStep>()
                     .Then<ProjectInfoProviderStep>()
                     .Then<OpenApiDocumentProviderStep>()

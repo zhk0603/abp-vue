@@ -12,7 +12,7 @@ namespace AbpVueCli.Commands
 {
     public class ModelCommand : CommandBase
     {
-        public ModelCommand(IServiceProvider serviceProvider) : base(serviceProvider, "model", "model")
+        public ModelCommand(IServiceProvider serviceProvider) : base(serviceProvider, "model", "只生成Model层的文件")
         {
             AddArgument(new Argument<string>("module") { Description = "模块名称" });
             AddArgument(new Argument<string>("modulePrefix") { Description = "模块api路径的前缀" });

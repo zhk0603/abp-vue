@@ -35,7 +35,9 @@ namespace AbpVueCli.Steps
                 Properties = apiSchema.Properties
             };
 
-            await GenerateFiles(tempDir, targetDirectory, model, true);
+            var overwrite = context.GetVariable<bool>("Overwrite");
+
+            await GenerateFiles(tempDir, targetDirectory, model, overwrite);
 
             return Done();
         }

@@ -13,7 +13,7 @@ namespace AbpVueCli.Commands
 {
     public class CrudCommand : CommandBase
     {
-        public CrudCommand(IServiceProvider serviceProvider) : base(serviceProvider, "crud", "crud")
+        public CrudCommand(IServiceProvider serviceProvider) : base(serviceProvider, "crud", "根据指定的模块生成CRUD的相关文件")
         {
             AddArgument(new Argument<string>("module") {Description = "模块名称"});
             AddArgument(new Argument<string>("modulePrefix") {Description = "模块api路径的前缀"});
@@ -21,6 +21,11 @@ namespace AbpVueCli.Commands
             AddOption(new Option(new string[] { "-d", "--directory" }, "项目目录。")
             {
                 Argument = new Argument<string>()
+            });
+
+            AddOption(new Option(new[] { "--no-overwrite" }, "指定不覆盖现有文件")
+            {
+                Argument = new Argument<bool>()
             });
 
             Handler = CommandHandler.Create((GenerateCommandOptionBasic options) => Run(options));
@@ -38,6 +43,12 @@ namespace AbpVueCli.Commands
                         step.VariableName = "Option";
                         step.ValueExpression = new JavaScriptExpression<GenerateCommandOptionBasic>($"({options.ToJson()})");
                     })
+                    .Then<SetVariable>(
+                        step =>
+                        {
+                            step.VariableName = "Overwrite";
+                            step.ValueExpression = new JavaScriptExpression<bool>("!Option.NoOverwrite");
+                        })
                     .Then<ProjectFinderStep>()
                     .Then<ProjectInfoProviderStep>()
                     .Then<OpenApiDocumentProviderStep>()
