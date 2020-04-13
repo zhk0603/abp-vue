@@ -22,6 +22,11 @@ namespace AbpVueCli.Commands
                 Argument = new Argument<string>()
             });
 
+            AddOption(new Option(new[] { "--no-overwrite" }, "指定不覆盖现有文件")
+            {
+                Argument = new Argument<bool>()
+            });
+
             Handler = CommandHandler.Create((GenerateCommandOptionBasic options) => Run(options));
 
         }
@@ -38,6 +43,12 @@ namespace AbpVueCli.Commands
                         step.VariableName = "Option";
                         step.ValueExpression = new JavaScriptExpression<GenerateCommandOptionBasic>($"({options.ToJson()})");
                     })
+                    .Then<SetVariable>(
+                        step =>
+                        {
+                            step.VariableName = "Overwrite";
+                            step.ValueExpression = new JavaScriptExpression<bool>("!Option.NoOverwrite");
+                        })
                     .Then<ProjectFinderStep>()
                     .Then<ProjectInfoProviderStep>()
                     .Then<OpenApiDocumentProviderStep>()

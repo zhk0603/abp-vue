@@ -14,7 +14,12 @@
     <PackageProjectUrl>https://github.com/zhk0603/abp-vue</PackageProjectUrl>
     <RepositoryUrl>https://github.com/zhk0603/abp-vue/tree/master/src/cli/AbpVueCli</RepositoryUrl>
     <PackageTags>abpvue vue helper generator</PackageTags>
+    <Authors>赵坤</Authors>
  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Elsa" Version="1.2.2.29" />

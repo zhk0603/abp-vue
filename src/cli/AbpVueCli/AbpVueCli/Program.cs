@@ -21,7 +21,7 @@ namespace AbpVueCli
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("Volo.Abp", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
-                .WriteTo.File(Path.Combine("logs", "abp_vue_log.txt"))
+                .WriteTo.File(Path.Combine(CliPaths.Log, "abp_vue_log.txt"))
                 .WriteTo.Console()
                 .CreateLogger();
 
@@ -49,14 +49,14 @@ namespace AbpVueCli
             //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views"
             //};
 
-            //args = new string[]
-            //{
-            //    "generate",
-            //    "crud",
-            //    "project",
-            //    "/api/Project",
-            //    "-d", @"D:\Workspaces\02.ty-tfs\sy-project-collection\sy-project\sy-project-ops"
-            //};
+            args = new string[]
+            {
+                "generate",
+                "crud",
+                "不存在的",
+                "不存在的",
+                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            };
 
             //args = new string[]
             //{
@@ -94,16 +94,16 @@ namespace AbpVueCli
             //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
             //};
 
-            args = new string[]
-            {
-                "generate",
-                "edit",
-                "tenant",
-                "/api/multi-tenancy/tenants",
-                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
+            //args = new string[]
+            //{
+            //    "generate",
+            //    "edit",
+            //    "tenant",
+            //    "/api/multi-tenancy/tenants",
+            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
 
-                "--no-overwrite"
-            };
+            //    "--no-overwrite"
+            //};
 #endif
 
             await parser.InvokeAsync(args);
