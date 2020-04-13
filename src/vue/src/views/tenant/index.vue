@@ -1,3 +1,9 @@
+<!--
+* @description Created by AbpVueCli
+* @author zhaokun
+* @date 2020-04-13 14:30:42
+* @version V1.0.0
+!-->
 <template>
   <div class="app-full-container">
     <div class="app-full-header">
@@ -57,7 +63,7 @@
     />
     <EditDialog
       :visible.sync="editDialogVisible"
-      :tenant-id="editTenantId"
+      :tenantId="editTenantId"
       :close-confirm="true"
       dialog-width="700px"
       @close="dialogClose"
@@ -83,7 +89,7 @@ export default {
       editDialogVisible: false,
       editTenantId: '',
       query: {
-        filter: ''
+        filter: '',
         // 在这里写列表过滤属性
       }
     }
@@ -105,6 +111,7 @@ export default {
       this.editTenantId = null
     },
     create() {
+      this.$refs.from.resetFields()
       this.createDialogVisible = true
     },
     edit(row) {

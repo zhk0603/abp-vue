@@ -2,11 +2,10 @@ import request from '@/utils/request'
 
 const tenantApi = {}
 
-
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-13 11:21:51
+ * @date 2020-04-13 14:26:35
  * @version V1.0.0
  */
 tenantApi.get = (id) => {
@@ -19,7 +18,7 @@ tenantApi.get = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-13 11:21:51
+ * @date 2020-04-13 14:26:35
  * @version V1.0.0
  */
 tenantApi.put = (id, body) => {
@@ -33,7 +32,7 @@ tenantApi.put = (id, body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-13 11:21:51
+ * @date 2020-04-13 14:26:35
  * @version V1.0.0
  */
 tenantApi.delete = (id) => {
@@ -46,7 +45,7 @@ tenantApi.delete = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-13 11:21:51
+ * @date 2020-04-13 14:26:35
  * @version V1.0.0
  */
 tenantApi.getList = (params) => {
@@ -60,7 +59,7 @@ tenantApi.getList = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-13 11:21:51
+ * @date 2020-04-13 14:26:35
  * @version V1.0.0
  */
 tenantApi.post = (body) => {
@@ -74,7 +73,7 @@ tenantApi.post = (body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-13 11:21:51
+ * @date 2020-04-13 14:26:35
  * @version V1.0.0
  */
 tenantApi.getDefaultConnectionString = (id) => {
@@ -87,7 +86,7 @@ tenantApi.getDefaultConnectionString = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-13 11:21:51
+ * @date 2020-04-13 14:26:35
  * @version V1.0.0
  */
 tenantApi.putDefaultConnectionString = (id, params) => {
@@ -101,7 +100,7 @@ tenantApi.putDefaultConnectionString = (id, params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-13 11:21:51
+ * @date 2020-04-13 14:26:35
  * @version V1.0.0
  */
 tenantApi.deleteDefaultConnectionString = (id) => {
@@ -110,6 +109,5 @@ tenantApi.deleteDefaultConnectionString = (id) => {
     method: 'delete'
   })
 }
-
 
 export default tenantApi

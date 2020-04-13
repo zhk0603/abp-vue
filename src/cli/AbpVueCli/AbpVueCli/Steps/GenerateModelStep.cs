@@ -15,7 +15,7 @@ namespace AbpVueCli.Steps
     {
         protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context, CancellationToken cancellationToken)
         {
-            var modelInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
+            var moduleInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
 
             var appDir = AppDomain.CurrentDomain.BaseDirectory;
             var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src", "views");
@@ -26,42 +26,23 @@ namespace AbpVueCli.Steps
             ModuleApiOperation postApi = context.GetVariable<ModuleApiOperation>("PostModuleApi");
             var apiSchema = postApi.Operation.RequestBody.Content.First().Value.Schema;
             
-            var model = new
+            var model = new GenerateModelModel
             {
-                Name = modelInfo.Name,
-                CamelCaseName = modelInfo.CamelCaseName,
-                PascalCaseName = modelInfo.PascalCaseName,
-                Url = modelInfo.Option.ModulePrefix,
-                ApiSchema = apiSchema
+                Name = moduleInfo.Name,
+                ModuleInfo = moduleInfo,
+                RequestBodySchema = apiSchema
             };
 
-            await GenerateFile(tempDir, targetDirectory, model, true);
+            await GenerateFiles(tempDir, targetDirectory, model, true);
 
             return Done();
         }
 
-        private async Task GenerateFile(string groupDirectory, string targetDirectory, object model, bool overwrite)
+        private async Task GenerateFiles(string sourceDirectory, string targetDirectory, object model, bool overwrite)
         {
-            foreach (var file in Directory.EnumerateFiles(groupDirectory, "*Config.js.sbntxt", SearchOption.AllDirectories))
+            foreach (var file in Directory.EnumerateFiles(sourceDirectory, "*Config.js.sbntxt", SearchOption.AllDirectories))
             {
-                Logger.LogDebug("Generating using template file: {file}", file);
-                var targetFilePathNameTemplate = file.Replace(groupDirectory, targetDirectory);
-                var targetFilePathName = TextGenerator.GenerateByTemplateText(targetFilePathNameTemplate, model).RemovePostFix(".sbntxt");
-                if (File.Exists(targetFilePathName) && !overwrite)
-                {
-                    Logger.LogInformation("File “{targetFilePathName}” already exists, skip generating.",
-                        targetFilePathName);
-                    continue;
-                }
-
-                var templateText = await File.ReadAllTextAsync(file);
-                var contents = TextGenerator.GenerateByTemplateText(templateText, model);
-
-                var dir = Path.GetDirectoryName(targetFilePathName);
-                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-                await File.WriteAllTextAsync(targetFilePathName, contents);
-                Logger.LogInformation("File “{targetFilePathName}” successfully generated.", targetFilePathName);
+                await GenerateFileAsync(sourceDirectory, targetDirectory, file, model, overwrite);
             }
         }
     }

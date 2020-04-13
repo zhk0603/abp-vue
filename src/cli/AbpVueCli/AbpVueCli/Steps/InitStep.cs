@@ -36,7 +36,7 @@ namespace AbpVueCli.Steps
             if (!Directory.Exists(tempDir))
                 throw new DirectoryNotFoundException($"Template group directory {tempDir} does not exist.");
 
-            await GenerateFile(tempDir, projectDir, new
+            await GenerateFiles(tempDir, projectDir, new
             {
                 Option = option
             }, false);
@@ -44,28 +44,11 @@ namespace AbpVueCli.Steps
             return Done();
         }
 
-        private async Task GenerateFile(string groupDirectory, string targetDirectory, object model, bool overwrite)
+        private async Task GenerateFiles(string sourceDirectory, string targetDirectory, object model, bool overwrite)
         {
-            foreach (var file in Directory.EnumerateFiles(groupDirectory, "*.sbntxt", SearchOption.AllDirectories))
+            foreach (var file in Directory.EnumerateFiles(sourceDirectory, "*.sbntxt", SearchOption.AllDirectories))
             {
-                Logger.LogDebug($"Generating using template file: {file}");
-                var targetFilePathNameTemplate = file.Replace(groupDirectory, targetDirectory);
-                var targetFilePathName = targetFilePathNameTemplate.RemovePostFix(".sbntxt");
-                if (File.Exists(targetFilePathName) && !overwrite)
-                {
-                    Logger.LogInformation("File “{targetFilePathName}” already exists, skip generating.",
-                        targetFilePathName);
-                    continue;
-                }
-
-                var templateText = await File.ReadAllTextAsync(file);
-                var contents = TextGenerator.GenerateByTemplateText(templateText, model);
-
-                var dir = Path.GetDirectoryName(targetFilePathName);
-                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-                await File.WriteAllTextAsync(targetFilePathName, contents);
-                Logger.LogInformation("File “{targetFilePathName}” successfully generated.", targetFilePathName);
+                await GenerateFileAsync(sourceDirectory, targetDirectory, file, model, overwrite);
             }
         }
     }

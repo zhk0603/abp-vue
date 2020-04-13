@@ -1,4 +1,10 @@
-﻿<template>
+﻿<!--
+* @description Created by AbpVueCli
+* @author {{ProjectInfo.UserName}}
+* @date {{date.to_string date.now `%F %T`}}
+* @version V1.0.0
+!-->
+<template>
   <div class="app-full-container">
     <div class="app-full-header">
 {{ for params in QueryParams }}
@@ -89,7 +95,7 @@ export default {
   methods: {
     getList() {
       {{ CamelCaseName }}Api.getList(this.query).then(res => {
-        this.tableData = res.items
+        this.tableData = res.{{ProjectInfo.ListPropertySchemaPath}}
         this.updateTotalCount(res.totalCount)
       })
     },

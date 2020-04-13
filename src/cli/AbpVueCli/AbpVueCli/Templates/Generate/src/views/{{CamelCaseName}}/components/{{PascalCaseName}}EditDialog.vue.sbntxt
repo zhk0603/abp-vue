@@ -1,4 +1,10 @@
-﻿<template>
+﻿<!--
+* @description Created by AbpVueCli
+* @author {{ProjectInfo.UserName}}
+* @date {{date.to_string date.now `%F %T`}}
+* @version V1.0.0
+!-->
+<template>
   <el-dialog
     title="Edit {{PascalCaseName}}"
     :visible="dialogVisible"

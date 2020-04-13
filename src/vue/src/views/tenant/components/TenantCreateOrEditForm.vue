@@ -1,3 +1,9 @@
+<!--
+* @description Created by AbpVueCli
+* @author zhaokun
+* @date 2020-04-13 14:31:55
+* @version V1.0.0
+!-->
 <template>
   <section>
     <el-form
@@ -110,7 +116,6 @@ export default {
       return tenantApi.put(this.tenantId, this.formData)
     },
     cancel() {
-      this.$refs.from.resetFields()
       this.$emit('cancel')
     }
   }

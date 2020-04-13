@@ -112,7 +112,7 @@ namespace AbpVueCli.Generator
 
             if (api.Operation.RequestBody != null)
             {
-                @params = ",\r\n    data: body";
+                @params += ",\r\n    data: body";
             }
 
             return @params;

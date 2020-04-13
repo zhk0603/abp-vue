@@ -39,7 +39,7 @@ namespace AbpVueCli.Steps
                 ListProperty = GetListProperty(getListApi, modelInfo.ProjectInfo)
             };
 
-            await GenerateFile(tempDir, targetDirectory, model, true);
+            await GenerateFiles(tempDir, targetDirectory, model, true);
 
             return Done();
         }
@@ -51,7 +51,7 @@ namespace AbpVueCli.Steps
             {
                 if (!projectInfo.ListPropertySchemaPath.IsNullOrWhiteSpace())
                 {
-                    var paths = projectInfo.ListPropertySchemaPath.Split(new [] {'/'},
+                    var paths = projectInfo.ListPropertySchemaPath.Split(new [] {'.'},
                         StringSplitOptions.RemoveEmptyEntries);
 
                     OpenApiSchema propertySchema = openApiMediaType.Schema;
@@ -83,28 +83,11 @@ namespace AbpVueCli.Steps
             return new Dictionary<string, OpenApiSchema>();
         }
 
-        private async Task GenerateFile(string groupDirectory, string targetDirectory, object model, bool overwrite)
+        private async Task GenerateFiles(string sourceDirectory, string targetDirectory, object model, bool overwrite)
         {
-            foreach (var file in Directory.EnumerateFiles(groupDirectory, "*index.vue.sbntxt", SearchOption.AllDirectories))
+            foreach (var file in Directory.EnumerateFiles(sourceDirectory, "*index.vue.sbntxt", SearchOption.AllDirectories))
             {
-                Logger.LogDebug("Generating using template file: {file}", file);
-                var targetFilePathNameTemplate = file.Replace(groupDirectory, targetDirectory);
-                var targetFilePathName = TextGenerator.GenerateByTemplateText(targetFilePathNameTemplate, model).RemovePostFix(".sbntxt");
-                if (File.Exists(targetFilePathName) && !overwrite)
-                {
-                    Logger.LogInformation("File “{targetFilePathName}” already exists, skip generating.",
-                        targetFilePathName);
-                    continue;
-                }
-
-                var templateText = await File.ReadAllTextAsync(file);
-                var contents = TextGenerator.GenerateByTemplateText(templateText, model);
-
-                var dir = Path.GetDirectoryName(targetFilePathName);
-                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-                await File.WriteAllTextAsync(targetFilePathName, contents);
-                Logger.LogInformation("File “{targetFilePathName}” successfully generated.", targetFilePathName);
+                await GenerateFileAsync(sourceDirectory, targetDirectory, file, model, overwrite);
             }
         }
     }

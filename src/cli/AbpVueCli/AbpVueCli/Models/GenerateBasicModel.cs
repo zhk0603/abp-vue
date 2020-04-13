@@ -3,7 +3,7 @@ using System.Text;
 
 namespace AbpVueCli.Models
 {
-    public abstract class BasicGenerateModel
+    public class BasicGenerateModel
     {
         public string Name { get; set; }
         public string CamelCaseName => Name.ToCamelCase();

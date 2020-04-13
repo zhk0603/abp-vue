@@ -1,7 +1,6 @@
 ﻿import request from '@/utils/request'
 
 const {{ CamelCaseName }}Api = {}
-
 {{ for api in ModuleApis }}
 /**
  * {{api.Operation.Summary | object.default "Created by AbpVueCli" }}
@@ -16,5 +15,4 @@ const {{ CamelCaseName }}Api = {}
   })
 }
 {{ end }}
-
 export default {{ CamelCaseName }}Api

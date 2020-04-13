@@ -58,10 +58,46 @@ namespace AbpVueCli
             //    "-d", @"D:\Workspaces\02.ty-tfs\sy-project-collection\sy-project\sy-project-ops"
             //};
 
+            //args = new string[]
+            //{
+            //    "generate",
+            //    "api",
+            //    "tenant",
+            //    "/api/multi-tenancy/tenants",
+            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //};
+
+            //args = new string[]
+            //{
+            //    "generate",
+            //    "model",
+            //    "tenant",
+            //    "/api/multi-tenancy/tenants",
+            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //};
+
+            //args = new string[]
+            //{
+            //    "generate",
+            //    "list",
+            //    "tenant",
+            //    "/api/multi-tenancy/tenants",
+            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //};
+
+            //args = new string[]
+            //{
+            //    "generate",
+            //    "create",
+            //    "tenant",
+            //    "/api/multi-tenancy/tenants",
+            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //};
+
             args = new string[]
             {
                 "generate",
-                "crud",
+                "edit",
                 "tenant",
                 "/api/multi-tenancy/tenants",
                 "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"

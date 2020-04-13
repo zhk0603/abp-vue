@@ -35,45 +35,29 @@ namespace AbpVueCli.Steps
                 Properties = apiSchema.Properties
             };
 
-            await GenerateFile(tempDir, targetDirectory, model, true);
+            await GenerateFiles(tempDir, targetDirectory, model, true);
 
             return Done();
         }
 
-        private async Task GenerateFile(string groupDirectory, string targetDirectory, object model, bool overwrite)
+        private async Task GenerateFiles(string sourceDirectory, string targetDirectory, object model, bool overwrite)
         {
-            foreach (var file in GetTemplateFiles(groupDirectory))
+            foreach (var file in GetTemplateFiles(sourceDirectory))
             {
-                Logger.LogDebug("Generating using template file: {file}", file);
-                var targetFilePathNameTemplate = file.Replace(groupDirectory, targetDirectory);
-                var targetFilePathName = TextGenerator.GenerateByTemplateText(targetFilePathNameTemplate, model).RemovePostFix(".sbntxt");
-                if (File.Exists(targetFilePathName) && !overwrite)
-                {
-                    Logger.LogInformation("File “{targetFilePathName}” already exists, skip generating.",
-                        targetFilePathName);
-                    continue;
-                }
-
-                var templateText = await File.ReadAllTextAsync(file);
-                var contents = TextGenerator.GenerateByTemplateText(templateText, model);
-
-                var dir = Path.GetDirectoryName(targetFilePathName);
-                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-                await File.WriteAllTextAsync(targetFilePathName, contents);
-                Logger.LogInformation("File “{targetFilePathName}” successfully generated.", targetFilePathName);
+                await GenerateFileAsync(sourceDirectory, targetDirectory, file, model, overwrite);
             }
         }
 
         private IEnumerable<string> GetTemplateFiles(string templatePath)
         {
             // 不支持这样搜索： *CreateOrEditForm.vue.sbntxt OR *CreateDialog.vue.sbntxt
+            string[] tempFiles = { "*CreateOrEditForm.vue.sbntxt", "*EditDialog.vue.sbntxt" };
 
-            yield return Directory
-                .EnumerateFiles(templatePath, "*CreateOrEditForm.vue.sbntxt", SearchOption.AllDirectories).First();
-
-            yield return Directory.EnumerateFiles(templatePath, "*EditDialog.vue.sbntxt", SearchOption.AllDirectories)
-                .First();
+            foreach (var temp in tempFiles)
+            {
+                yield return Directory
+                    .EnumerateFiles(templatePath, temp, SearchOption.AllDirectories).First();
+            }
         }
     }
 }

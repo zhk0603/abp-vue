@@ -1,3 +1,9 @@
+<!--
+* @description Created by AbpVueCli
+* @author zhaokun
+* @date 2020-04-13 14:31:55
+* @version V1.0.0
+!-->
 <template>
   <el-dialog
     title="Edit Tenant"
@@ -6,7 +12,7 @@
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <TenantCreateOrEditForm :tenant-id="tenantId" @cancel="onCancel" @successful="onSuccessful" />
+    <TenantCreateOrEditForm :tenantId="tenantId" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 

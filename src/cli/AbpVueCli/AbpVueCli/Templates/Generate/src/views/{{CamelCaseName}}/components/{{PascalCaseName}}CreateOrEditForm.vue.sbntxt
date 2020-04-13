@@ -1,4 +1,10 @@
-﻿<template>
+﻿<!--
+* @description Created by AbpVueCli
+* @author {{ProjectInfo.UserName}}
+* @date {{date.to_string date.now `%F %T`}}
+* @version V1.0.0
+!-->
+<template>
   <section>
     <el-form
       ref="from"
