@@ -1,5 +1,7 @@
 ﻿{
   "openApiAddr": "{{ Option.OpenApiAddr }}",
   "userName": "{{ Option.UserName }}",
-  "email": "{{ Option.Email }}"
+  "email": "{{ Option.Email }}",
+  "listQueryIgnoreParams": [],
+  "listPropertySchemaPath":""
 }

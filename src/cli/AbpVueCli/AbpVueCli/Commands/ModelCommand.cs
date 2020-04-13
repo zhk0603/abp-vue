@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Threading.Tasks;
@@ -11,12 +10,12 @@ using Elsa.Scripting.JavaScript;
 
 namespace AbpVueCli.Commands
 {
-    public class CrudCommand : CommandBase
+    public class ModelCommand : CommandBase
     {
-        public CrudCommand(IServiceProvider serviceProvider) : base(serviceProvider, "crud", "crud")
+        public ModelCommand(IServiceProvider serviceProvider) : base(serviceProvider, "model", "model")
         {
-            AddArgument(new Argument<string>("module") {Description = "模块名称"});
-            AddArgument(new Argument<string>("modulePrefix") {Description = "模块api路径的前缀"});
+            AddArgument(new Argument<string>("module") { Description = "模块名称" });
+            AddArgument(new Argument<string>("modulePrefix") { Description = "模块api路径的前缀" });
 
             AddOption(new Option(new string[] { "-d", "--directory" }, "项目目录。")
             {
@@ -24,6 +23,7 @@ namespace AbpVueCli.Commands
             });
 
             Handler = CommandHandler.Create((GenerateCommandOptionBasic options) => Run(options));
+
         }
 
         private async Task Run(GenerateCommandOptionBasic options)
@@ -43,19 +43,12 @@ namespace AbpVueCli.Commands
                     .Then<OpenApiDocumentProviderStep>()
 
                     .Then<PreGenerateStep>()
-
-                    .Then<GenerateApiStep>()
-
                     .Then<PostApiFinderStep>()
-                    .Then<GenerateModelStep>()
-                    .Then<GenerateCreateViewStep>()
-                    .Then<GenerateEditViewStep>()
-
-                    .Then<GetListApiFinderStep>()
-                    .Then<GenerateListViewStep>();
+                    .Then<GenerateModelStep>();
 
                 return builder.Build();
             });
         }
+
     }
 }
