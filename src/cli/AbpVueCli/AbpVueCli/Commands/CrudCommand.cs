@@ -48,6 +48,8 @@ namespace AbpVueCli.Commands
 
                     .Then<PostApiFinderStep>()
                     .Then<GenerateModelStep>()
+                    .Then<GenerateCreateViewStep>()
+                    .Then<GenerateEditViewStep>()
 
                     .Then<GetListApiFinderStep>()
                     .Then<GenerateListViewStep>();

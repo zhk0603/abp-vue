@@ -100,6 +100,7 @@ export default {
       this.edit{{ PascalCaseName }}Id = null
     },{{ if GenerateCreate }}
     create() {
+      this.$refs.from.resetFields()
       this.createDialogVisible = true
     },{{ end }}
 {{ if GenerateEdit }}    edit(row) {

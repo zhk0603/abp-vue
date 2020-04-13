@@ -10,7 +10,7 @@
         size="mini"
       />
       <el-button class="header-item-btn" type="primary" size="mini" @click="getList">搜索</el-button>
-
+      <el-button class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>
     </div>
     <div class="app-full-body">
       <el-table
@@ -33,7 +33,7 @@
           label="操作"
         >
           <template slot-scope="scope">
-
+            <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>
             <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
               <el-link slot="reference" type="danger" icon="el-icon-delete">删除</el-link>
             </el-popconfirm>
@@ -49,6 +49,19 @@
         @pagination="onPagination"
       />
     </div>
+    <CreateDialog
+      :visible.sync="createDialogVisible"
+      :close-confirm="true"
+      dialog-width="500px"
+      @close="dialogClose"
+    />
+    <EditDialog
+      :visible.sync="editDialogVisible"
+      :tenant-id="editTenantId"
+      :close-confirm="true"
+      dialog-width="700px"
+      @close="dialogClose"
+    />
 
   </div>
 </template>
@@ -57,14 +70,18 @@
 import listMixin from '@/mixins/listMixin'
 import tenantApi from '@/api/tenant'
 import Pagination from '@/components/Pagination'
+import CreateDialog from './components/TenantCreateDialog'
+import EditDialog from './components/TenantEditDialog'
 
 export default {
   name: 'Index',
-  components: { Pagination },
+  components: { CreateDialog, EditDialog, Pagination },
   mixins: [listMixin],
   data() {
     return {
-
+      createDialogVisible: false,
+      editDialogVisible: false,
+      editTenantId: '',
       query: {
         filter: ''
         // 在这里写列表过滤属性
@@ -87,7 +104,13 @@ export default {
       }
       this.editTenantId = null
     },
-
+    create() {
+      this.createDialogVisible = true
+    },
+    edit(row) {
+      this.editTenantId = row.id
+      this.editDialogVisible = true
+    },
     del(row) {
       tenantApi.delete(row.id).then(() => {
         this.$message('删除成功')

@@ -6,7 +6,7 @@ const tenantApi = {}
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 16:28:49
+ * @date 2020-04-13 11:21:51
  * @version V1.0.0
  */
 tenantApi.get = (id) => {
@@ -19,21 +19,21 @@ tenantApi.get = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 16:28:49
+ * @date 2020-04-13 11:21:51
  * @version V1.0.0
  */
 tenantApi.put = (id, body) => {
   return request({
     url: `/api/multi-tenancy/tenants/${id}`,
     method: 'put',
-    body
+    data: body
   })
 }
 
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 16:28:49
+ * @date 2020-04-13 11:21:51
  * @version V1.0.0
  */
 tenantApi.delete = (id) => {
@@ -46,7 +46,7 @@ tenantApi.delete = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 16:28:49
+ * @date 2020-04-13 11:21:51
  * @version V1.0.0
  */
 tenantApi.getList = (params) => {
@@ -60,21 +60,21 @@ tenantApi.getList = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 16:28:49
+ * @date 2020-04-13 11:21:51
  * @version V1.0.0
  */
 tenantApi.post = (body) => {
   return request({
     url: `/api/multi-tenancy/tenants`,
     method: 'post',
-    body
+    data: body
   })
 }
 
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 16:28:49
+ * @date 2020-04-13 11:21:51
  * @version V1.0.0
  */
 tenantApi.getDefaultConnectionString = (id) => {
@@ -87,7 +87,7 @@ tenantApi.getDefaultConnectionString = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 16:28:49
+ * @date 2020-04-13 11:21:51
  * @version V1.0.0
  */
 tenantApi.putDefaultConnectionString = (id, params) => {
@@ -101,7 +101,7 @@ tenantApi.putDefaultConnectionString = (id, params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 16:28:49
+ * @date 2020-04-13 11:21:51
  * @version V1.0.0
  */
 tenantApi.deleteDefaultConnectionString = (id) => {

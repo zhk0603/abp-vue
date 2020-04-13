@@ -112,7 +112,7 @@ namespace AbpVueCli.Generator
 
             if (api.Operation.RequestBody != null)
             {
-                @params = ",\r\n    body";
+                @params = ",\r\n    data: body";
             }
 
             return @params;
@@ -135,7 +135,7 @@ namespace AbpVueCli.Generator
                 {
                     var requiredRule = new JObject();
                     requiredRule["required"] = true;
-                    requiredRule["message"] = $"请输入{propertyItem.Value.Description}";
+                    requiredRule["message"] = $"请输入{propertyItem.Value.Description ?? propertyItem.Key}";
                     requiredRule["trigger"] = "blur";
                     rules.Add(requiredRule);
                 }
@@ -154,7 +154,8 @@ namespace AbpVueCli.Generator
                 {
                     var formatRule = new JObject();
                     formatRule["type"] = GetJsFormatType(propertyItem.Value);
-                    formatRule["message"] = $"{propertyItem.Value.Description} 必须为 {formatRule["type"]}";
+                    formatRule["message"] =
+                        $"{propertyItem.Value.Description ?? propertyItem.Key} 必须为 {formatRule["type"]}";
                     formatRule["trigger"] = "change";
                     rules.Add(formatRule);
                 }

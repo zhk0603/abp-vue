@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <section>
     <el-form
       ref="from"
@@ -8,15 +8,31 @@
       size="mini"
     >
       <el-row>
-{{ for prop in Properties }}
+
         <el-col :span="24">
           <el-form-item
-            prop="{{prop.Key}}"
-            label="{{prop.Value.Description | object.default prop.Key}}"
+            prop="adminEmailAddress"
+            label="adminEmailAddress"
           >
-            <el-input v-model="formData.{{prop.Key}}" size="mini" clearable />
+            <el-input v-model="formData.adminEmailAddress" size="mini" clearable />
           </el-form-item>
-        </el-col>{{ end }}
+        </el-col>
+        <el-col :span="24">
+          <el-form-item
+            prop="adminPassword"
+            label="adminPassword"
+          >
+            <el-input v-model="formData.adminPassword" size="mini" clearable />
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item
+            prop="name"
+            label="name"
+          >
+            <el-input v-model="formData.name" size="mini" clearable />
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
     <div class="from-footer">
@@ -28,18 +44,18 @@
 
 <script>
 import fromMixin from '@/mixins/formMixin'
-import {{CamelCaseName}}Api from '@/api/{{CamelCaseName}}'
-import { viewModel, rules } from './{{PascalCaseName}}Config'
+import tenantApi from '@/api/tenant'
+import { viewModel, rules } from './TenantConfig'
 
 export default {
-  name: '{{PascalCaseName}}CreateOrEditForm',
+  name: 'TenantCreateOrEditForm',
   mixins: [fromMixin],
   props: {
     isCreate: {
       type: Boolean,
       default: false
     },
-    {{CamelCaseName}}Id: {
+    tenantId: {
       type: String,
       default: ''
     }
@@ -51,7 +67,7 @@ export default {
     }
   },
   watch: {
-    {{CamelCaseName}}Id: {
+    tenantId: {
       immediate: true,
       handler: function() {
         this.get()
@@ -60,8 +76,8 @@ export default {
   },
   methods: {
     async get() {
-      if (this.{{CamelCaseName}}Id) {
-        await {{CamelCaseName}}Api.get(this.{{CamelCaseName}}Id).then(res => {
+      if (this.tenantId) {
+        await tenantApi.get(this.tenantId).then(res => {
           this.formData = Object.assign(this.formData, res)
         })
       }
@@ -88,12 +104,13 @@ export default {
       })
     },
     doPost() {
-      return {{CamelCaseName}}Api.post(this.formData)
+      return tenantApi.post(this.formData)
     },
     doPut() {
-      return {{CamelCaseName}}Api.put(this.{{CamelCaseName}}Id, this.formData)
+      return tenantApi.put(this.tenantId, this.formData)
     },
     cancel() {
+      this.$refs.from.resetFields()
       this.$emit('cancel')
     }
   }

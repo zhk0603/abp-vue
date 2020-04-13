@@ -1,10 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿<template>
+  <el-dialog
+    title="Create {{PascalCaseName}}"
+    :visible="dialogVisible"
+    :before-close="beforeClose"
+    :width="dialogWidth"
+    @close="closeDialog"
+  >
+    <{{PascalCaseName}}CreateOrEditForm :is-create="true" @cancel="onCancel" @successful="onSuccessful" />
+  </el-dialog>
+</template>
 
-namespace AbpVueCli.Templates.Generate.src.views.__Name__.components
-{
-    class UserCreateDialog
-    {
-    }
+<script>
+import {{PascalCaseName}}CreateOrEditForm from './{{PascalCaseName}}CreateOrEditForm'
+import dialogMixin from '@/mixins/dialogMixin'
+
+export default {
+  name: '{{PascalCaseName}}CreateDialog',
+  components: { {{PascalCaseName}}CreateOrEditForm },
+  mixins: [dialogMixin],
+  props: {
+  }
 }
+</script>

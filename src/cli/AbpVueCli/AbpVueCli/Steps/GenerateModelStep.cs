@@ -35,7 +35,7 @@ namespace AbpVueCli.Steps
                 ApiSchema = apiSchema
             };
 
-            await GenerateFile(tempDir, targetDirectory, model, false);
+            await GenerateFile(tempDir, targetDirectory, model, true);
 
             return Done();
         }
