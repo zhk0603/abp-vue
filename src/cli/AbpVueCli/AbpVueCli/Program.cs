@@ -49,12 +49,23 @@ namespace AbpVueCli
             //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views"
             //};
 
+            // sy-project
+            //args = new string[]
+            //{
+            //    "generate",
+            //    "crud",
+            //    "car",
+            //    "/api/car",
+            //    "-d", @"D:\Workspaces\02.ty-tfs\sy-project-collection\sy-project\sy-project\vue"
+            //};
+
+            // abp-vue
             args = new string[]
             {
                 "generate",
                 "crud",
-                "不存在的",
-                "不存在的",
+                "role",
+                "/api/identity/roles",
                 "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
             };
 

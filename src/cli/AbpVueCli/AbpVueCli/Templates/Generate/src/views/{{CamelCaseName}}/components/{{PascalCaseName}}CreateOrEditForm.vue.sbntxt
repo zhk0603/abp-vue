@@ -10,17 +10,27 @@
       ref="from"
       :model="formData"
       :rules="rules"
-      label-position="top"
+      label-width="120px"
+{{ if Properties | array.size < 10 }}      label-position="top"{{else}}      label-position="right"{{ end }}
       size="mini"
     >
       <el-row>
 {{ for prop in Properties }}
-        <el-col :span="24">
+{{ if Properties | array.size < 10 }}        <el-col :span="24">
+{{ else }}        <el-col :span="12">{{ end }}
           <el-form-item
             prop="{{prop.Key}}"
             label="{{prop.Value.Description | object.default prop.Key}}"
           >
-            <el-input v-model="formData.{{prop.Key}}" size="mini" clearable />
+{{ if prop.Value.Type == 'boolean' }}
+            <el-switch v-model="formData.{{prop.Key}}" />
+{{ else if prop.Value.Type == 'integer' }}
+            <el-input v-model="formData.{{prop.Key}}" class="form-item" size="mini" type="number" clearable />
+{{ else if prop.Value.Format == 'date-time'}}
+            <el-date-picker v-model="formData.{{prop.Key}}" class="form-item" size="mini" type="date" />
+{{ else }}
+            <el-input v-model="formData.{{prop.Key}}" class="form-item" size="mini" clearable />
+{{ end }}
           </el-form-item>
         </el-col>{{ end }}
       </el-row>
@@ -100,6 +110,7 @@ export default {
       return {{CamelCaseName}}Api.put(this.{{CamelCaseName}}Id, this.formData)
     },
     cancel() {
+      this.$refs.from.resetFields()
       this.$emit('cancel')
     }
   }

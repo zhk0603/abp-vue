@@ -51,3 +51,7 @@
   .el-link [class*=el-icon-]+span{
       margin-left: 2px;
   }
+
+.form-item{
+   width: 100%;
+}

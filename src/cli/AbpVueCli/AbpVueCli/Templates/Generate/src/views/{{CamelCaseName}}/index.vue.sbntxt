@@ -8,13 +8,27 @@
   <div class="app-full-container">
     <div class="app-full-header">
 {{ for params in QueryParams }}
+{{ if params.Parameter.Schema.Type == 'boolean' }}
+      <el-switch v-model="query.{{params.CamelCaseName}}" />
+{{ else if params.Parameter.Schema.Type == 'integer' }}
       <el-input
         v-model="query.{{params.CamelCaseName}}"
         placeholder="{{params.Description}}"
         clearable
         class="header-item"
         size="mini"
-      />{{ end }}
+        type="number"
+      />
+{{ else if params.Parameter.Schema.Format == 'date-time'}}
+      <el-date-picker v-model="query.{{params.CamelCaseName}}" size="mini" type="date" />
+{{ else }}
+      <el-input
+        v-model="query.{{params.CamelCaseName}}"
+        placeholder="{{params.Description}}"
+        clearable
+        class="header-item"
+        size="mini"
+      />{{ end }}{{ end }}
 {{ if QueryParams != empty }}      <el-button class="header-item-btn" type="primary" size="mini" @click="getList">搜索</el-button>{{ end}}
 {{ if GenerateCreate }}      <el-button class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>{{ end }}
     </div>
@@ -25,11 +39,22 @@
         @sort-change="onSortChange"
       >
 {{ for prop in ListProperty }}
+{{ if prop.Value.Type == 'boolean'}}
         <el-table-column
           prop="{{prop.Key}}"
           label="{{prop.Value.Description | object.default prop.Key}}"
           sortable="custom"
-        />{{ end }}
+        >
+          <template slot-scope="scope">
+            {{'{{'}} scope.row.{{prop.Key}} {{'}}'}}
+          </template>
+        </el-table-column>
+{{ else }}
+        <el-table-column
+          prop="{{prop.Key}}"
+          label="{{prop.Value.Description | object.default prop.Key}}"
+          sortable="custom"
+        />{{end }}{{ end }}
         <el-table-column
           label="操作"
         >
@@ -53,14 +78,14 @@
 {{ if GenerateCreate }}    <CreateDialog
       :visible.sync="createDialogVisible"
       :close-confirm="true"
-      dialog-width="500px"
+      dialog-width="50%"
       @close="dialogClose"
     />{{ end }}
 {{ if GenerateEdit }}    <EditDialog
       :visible.sync="editDialogVisible"
       :{{ CamelCaseName }}Id="edit{{ PascalCaseName }}Id"
       :close-confirm="true"
-      dialog-width="700px"
+      dialog-width="50%"
       @close="dialogClose"
     />{{ end }}
 
@@ -84,8 +109,8 @@ export default {
 {{ if GenerateEdit }}      editDialogVisible: false,
       edit{{ PascalCaseName }}Id: '',{{ end }}
       query: {
-{{ for params in QueryParams }}        {{params.CamelCaseName}}: '',{{ end }}
-        // 在这里写列表过滤属性
+{{ for params in QueryParams }}
+        {{params.CamelCaseName}}: '',{{ end }}
       }
     }
   },
@@ -106,7 +131,6 @@ export default {
       this.edit{{ PascalCaseName }}Id = null
     },{{ if GenerateCreate }}
     create() {
-      this.$refs.from.resetFields()
       this.createDialogVisible = true
     },{{ end }}
 {{ if GenerateEdit }}    edit(row) {
