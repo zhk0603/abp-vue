@@ -66,7 +66,8 @@ namespace AbpVueCli
                 "crud",
                 "role",
                 "/api/identity/roles",
-                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
+                "-o"
             };
 
             //args = new string[]

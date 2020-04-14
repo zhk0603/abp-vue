@@ -41,13 +41,13 @@ namespace AbpVueCli.Steps
         protected async Task GenerateFileAsync(string sourceDirectory, string targetDirectory, string file, object model,
             bool overwrite)
         {
-            Logger.LogDebug("Generating using template file: {file}", file);
+            Logger.LogDebug("使用模板文件生成: {file}", file);
             var targetFilePathNameTemplate = file.Replace(sourceDirectory, targetDirectory);
             var targetFilePathName = TextGenerator.GenerateByTemplateText(targetFilePathNameTemplate, model)
                 .RemovePostFix(".sbntxt");
             if (File.Exists(targetFilePathName) && !overwrite)
             {
-                Logger.LogInformation("File “{targetFilePathName}” already exists, skip generating.",
+                Logger.LogInformation("文件 “{targetFilePathName}” 已经存在，跳过生成。",
                     targetFilePathName);
                 return;
             }
@@ -59,7 +59,7 @@ namespace AbpVueCli.Steps
             if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
             await File.WriteAllTextAsync(targetFilePathName, contents);
-            Logger.LogInformation("File “{targetFilePathName}” successfully generated.", targetFilePathName);
+            Logger.LogInformation("文件 “{targetFilePathName}” 成功生成。", targetFilePathName);
         }
     }
 }

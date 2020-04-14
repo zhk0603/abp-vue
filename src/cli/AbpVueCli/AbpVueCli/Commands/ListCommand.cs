@@ -22,7 +22,7 @@ namespace AbpVueCli.Commands
                 Argument = new Argument<string>()
             });
 
-            AddOption(new Option(new[] { "--no-overwrite" }, "指定不覆盖现有文件")
+            AddOption(new Option(new[] { "-o", "--overwrite" }, "指定覆盖现有文件")
             {
                 Argument = new Argument<bool>()
             });
@@ -46,7 +46,7 @@ namespace AbpVueCli.Commands
                         step =>
                         {
                             step.VariableName = "Overwrite";
-                            step.ValueExpression = new JavaScriptExpression<bool>("!Option.NoOverwrite");
+                            step.ValueExpression = new JavaScriptExpression<bool>("Option.Overwrite");
                         })
                     .Then<ProjectFinderStep>()
                     .Then<ProjectInfoProviderStep>()

@@ -21,7 +21,7 @@ namespace AbpVueCli.Steps
             var appDir = AppDomain.CurrentDomain.BaseDirectory;
             var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src", "views");
             if (!Directory.Exists(tempDir))
-                throw new DirectoryNotFoundException($"Template group directory {tempDir} does not exist.");
+                throw new DirectoryNotFoundException($"模板目录 {tempDir} 不存在。");
             var targetDirectory = Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "views");
 
             ModuleApiOperation postApi = context.GetVariable<ModuleApiOperation>("PostModuleApi");

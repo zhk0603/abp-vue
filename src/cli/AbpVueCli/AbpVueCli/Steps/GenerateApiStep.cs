@@ -22,7 +22,7 @@ namespace AbpVueCli.Steps
             var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src",
                 "api");
             if (!Directory.Exists(tempDir))
-                throw new DirectoryNotFoundException($"Template group directory {tempDir} does not exist.");
+                throw new DirectoryNotFoundException($"模板目录 {tempDir} 不存在。");
             var targetDirectory = Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "api");
 
             var overwrite = context.GetVariable<bool>("Overwrite");
