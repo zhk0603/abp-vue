@@ -23,19 +23,29 @@ namespace AbpVueCli.Commands
                 Argument = new Argument<string>()
             });
 
-            AddOption(new Option(new string[] { "-u", "--userName" }, "用户名。")
+            AddOption(new Option(new string[] {"-u", "--userName"}, "用户名。")
             {
                 Argument = new Argument<string>()
             });
 
-            AddOption(new Option(new string[] { "-e", "--email" }, "邮箱。")
+            AddOption(new Option(new string[] {"-e", "--email"}, "邮箱。")
             {
                 Argument = new Argument<string>()
             });
 
-            AddOption(new Option(new string[] { "-d", "--directory" }, "项目目录。")
+            AddOption(new Option(new string[] {"-d", "--directory"}, "项目目录。")
             {
                 Argument = new Argument<string>()
+            });
+
+            AddOption(new Option(new string[] {"-s", "--save-templates"}, "将模板保存到指定的目录中，支持绝对路径与相对路径，相对路径以Vue项目的根目录为起点。")
+            {
+                Argument = new Argument<string>()
+            });
+
+            AddOption(new Option(new[] { "--overwrite" }, "指定覆盖现有文件")
+            {
+                Argument = new Argument<bool>()
             });
 
             Handler = CommandHandler.Create((InitCommandOption optionType) => Run(optionType));
@@ -67,9 +77,10 @@ namespace AbpVueCli.Commands
         ///     接口地址
         /// </summary>
         public string OpenApiAddr { get; set; }
-
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Directory { get; set; }
+        public string SaveTemplates { get; set; }
+        public bool Overwrite { get; set; }
     }
 }

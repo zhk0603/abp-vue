@@ -1,0 +1,118 @@
+<!--
+* @description Created by AbpVueCli
+* @author {{ProjectInfo.UserName}}
+* @date {{date.to_string date.now `%F %T`}}
+* @version V1.0.0
+!-->
+<template>
+  <section>
+    <el-form
+      ref="from"
+      :model="formData"
+      :rules="rules"
+      label-width="120px"
+{{ if Properties | array.size < 10 }}      label-position="top"{{else}}      label-position="right"{{ end }}
+      size="mini"
+    >
+      <el-row>
+{{ for prop in Properties }}
+{{ if Properties | array.size < 10 }}        <el-col :span="24">
+{{ else }}        <el-col :span="12">{{ end }}
+          <el-form-item
+            prop="{{prop.Key}}"
+            label="{{prop.Value.Description | object.default prop.Key}}"
+          >
+{{ if prop.Value.Type == 'boolean' }}
+            <el-switch v-model="formData.{{prop.Key}}" />
+{{ else if prop.Value.Type == 'integer' }}
+            <el-input v-model="formData.{{prop.Key}}" class="form-item" size="mini" type="number" clearable />
+{{ else if prop.Value.Format == 'date-time'}}
+            <el-date-picker v-model="formData.{{prop.Key}}" class="form-item" size="mini" type="date" />
+{{ else }}
+            <el-input v-model="formData.{{prop.Key}}" class="form-item" size="mini" clearable />
+{{ end }}
+          </el-form-item>
+        </el-col>{{ end }}
+      </el-row>
+    </el-form>
+    <div class="from-footer">
+      <el-button size="mini" @click="cancel">取消</el-button>
+      <el-button type="primary" size="mini" @click="submitForm">提交</el-button>
+    </div>
+  </section>
+</template>
+
+<script>
+import fromMixin from '@/mixins/formMixin'
+import {{CamelCaseName}}Api from '@/api/{{CamelCaseName}}'
+import { viewModel, rules } from './{{PascalCaseName}}Config'
+
+export default {
+  name: '{{PascalCaseName}}CreateOrEditForm',
+  mixins: [fromMixin],
+  props: {
+    isCreate: {
+      type: Boolean,
+      default: false
+    },
+    {{CamelCaseName}}Id: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      formData: Object.assign({ }, viewModel),
+      rules
+    }
+  },
+  watch: {
+    {{CamelCaseName}}Id: {
+      immediate: true,
+      handler: function() {
+        this.get()
+      }
+    }
+  },
+  methods: {
+    async get() {
+      if (this.{{CamelCaseName}}Id) {
+        await {{CamelCaseName}}Api.get(this.{{CamelCaseName}}Id).then(res => {
+          this.formData = Object.assign(this.formData, res)
+        })
+      }
+    },
+    submitForm() {
+      this.$refs.from.validate((valid) => {
+        if (valid) {
+          let action = null
+          if (this.isCreate) {
+            action = this.doPost()
+          } else {
+            action = this.doPut()
+          }
+
+          action.then(() => {
+            this.$message('提交成功')
+            this.$emit('successful')
+            this.formData = Object.assign({}, viewModel)
+            this.$refs.from.resetFields()
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    doPost() {
+      return {{CamelCaseName}}Api.post(this.formData)
+    },
+    doPut() {
+      return {{CamelCaseName}}Api.put(this.{{CamelCaseName}}Id, this.formData)
+    },
+    cancel() {
+      this.$refs.from.resetFields()
+      this.$emit('cancel')
+    }
+  }
+}
+</script>

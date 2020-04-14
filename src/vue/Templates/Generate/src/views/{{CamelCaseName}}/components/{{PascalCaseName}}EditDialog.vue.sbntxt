@@ -1,0 +1,34 @@
+<!--
+* @description Created by AbpVueCli
+* @author {{ProjectInfo.UserName}}
+* @date {{date.to_string date.now `%F %T`}}
+* @version V1.0.0
+!-->
+<template>
+  <el-dialog
+    title="Edit {{PascalCaseName}}"
+    :visible="dialogVisible"
+    :before-close="beforeClose"
+    :width="dialogWidth"
+    @close="closeDialog"
+  >
+    <{{PascalCaseName}}CreateOrEditForm :{{CamelCaseName}}Id="{{CamelCaseName}}Id" @cancel="onCancel" @successful="onSuccessful" />
+  </el-dialog>
+</template>
+
+<script>
+import {{PascalCaseName}}CreateOrEditForm from './{{PascalCaseName}}CreateOrEditForm'
+import dialogMixin from '@/mixins/dialogMixin'
+
+export default {
+  name: '{{PascalCaseName}}EditDialog',
+  components: { {{PascalCaseName}}CreateOrEditForm },
+  mixins: [dialogMixin],
+  props: {
+    {{CamelCaseName}}Id: {
+      type: String,
+      default: ''
+    }
+  }
+}
+</script>

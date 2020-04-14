@@ -46,7 +46,9 @@ namespace AbpVueCli
             //    "-o", "https://localhost:44314/swagger/v1/swagger.json",
             //    "-u", "zhaokun",
             //    "-e", "abc@abc.com",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views"
+            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views",
+            //    "--overwrite",
+            //    "-s", "." // VueProject根目录
             //};
 
             // sy-project

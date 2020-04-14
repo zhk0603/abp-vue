@@ -28,7 +28,6 @@ namespace AbpVueCli.Commands
             });
 
             Handler = CommandHandler.Create((GenerateCommandOptionBasic options) => Run(options));
-
         }
 
         private async Task Run(GenerateCommandOptionBasic options)

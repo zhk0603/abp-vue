@@ -2,14 +2,13 @@ import request from '@/utils/request'
 
 const roleApi = {}
 
-
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:32:26
+ * @date 2020-04-14 12:18:49
  * @version V1.0.0
  */
-roleApi.getall = () => {
+roleApi.getAll = () => {
   return request({
     url: `/api/identity/roles/all`,
     method: 'get'
@@ -19,7 +18,7 @@ roleApi.getall = () => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:32:26
+ * @date 2020-04-14 12:18:49
  * @version V1.0.0
  */
 roleApi.getList = (params) => {
@@ -33,21 +32,21 @@ roleApi.getList = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:32:26
+ * @date 2020-04-14 12:18:49
  * @version V1.0.0
  */
 roleApi.post = (body) => {
   return request({
     url: `/api/identity/roles`,
     method: 'post',
-    body
+    data: body
   })
 }
 
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:32:26
+ * @date 2020-04-14 12:18:49
  * @version V1.0.0
  */
 roleApi.get = (id) => {
@@ -60,21 +59,21 @@ roleApi.get = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:32:26
+ * @date 2020-04-14 12:18:49
  * @version V1.0.0
  */
-roleApi.put = (id,body) => {
+roleApi.put = (id, body) => {
   return request({
     url: `/api/identity/roles/${id}`,
     method: 'put',
-    body
+    data: body
   })
 }
 
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:32:26
+ * @date 2020-04-14 12:18:49
  * @version V1.0.0
  */
 roleApi.delete = (id) => {
@@ -83,6 +82,5 @@ roleApi.delete = (id) => {
     method: 'delete'
   })
 }
-
 
 export default roleApi

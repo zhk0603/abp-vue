@@ -53,12 +53,12 @@ namespace AbpVueCli.Commands
 
             var workflowDefinition = builder(workflowBuilder);
             // Start the workflow.
-            Logger.LogInformation("Command '{Name}' started.", Name);
+            Logger.LogInformation("命令 '{Name}' 执行.", Name);
             var invoker = ServiceProvider.GetService<IWorkflowInvoker>();
             var ctx = await invoker.StartAsync(workflowDefinition);
             if (ctx.Workflow.Status == WorkflowStatus.Finished)
             {
-                Logger.LogInformation("Command '{Name}' finished successfully.", Name);
+                Logger.LogInformation("命令 '{Name}' 成功完成.", Name);
             }
         }
     }

@@ -170,6 +170,20 @@ export const constantRoutes = [
   },
 
   {
+    path: '/role',
+    component: Layout,
+    redirect: '/role/index',
+    children: [
+      {
+        path: 'index',
+        name: 'TenantIndex',
+        component: () => import('@/views/role/index'),
+        meta: { title: '角色管理', icon: 'dashboard' }
+      }
+    ]
+  },
+
+  {
     path: '/signin-oidc',
     component: () => import('@/views/signin-oidc'),
     hidden: true

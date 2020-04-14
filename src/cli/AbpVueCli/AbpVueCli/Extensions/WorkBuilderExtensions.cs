@@ -34,6 +34,7 @@ namespace AbpVueCli.Extensions
 
         public static IActivityBuilder InitRequiredVariable(this IWorkflowBuilder builder)
         {
+            var appDir = AppDomain.CurrentDomain.BaseDirectory;
             return builder.StartWith<SetVariable>(step =>
             {
                 step.VariableName = "TemplateDirectory";
@@ -43,10 +44,11 @@ namespace AbpVueCli.Extensions
 
         public static IActivityBuilder InitRequiredVariable(this IActivityBuilder builder)
         {
+            var appDir = AppDomain.CurrentDomain.BaseDirectory;
             return builder.Then<SetVariable>(step =>
             {
                 step.VariableName = "TemplateDirectory";
-                step.ValueExpression = new LiteralExpression("Templates");
+                step.ValueExpression = new LiteralExpression(Path.Combine(appDir, "Templates"));
             });
         }
 

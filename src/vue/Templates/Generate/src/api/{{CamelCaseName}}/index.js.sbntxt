@@ -1,0 +1,4 @@
+import {{ CamelCaseName }}Api from './{{CamelCaseName}}Api'
+import * as {{CamelCaseName}}ExtensionApi from './{{CamelCaseName}}ExtensionApi'
+
+export default Object.assign({{CamelCaseName}}Api, {{CamelCaseName}}ExtensionApi)

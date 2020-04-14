@@ -32,6 +32,11 @@ namespace AbpVueCli.Steps
                 throw new ArgumentNullException(nameof(projectInfo.OpenApiAddr), "请提供 OpenApi 地址。");
             }
 
+            if (!projectInfo.TemplateFileDirectory.IsNullOrWhiteSpace())
+            {
+                context.SetVariable("TemplateDirectory", projectInfo.TemplateFileDirectory);
+            }
+
             context.SetVariable("ProjectInfo", projectInfo);
 
             return Done();

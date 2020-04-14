@@ -1,4 +1,4 @@
-﻿{
+{
   "openApiAddr": "{{ Option.OpenApiAddr }}",
   "userName": "{{ Option.UserName }}",
   "email": "{{ Option.Email }}",
