@@ -35,6 +35,11 @@ namespace AbpVueCli.Steps
         {
             foreach (var file in Directory.EnumerateFiles(sourceDirectory, "*.sbntxt", SearchOption.AllDirectories))
             {
+                if (file.EndsWith("ExtensionApi.js.sbntxt"))
+                {
+                    overwrite = false;
+                }
+
                 await GenerateFileAsync(sourceDirectory, targetDirectory, file, model, overwrite);
             }
         }

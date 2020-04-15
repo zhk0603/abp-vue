@@ -40,16 +40,16 @@ namespace AbpVueCli
                 .Build();
 
 #if DEBUG
-            args = new string[]
-            {
-                "init",
-                "-o", "https://localhost:44314/swagger/v1/swagger.json",
-                "-u", "zhaokun",
-                "-e", "abc@abc.com",
-                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views",
-                "--overwrite",
-                "-s", "." // VueProject根目录
-            };
+            //args = new string[]
+            //{
+            //    "init",
+            //    "-o", "https://localhost:44314/swagger/v1/swagger.json",
+            //    "-u", "zhaokun",
+            //    "-e", "abc@abc.com",
+            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views",
+            //    "--overwrite",
+            //    "-s", "." // VueProject根目录
+            //};
 
             // sy-project
             //args = new string[]
@@ -72,14 +72,15 @@ namespace AbpVueCli
             //    "-o"
             //};
 
-            //args = new string[]
-            //{
-            //    "generate",
-            //    "api",
-            //    "tenant",
-            //    "/api/multi-tenancy/tenants",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
-            //};
+            args = new string[]
+            {
+                "generate",
+                "api",
+                "tenant",
+                "/api/multi-tenancy/tenants",
+                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
+                "-o"
+            };
 
             //args = new string[]
             //{
