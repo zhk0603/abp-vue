@@ -3,10 +3,6 @@
   "userName": "zhaokun",
   "email": "abc@abc.com",
   "templateFileDirectory": "D:\\Workspaces\\01.github\\zhk0603\\abp-vue\\src\\vue\\Templates",
-  "listQueryIgnoreParams": [
-    "sorting",
-    "skipCount",
-    "maxResultCount"
-  ],
-  "listPropertySchemaPath": "items"
+  "listQueryIgnoreParams": [],
+  "listPropertySchemaPath": ""
 }

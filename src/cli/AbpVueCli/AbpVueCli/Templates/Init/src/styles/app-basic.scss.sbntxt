@@ -55,3 +55,7 @@
 .form-item{
    width: 100%;
 }
+
+.pagination-container{
+  padding: 0 !important;
+}

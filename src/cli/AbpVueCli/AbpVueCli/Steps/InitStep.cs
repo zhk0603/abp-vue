@@ -58,7 +58,38 @@ namespace AbpVueCli.Steps
                 TemplateFileDirectory = templatePath
             }, option.Overwrite);
 
+            await ImportCss(projectDir);
+
             return Done();
+        }
+
+        private static async Task ImportCss(string projectDir)
+        {
+            var cssFile = Directory.EnumerateFiles(projectDir, "index.scss", SearchOption.AllDirectories).FirstOrDefault();
+            if (!cssFile.IsNullOrEmpty())
+            {
+                var sb = new StringBuilder();
+                using (StreamReader sr = new StreamReader(cssFile))
+                {
+                    bool insert = false;
+                    while (!sr.EndOfStream)
+                    {
+                        var lineText = sr.ReadLine();
+                        if (lineText != null)
+                        {
+                            if (!insert && !lineText.TrimStart().StartsWith("@import"))
+                            {
+                                insert = true;
+                                sb.AppendLine("@import './app-basic.scss';");
+                            }
+
+                            sb.AppendLine(lineText);
+                        }
+                    }
+                }
+
+                await File.WriteAllTextAsync(cssFile, sb.ToString());
+            }
         }
 
         private async Task CopyFilesAsync(string sourceDirectory, string targetDirectory, bool overwrite)
