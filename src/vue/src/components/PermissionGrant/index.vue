@@ -6,7 +6,7 @@
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <permission-grant-form :user-id="userId" @cancel="onCancel" @successful="onSuccessful" />
+    <permission-grant-form :provider-key="providerKey" :provider-name="providerName" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 
@@ -15,11 +15,15 @@ import PermissionGrantForm from './PermissionGrantForm'
 import dialogMixin from '@/mixins/dialogMixin'
 
 export default {
-  name: 'PermissionGrantDialog',
+  name: 'PermissionGrant',
   components: { PermissionGrantForm },
   mixins: [dialogMixin],
   props: {
-    userId: {
+    providerKey: {
+      type: String,
+      default: ''
+    },
+    providerName: {
       type: String,
       default: ''
     },

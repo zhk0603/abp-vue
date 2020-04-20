@@ -1,40 +1,35 @@
 export const viewModel = {
-  "name": "",
-  "isDefault": null,
-  "isPublic": null
+  'name': '',
+  'isDefault': null,
+  'isPublic': null
 }
 
 export const rules = {
-  "name": [
+  'name': [
     {
-      "required": true,
-      "message": "请输入name",
-      "trigger": "blur"
+      'required': true,
+      'message': '请输入角色名称',
+      'trigger': 'blur'
     },
     {
-      "min": 0,
-      "max": 256,
-      "message": "长度在 0 到 256 个字符",
-      "trigger": "blur"
-    },
-    {
-      "type": "string",
-      "message": "name 必须为 string",
-      "trigger": "change"
+      'min': 0,
+      'max': 256,
+      'message': '长度在 0 到 256 个字符',
+      'trigger': 'blur'
     }
   ],
-  "isDefault": [
+  'isDefault': [
     {
-      "type": "boolean",
-      "message": "isDefault 必须为 boolean",
-      "trigger": "change"
+      'type': 'boolean',
+      'message': 'isDefault 必须为 boolean',
+      'trigger': 'change'
     }
   ],
-  "isPublic": [
+  'isPublic': [
     {
-      "type": "boolean",
-      "message": "isPublic 必须为 boolean",
-      "trigger": "change"
+      'type': 'boolean',
+      'message': 'isPublic 必须为 boolean',
+      'trigger': 'change'
     }
   ]
 }

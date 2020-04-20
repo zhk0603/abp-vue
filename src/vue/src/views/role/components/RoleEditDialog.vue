@@ -1,18 +1,18 @@
 <!--
 * @description Created by AbpVueCli
 * @author zhaokun
-* @date 2020-04-14 12:18:49
+* @date 2020-04-20 15:23:55
 * @version V1.0.0
 !-->
 <template>
   <el-dialog
-    title="Edit Role"
+    title="编辑角色"
     :visible="dialogVisible"
     :before-close="beforeClose"
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <RoleCreateOrEditForm :roleId="roleId" @cancel="onCancel" @successful="onSuccessful" />
+    <RoleCreateOrEditForm :role-id="roleId" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 

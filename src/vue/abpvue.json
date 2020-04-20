@@ -1,8 +1,12 @@
 {
   "openApiAddr": "https://localhost:44314/swagger/v1/swagger.json",
   "userName": "zhaokun",
-  "email": "abc@abc.com",
+  "email": "zk9474@hotmail.com",
   "templateFileDirectory": "D:\\Workspaces\\01.github\\zhk0603\\abp-vue\\src\\vue\\Templates",
-  "listQueryIgnoreParams": [],
-  "listPropertySchemaPath": ""
+  "listQueryIgnoreParams": [
+    "sorting",
+    "skipCount",
+    "maxResultCount"
+  ],
+  "listPropertySchemaPath": "items"
 }

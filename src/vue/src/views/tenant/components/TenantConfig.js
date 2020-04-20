@@ -1,4 +1,10 @@
-export const viewModel = {
+export const createViewModel = {
+  'adminEmailAddress': '',
+  'adminPassword': '',
+  'name': ''
+}
+
+export const editViewModel = {
   'adminEmailAddress': '',
   'adminPassword': '',
   'name': ''
@@ -8,31 +14,21 @@ export const rules = {
   'adminEmailAddress': [
     {
       'required': true,
-      'message': '请输入adminEmailAddress',
+      'message': '请输入 管理员邮箱地址',
       'trigger': 'blur'
-    },
-    {
-      'type': 'string',
-      'message': 'adminEmailAddress 必须为 string',
-      'trigger': 'change'
     }
   ],
   'adminPassword': [
     {
       'required': true,
-      'message': '请输入adminPassword',
+      'message': '请输入 管理员密码',
       'trigger': 'blur'
-    },
-    {
-      'type': 'string',
-      'message': 'adminPassword 必须为 string',
-      'trigger': 'change'
     }
   ],
   'name': [
     {
       'required': true,
-      'message': '请输入name',
+      'message': '请输入 租户名称',
       'trigger': 'blur'
     },
     {
@@ -40,11 +36,6 @@ export const rules = {
       'max': 64,
       'message': '长度在 0 到 64 个字符',
       'trigger': 'blur'
-    },
-    {
-      'type': 'string',
-      'message': 'name 必须为 string',
-      'trigger': 'change'
     }
   ]
 }

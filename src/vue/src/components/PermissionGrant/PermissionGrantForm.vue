@@ -20,7 +20,9 @@
           <span slot-scope="{ node, data }" class="custom-tree-node">
             <span>
               {{ node.label }}
-              {{ data.grantedProviders && data.grantedProviders.length > 0 ? `(${data.grantedProviders[0].providerName})` : "" }}
+              <span v-if="enableDisableFeature">
+                {{ data.grantedProviders && data.grantedProviders.length > 0 ? `(${data.grantedProviders[0].providerName})` : "" }}
+              </span>
             </span>
           </span>
         </el-tree>
@@ -35,12 +37,16 @@
 </template>
 
 <script>
-import permissionApi from '@/api/permission'
+import permissionApi from '@/api/permissions'
 
 export default {
   name: 'PermissionGrantForm',
   props: {
-    userId: {
+    providerKey: {
+      type: String,
+      default: ''
+    },
+    providerName: {
       type: String,
       default: ''
     }
@@ -62,8 +68,16 @@ export default {
       }
     }
   },
+  computed: {
+    /**
+     * 是否启用“禁用功能”
+     */
+    enableDisableFeature: function() {
+      return this.providerName === 'U'
+    }
+  },
   watch: {
-    userId: {
+    providerKey: {
       immediate: true,
       handler: function() {
         this.getPermissions()
@@ -75,10 +89,10 @@ export default {
       this.isIndeterminate = false
     },
     getPermissions() {
-      if (this.userId) {
-        permissionApi.get({
-          providerName: 'U',
-          providerKey: this.userId
+      if (this.providerKey) {
+        permissionApi.getList({
+          providerName: this.providerName,
+          providerKey: this.providerKey
         }).then(res => {
           this.permissions = res
           this.initTree()
@@ -105,21 +119,24 @@ export default {
           const roots = group.permissions.filter(x => {
             return x.parentName == null
           })
-
           roots.forEach(x => {
             const tmp = {
               id: x.name,
               label: x.displayName,
-              disabled: x.grantedProviders.length !== 0,
               grantedProviders: x.grantedProviders
+            }
+            if (this.enableDisableFeature) {
+              tmp['disabled'] = x.grantedProviders.length !== 0
             }
             item.treeData.push(tmp)
 
-            x.grantedProviders.forEach(gp => {
-              if (gp.providerName === 'U') {
-                tmp.disabled = false
-              }
-            })
+            if (this.enableDisableFeature) {
+              x.grantedProviders.forEach(gp => {
+                if (gp.providerName === 'U') {
+                  tmp.disabled = false
+                }
+              })
+            }
             this.allPermissionMap.set(tmp.id, gIndex)
             if (x.isGranted) {
               item.initPermission.push(x.name)
@@ -133,15 +150,22 @@ export default {
                 item.initPermission.push(y.name)
               }
               const { name: id, displayName: label, ...rest } = y
-              let disabled = y.grantedProviders.length !== 0
-              y.grantedProviders.forEach(gp => {
-                if (gp.providerName === 'U') {
-                  disabled = false
-                }
-              })
-              return {
-                id, label, disabled, ...rest
+              const res = {
+                id,
+                label,
+                ...rest
               }
+              if (this.enableDisableFeature) {
+                let disabled = y.grantedProviders.length !== 0
+                y.grantedProviders.forEach(gp => {
+                  if (gp.providerName === 'U') {
+                    disabled = false
+                  }
+                })
+                res['disabled'] = disabled
+              }
+
+              return res
             })
             tmp.children = children
           })
@@ -163,8 +187,8 @@ export default {
         })
       }
       permissionApi.put({
-        providerName: 'U',
-        providerKey: this.userId
+        providerName: this.providerName,
+        providerKey: this.providerKey
       }, {
         permissions
       }).then(res => {

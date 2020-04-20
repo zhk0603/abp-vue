@@ -1,12 +1,12 @@
 <!--
 * @description Created by AbpVueCli
 * @author zhaokun
-* @date 2020-04-14 12:18:49
+* @date 2020-04-20 15:23:55
 * @version V1.0.0
 !-->
 <template>
   <el-dialog
-    title="Create Role"
+    title="新增角色"
     :visible="dialogVisible"
     :before-close="beforeClose"
     :width="dialogWidth"

@@ -79,10 +79,11 @@
       dialog-width="700px"
       @close="dialogClose"
     />
-    <PermissionGrantDialog
+    <PermissionGrant
       :visible.sync="permissionGrantDialogVisible"
       :close-confirm="true"
-      :user-id="permissionGrantUserId"
+      :provider-key="permissionGrantUserId"
+      provider-name="U"
       :name="permissionGrantUserName"
       dialog-width="700px"
       @close="dialogClose"
@@ -96,12 +97,12 @@ import userApi from '@/api/user'
 import roleApi from '@/api/role'
 import CreateDialog from './components/UserCreateDialog'
 import EditDialog from './components/UserEditDialog'
-import PermissionGrantDialog from './components/PermissionGrantDialog'
+import PermissionGrant from '@/components/PermissionGrant'
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'Index',
-  components: { CreateDialog, EditDialog, PermissionGrantDialog, Pagination },
+  components: { CreateDialog, EditDialog, PermissionGrant, Pagination },
   mixins: [listMixin],
   data() {
     return {
@@ -132,7 +133,7 @@ export default {
       })
     },
     getList() {
-      userApi.list(this.query).then(res => {
+      userApi.getList(this.query).then(res => {
         this.tableData = res.items
         this.updateTotalCount(res.totalCount)
       })

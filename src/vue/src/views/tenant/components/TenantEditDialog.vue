@@ -1,28 +1,28 @@
 <!--
 * @description Created by AbpVueCli
 * @author zhaokun
-* @date 2020-04-13 14:31:55
+* @date 2020-04-20 15:24:40
 * @version V1.0.0
 !-->
 <template>
   <el-dialog
-    title="Edit Tenant"
+    title="编辑租户"
     :visible="dialogVisible"
     :before-close="beforeClose"
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <TenantCreateOrEditForm :tenantId="tenantId" @cancel="onCancel" @successful="onSuccessful" />
+    <TenantEditForm :tenant-id="tenantId" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 
 <script>
-import TenantCreateOrEditForm from './TenantCreateOrEditForm'
+import TenantEditForm from './TenantEditForm'
 import dialogMixin from '@/mixins/dialogMixin'
 
 export default {
   name: 'TenantEditDialog',
-  components: { TenantCreateOrEditForm },
+  components: { TenantEditForm },
   mixins: [dialogMixin],
   props: {
     tenantId: {

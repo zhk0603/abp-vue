@@ -1,7 +1,7 @@
 <!--
 * @description Created by AbpVueCli
 * @author zhaokun
-* @date 2020-04-13 14:31:55
+* @date 2020-04-20 15:24:40
 * @version V1.0.0
 !-->
 <template>
@@ -10,33 +10,17 @@
       ref="from"
       :model="formData"
       :rules="rules"
+      label-width="120px"
       label-position="top"
       size="mini"
     >
       <el-row>
-
-        <el-col :span="24">
-          <el-form-item
-            prop="adminEmailAddress"
-            label="adminEmailAddress"
-          >
-            <el-input v-model="formData.adminEmailAddress" size="mini" clearable />
-          </el-form-item>
-        </el-col>
-        <el-col :span="24">
-          <el-form-item
-            prop="adminPassword"
-            label="adminPassword"
-          >
-            <el-input v-model="formData.adminPassword" size="mini" clearable />
-          </el-form-item>
-        </el-col>
         <el-col :span="24">
           <el-form-item
             prop="name"
-            label="name"
+            label="租户名称"
           >
-            <el-input v-model="formData.name" size="mini" clearable />
+            <el-input v-model="formData.name" class="form-item" size="mini" clearable />
           </el-form-item>
         </el-col>
       </el-row>
@@ -51,16 +35,12 @@
 <script>
 import fromMixin from '@/mixins/formMixin'
 import tenantApi from '@/api/tenant'
-import { viewModel, rules } from './TenantConfig'
+import { editViewModel, rules } from './TenantConfig'
 
 export default {
-  name: 'TenantCreateOrEditForm',
+  name: 'TenantEditForm',
   mixins: [fromMixin],
   props: {
-    isCreate: {
-      type: Boolean,
-      default: false
-    },
     tenantId: {
       type: String,
       default: ''
@@ -68,7 +48,7 @@ export default {
   },
   data() {
     return {
-      formData: Object.assign({ }, viewModel),
+      formData: Object.assign({ }, editViewModel),
       rules
     }
   },
@@ -91,17 +71,10 @@ export default {
     submitForm() {
       this.$refs.from.validate((valid) => {
         if (valid) {
-          let action = null
-          if (this.isCreate) {
-            action = this.doPost()
-          } else {
-            action = this.doPut()
-          }
-
-          action.then(() => {
+          tenantApi.put(this.tenantId, this.formData).then(() => {
             this.$message('提交成功')
             this.$emit('successful')
-            this.formData = Object.assign({}, viewModel)
+            this.formData = Object.assign({}, editViewModel)
             this.$refs.from.resetFields()
           })
         } else {
@@ -109,13 +82,8 @@ export default {
         }
       })
     },
-    doPost() {
-      return tenantApi.post(this.formData)
-    },
-    doPut() {
-      return tenantApi.put(this.tenantId, this.formData)
-    },
     cancel() {
+      this.$refs.from.resetFields()
       this.$emit('cancel')
     }
   }

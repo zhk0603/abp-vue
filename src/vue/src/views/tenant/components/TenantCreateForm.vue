@@ -1,7 +1,7 @@
 <!--
 * @description Created by AbpVueCli
 * @author zhaokun
-* @date 2020-04-20 15:23:55
+* @date 2020-04-20 15:24:40
 * @version V1.0.0
 !-->
 <template>
@@ -15,38 +15,28 @@
       size="mini"
     >
       <el-row>
-
         <el-col :span="24">
-
           <el-form-item
             prop="name"
-            label="角色名称"
+            label="租户名称"
           >
-
             <el-input v-model="formData.name" class="form-item" size="mini" clearable />
-
           </el-form-item>
         </el-col>
         <el-col :span="24">
-
           <el-form-item
-            prop="isDefault"
-            label="默认"
+            prop="adminPassword"
+            label="管理员密码"
           >
-
-            <el-switch v-model="formData.isDefault" />
-
+            <el-input v-model="formData.adminPassword" class="form-item" size="mini" clearable />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-
           <el-form-item
-            prop="isPublic"
-            label="公开"
+            prop="adminEmailAddress"
+            label="管理员邮箱地址"
           >
-
-            <el-switch v-model="formData.isPublic" />
-
+            <el-input v-model="formData.adminEmailAddress" class="form-item" size="mini" clearable />
           </el-form-item>
         </el-col>
       </el-row>
@@ -60,30 +50,26 @@
 
 <script>
 import fromMixin from '@/mixins/formMixin'
-import roleApi from '@/api/role'
-import { viewModel, rules } from './RoleConfig'
+import tenantApi from '@/api/tenant'
+import { createViewModel, rules } from './TenantConfig'
 
 export default {
-  name: 'RoleCreateOrEditForm',
+  name: 'TenantCreateForm',
   mixins: [fromMixin],
   props: {
-    isCreate: {
-      type: Boolean,
-      default: false
-    },
-    roleId: {
+    tenantId: {
       type: String,
       default: ''
     }
   },
   data() {
     return {
-      formData: Object.assign({ }, viewModel),
+      formData: Object.assign({ }, createViewModel),
       rules
     }
   },
   watch: {
-    roleId: {
+    tenantId: {
       immediate: true,
       handler: function() {
         this.get()
@@ -92,8 +78,8 @@ export default {
   },
   methods: {
     async get() {
-      if (this.roleId) {
-        await roleApi.get(this.roleId).then(res => {
+      if (this.tenantId) {
+        await tenantApi.get(this.tenantId).then(res => {
           this.formData = Object.assign(this.formData, res)
         })
       }
@@ -101,29 +87,16 @@ export default {
     submitForm() {
       this.$refs.from.validate((valid) => {
         if (valid) {
-          let action = null
-          if (this.isCreate) {
-            action = this.doPost()
-          } else {
-            action = this.doPut()
-          }
-
-          action.then(() => {
+          tenantApi.post(this.formData).then(() => {
             this.$message('提交成功')
             this.$emit('successful')
-            this.formData = Object.assign({}, viewModel)
+            this.formData = Object.assign({}, createViewModel)
             this.$refs.from.resetFields()
           })
         } else {
           return false
         }
       })
-    },
-    doPost() {
-      return roleApi.post(this.formData)
-    },
-    doPut() {
-      return roleApi.put(this.roleId, this.formData)
     },
     cancel() {
       this.$refs.from.resetFields()

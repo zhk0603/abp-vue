@@ -6,7 +6,7 @@ import store from '@/store'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
-  timeout: 30000 // request timeout
+  timeout: 60000 // request timeout
 })
 
 // request interceptor
@@ -46,11 +46,17 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error) // for debug
+    let msg = error.message
+    // TODO 显示实体验证错误信息。
+    if (error.response.data.error) {
+      msg = error.response.data.error.message
+    }
     Message({
-      message: error.message,
+      message: msg,
       type: 'error',
       duration: 5 * 1000
     })
+
     return Promise.reject(error)
   }
 )

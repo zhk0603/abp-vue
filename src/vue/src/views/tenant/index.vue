@@ -1,7 +1,7 @@
 <!--
 * @description Created by AbpVueCli
 * @author zhaokun
-* @date 2020-04-13 14:30:42
+* @date 2020-04-20 15:24:40
 * @version V1.0.0
 !-->
 <template>
@@ -24,15 +24,14 @@
         highlight-current-row
         @sort-change="onSortChange"
       >
-
         <el-table-column
-          prop="name"
-          label="name"
+          prop="id"
+          label="租户ID"
           sortable="custom"
         />
         <el-table-column
-          prop="id"
-          label="id"
+          prop="name"
+          label="租户名称"
           sortable="custom"
         />
         <el-table-column
@@ -63,9 +62,9 @@
     />
     <EditDialog
       :visible.sync="editDialogVisible"
-      :tenantId="editTenantId"
+      :tenant-id="editTenantId"
       :close-confirm="true"
-      dialog-width="700px"
+      dialog-width="500px"
       @close="dialogClose"
     />
 
@@ -89,8 +88,8 @@ export default {
       editDialogVisible: false,
       editTenantId: '',
       query: {
-        filter: '',
-        // 在这里写列表过滤属性
+
+        filter: ''
       }
     }
   },
@@ -111,7 +110,6 @@ export default {
       this.editTenantId = null
     },
     create() {
-      this.$refs.from.resetFields()
       this.createDialogVisible = true
     },
     edit(row) {

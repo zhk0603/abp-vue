@@ -42,27 +42,27 @@ const actions = {
 function getRemoteRouteres() {
   // 这里调用api 获取路由表，假如后台返回的内容如下：
   var remoteRouters = [
-    {
-      path: '/example',
-      component: 'Layout',
-      redirect: '/example/table',
-      name: 'Example',
-      meta: { title: 'Example （Dynamic Router）', icon: 'example' },
-      children: [
-        {
-          path: 'table',
-          name: 'Table',
-          component: 'table/index',
-          meta: { title: 'Table', icon: 'table' }
-        },
-        {
-          path: 'tree',
-          name: 'Tree',
-          component: 'tree/index',
-          meta: { title: 'Tree', icon: 'tree' }
-        }
-      ]
-    }
+    // {
+    //   path: '/example',
+    //   component: 'Layout',
+    //   redirect: '/example/table',
+    //   name: 'Example',
+    //   meta: { title: 'Example （Dynamic Router）', icon: 'example' },
+    //   children: [
+    //     {
+    //       path: 'table',
+    //       name: 'Table',
+    //       component: 'table/index',
+    //       meta: { title: 'Table', icon: 'table' }
+    //     },
+    //     {
+    //       path: 'tree',
+    //       name: 'Tree',
+    //       component: 'tree/index',
+    //       meta: { title: 'Tree', icon: 'tree' }
+    //     }
+    //   ]
+    // }
   ]
 
   var routers = buildRouteres(remoteRouters)

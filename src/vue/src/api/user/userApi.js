@@ -5,7 +5,7 @@ const userApi = {}
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:02:20
+ * @date 2020-04-20 15:21:04
  * @version V1.0.0
  */
 userApi.get = (id) => {
@@ -18,21 +18,21 @@ userApi.get = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:02:20
+ * @date 2020-04-20 15:21:04
  * @version V1.0.0
  */
 userApi.put = (id, body) => {
   return request({
     url: `/api/identity/users/${id}`,
     method: 'put',
-    body
+    data: body
   })
 }
 
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:02:20
+ * @date 2020-04-20 15:21:04
  * @version V1.0.0
  */
 userApi.delete = (id) => {
@@ -45,7 +45,7 @@ userApi.delete = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:02:20
+ * @date 2020-04-20 15:21:04
  * @version V1.0.0
  */
 userApi.getList = (params) => {
@@ -59,24 +59,24 @@ userApi.getList = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:02:20
+ * @date 2020-04-20 15:21:04
  * @version V1.0.0
  */
 userApi.post = (body) => {
   return request({
     url: `/api/identity/users`,
     method: 'post',
-    body
+    data: body
   })
 }
 
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:02:20
+ * @date 2020-04-20 15:21:04
  * @version V1.0.0
  */
-userApi.getroles = (id) => {
+userApi.getRoles = (id) => {
   return request({
     url: `/api/identity/users/${id}/roles`,
     method: 'get'
@@ -86,24 +86,24 @@ userApi.getroles = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:02:20
+ * @date 2020-04-20 15:21:04
  * @version V1.0.0
  */
-userApi.putroles = (id, body) => {
+userApi.putRoles = (id, body) => {
   return request({
     url: `/api/identity/users/${id}/roles`,
     method: 'put',
-    body
+    data: body
   })
 }
 
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:02:20
+ * @date 2020-04-20 15:21:04
  * @version V1.0.0
  */
-userApi.getbyusername = (userName) => {
+userApi.getByUsername = (userName) => {
   return request({
     url: `/api/identity/users/by-username/${userName}`,
     method: 'get'
@@ -113,10 +113,10 @@ userApi.getbyusername = (userName) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-12 14:02:20
+ * @date 2020-04-20 15:21:04
  * @version V1.0.0
  */
-userApi.getbyemail = (email) => {
+userApi.getByEmail = (email) => {
   return request({
     url: `/api/identity/users/by-email/${email}`,
     method: 'get'

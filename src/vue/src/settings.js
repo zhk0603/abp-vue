@@ -2,7 +2,7 @@ const idpBase = process.env.VUE_APP_IDP_BASE
 const vueBase = process.env.VUE_APP_VUE_BASE
 
 module.exports = {
-  title: 'Vue Admin Template',
+  title: 'abp vue',
 
   /**
    * @type {boolean} true | false
