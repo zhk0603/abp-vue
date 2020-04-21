@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Abp.VueTemplate.MenuManagement</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.MongoDB" Version="2.6.0" />
+    <ProjectReference Include="..\Abp.VueTemplate.MenuManagement.Domain\Abp.VueTemplate.MenuManagement.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

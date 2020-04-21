@@ -82,6 +82,7 @@ export const constantRoutes = [
       }
     ]
   },
+
   {
     path: '/role',
     component: Layout,
@@ -92,6 +93,20 @@ export const constantRoutes = [
         name: 'RoleIndex',
         component: () => import('@/views/role/index'),
         meta: { title: '角色管理', icon: 'dashboard' }
+      }
+    ]
+  },
+
+  {
+    path: '/menus',
+    component: Layout,
+    redirect: '/menus/index',
+    children: [
+      {
+        path: 'index',
+        name: 'MenuIndex',
+        component: () => import('@/views/menu/index'),
+        meta: { title: '菜单管理', icon: 'dashboard' }
       }
     ]
   },

@@ -7,7 +7,7 @@ using Volo.Abp.MultiTenancy;
 
 namespace Abp.VueTemplate.Permission
 {
-    public class Menu : AuditedEntity<Guid>, IMultiTenant
+    public class Menu : AuditedAggregateRoot<Guid>, IMultiTenant
     {
         public virtual Guid? TenantId { get; protected set; }
         public virtual string Name { get; protected set; }

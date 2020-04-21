@@ -3,12 +3,13 @@
     public enum MenuEnumType
     {
         /// <summary>
-        /// 路由
+        ///     菜单
         /// </summary>
-        Router,
+        Menu,
+
         /// <summary>
-        /// 页面
+        ///     权限
         /// </summary>
-        Page
+        Permission
     }
 }

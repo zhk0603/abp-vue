@@ -1,0 +1,24 @@
+{
+  "culture": "cs",
+  "texts": {
+    "Menu:Menu": "MenuMenu",
+    "Menu": "Menu",
+    "MenuTenantId": "MenuTenantId",
+    "MenuName": "MenuName",
+    "MenuDisplayName": "MenuDisplayName",
+    "MenuMenuType": "MenuMenuType",
+    "MenuComponentPath": "MenuComponentPath",
+    "MenuRouterPath": "MenuRouterPath",
+    "MenuParentId": "MenuParentId",
+    "MenuParent": "MenuParent",
+    "MenuIcon": "MenuIcon",
+    "MenuSort": "MenuSort",
+    "MenuTargetUrl": "MenuTargetUrl",
+    "MenuPermissionKey": "MenuPermissionKey",
+    "MenuChildren": "MenuChildren",
+    "CreateMenu": "CreateMenu",
+    "EditMenu": "EditMenu",
+    "MenuDeletionConfirmationMessage": "Are you sure to delete the menu {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
+  }
+}

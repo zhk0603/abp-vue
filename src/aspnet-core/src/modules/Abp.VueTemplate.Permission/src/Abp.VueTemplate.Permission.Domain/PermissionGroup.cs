@@ -9,8 +9,6 @@ namespace Abp.VueTemplate.Permission
     public class PermissionGroup : AuditedEntity<Guid>, IMultiTenant
     {
         public virtual Guid? TenantId { get; protected set; }
-
-        // 同级别里要唯一。
         public virtual string Key { get; protected set; }
         public virtual string Name { get; protected set; }
         public virtual Guid? ParentId { get; set; }

@@ -5,6 +5,10 @@
  * @param {string} fmt 转换格式
  */
 export function formatDate(dateStr, fmt = 'yyyy-MM-dd hh:mm:ss') {
+  if (!dateStr) {
+    return ''
+  }
+
   const date = new Date(dateStr)
   var o = {
     'M+': date.getMonth() + 1, // 月份
