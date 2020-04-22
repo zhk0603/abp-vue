@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="2.3.0" />
-    <ProjectReference Include="..\Abp.VueTemplate.Permission.Domain\Abp.VueTemplate.Permission.Domain.csproj" />
   </ItemGroup>
 
 </Project>

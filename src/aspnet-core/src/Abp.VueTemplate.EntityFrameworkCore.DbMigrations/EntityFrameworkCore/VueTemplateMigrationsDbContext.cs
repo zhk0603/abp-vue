@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Abp.VueTemplate.MenuManagement.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -9,7 +10,6 @@ using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
-using Abp.VueTemplate.Permission.EntityFrameworkCore;
 
 namespace Abp.VueTemplate.EntityFrameworkCore
 {
@@ -51,9 +51,9 @@ namespace Abp.VueTemplate.EntityFrameworkCore
             /* Configure your own tables/entities inside the ConfigureVueTemplate method */
 
             builder.ConfigureVueTemplate();
-            builder.ConfigurePermission(options =>
+            builder.ConfigureMenuManagement(options =>
             {
-                options.TablePrefix = "App";
+                options.TablePrefix = "App_";
             });
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Abp.VueTemplate.Localization;
-using Abp.VueTemplate.Permission;
+using Abp.VueTemplate.MenuManagement;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.FeatureManagement;
@@ -16,7 +16,7 @@ using Volo.Abp.VirtualFileSystem;
 namespace Abp.VueTemplate
 {
     [DependsOn(
-        typeof(PermissionDomainSharedModule),
+        typeof(MenuManagementDomainSharedModule),
         typeof(AbpAuditLoggingDomainSharedModule),
         typeof(AbpBackgroundJobsDomainSharedModule),
         typeof(AbpFeatureManagementDomainSharedModule),

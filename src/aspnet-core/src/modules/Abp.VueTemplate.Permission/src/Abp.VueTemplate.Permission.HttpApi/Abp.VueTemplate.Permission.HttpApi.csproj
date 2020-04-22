@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="2.3.0" />
-    <ProjectReference Include="..\Abp.VueTemplate.Permission.Application.Contracts\Abp.VueTemplate.Permission.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

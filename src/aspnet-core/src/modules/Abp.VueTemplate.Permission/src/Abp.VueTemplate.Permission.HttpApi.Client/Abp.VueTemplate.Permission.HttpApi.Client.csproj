@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Http.Client" Version="2.3.0" />
-    <ProjectReference Include="..\Abp.VueTemplate.Permission.Application.Contracts\Abp.VueTemplate.Permission.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

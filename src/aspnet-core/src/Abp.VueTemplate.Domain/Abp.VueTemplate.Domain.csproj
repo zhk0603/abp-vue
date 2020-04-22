@@ -12,21 +12,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.Domain\Abp.VueTemplate.MenuManagement.Domain.csproj" />
     <ProjectReference Include="..\Abp.VueTemplate.Domain.Shared\Abp.VueTemplate.Domain.Shared.csproj" />
-    <ProjectReference Include="..\modules\Abp.VueTemplate.Permission\src\Abp.VueTemplate.Permission.Domain\Abp.VueTemplate.Permission.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.2.0" />
-    <PackageReference Include="Volo.Abp.Identity.Domain" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.IdentityServer" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="2.3.0" />
+    <PackageReference Include="Volo.Abp.Identity.Domain" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.IdentityServer" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="2.6.0" />
   </ItemGroup>
 
 </Project>

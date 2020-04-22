@@ -12,16 +12,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.Application.Contracts\Abp.VueTemplate.MenuManagement.Application.Contracts.csproj" />
     <ProjectReference Include="..\Abp.VueTemplate.Domain.Shared\Abp.VueTemplate.Domain.Shared.csproj" />
-    <ProjectReference Include="..\modules\Abp.VueTemplate.Permission\src\Abp.VueTemplate.Permission.Application.Contracts\Abp.VueTemplate.Permission.Application.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Account.Application.Contracts" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.Identity.Application.Contracts" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.TenantManagement.Application.Contracts" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.Application.Contracts" Version="2.3.0" />
+    <PackageReference Include="Volo.Abp.Account.Application.Contracts" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.Identity.Application.Contracts" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Application.Contracts" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Application.Contracts" Version="2.6.0" />
   </ItemGroup>
 
 </Project>

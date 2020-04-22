@@ -1,5 +1,5 @@
-﻿using Abp.VueTemplate.Permission;
-using Abp.VueTemplate.Permission.EntityFrameworkCore;
+﻿using Abp.VueTemplate.MenuManagement;
+using Abp.VueTemplate.MenuManagement.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -16,7 +16,7 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 namespace Abp.VueTemplate.EntityFrameworkCore
 {
     [DependsOn(
-        typeof(PermissionEntityFrameworkCoreModule),
+        typeof(MenuManagementEntityFrameworkCoreModule),
         typeof(VueTemplateDomainModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
@@ -32,7 +32,7 @@ namespace Abp.VueTemplate.EntityFrameworkCore
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            PermissionDbProperties.DbTablePrefix = "App";
+            MenuManagementDbProperties.DbTablePrefix = "App_";
 
             context.Services.AddAbpDbContext<VueTemplateDbContext>(options =>
             {
