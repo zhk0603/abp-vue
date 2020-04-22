@@ -1,6 +1,7 @@
 ﻿using Abp.VueTemplate.MenuManagement;
 using Abp.VueTemplate.MenuManagement.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -30,6 +31,8 @@ namespace Abp.VueTemplate.EntityFrameworkCore
         )]
     public class VueTemplateEntityFrameworkCoreModule : AbpModule
     {
+        public static readonly ILoggerFactory MyLoggerFactory
+    = LoggerFactory.Create(builder => { builder.AddConsole(); });
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             MenuManagementDbProperties.DbTablePrefix = "App_";
@@ -46,6 +49,13 @@ namespace Abp.VueTemplate.EntityFrameworkCore
                 /* The main point to change your DBMS.
                  * See also VueTemplateMigrationsDbContextFactory for EF Core tooling. */
                 options.UseSqlServer();
+
+               // options.Configure(dbConfig =>
+               //{
+               //    dbConfig.DbContextOptions.UseLoggerFactory(MyLoggerFactory);
+               //    dbConfig.DbContextOptions.EnableDetailedErrors();
+               //    dbConfig.DbContextOptions.EnableSensitiveDataLogging();
+               //});
             });
         }
     }

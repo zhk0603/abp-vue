@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Ddd.Domain" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain" Version="2.6.0" />
     <ProjectReference Include="..\Abp.VueTemplate.MenuManagement.Domain.Shared\Abp.VueTemplate.MenuManagement.Domain.Shared.csproj" />
   </ItemGroup>
 

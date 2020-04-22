@@ -1,5 +1,5 @@
 {
-  "openApiAddr": "https://localhost:44324/swagger/v1/swagger.json",
+  "openApiAddr": "https://localhost:44314/swagger/v1/swagger.json",
   "userName": "zhaokun",
   "email": "zk9474@hotmail.com",
   "templateFileDirectory": "D:\\Workspaces\\01.github\\zhk0603\\abp-vue\\src\\vue\\Templates",

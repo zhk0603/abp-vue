@@ -77,7 +77,7 @@
       dialog-width="500px"
       @close="dialogClose"
     />
-    <PermissionGrant
+    <MenuGrant
       :visible.sync="permissionGrantDialogVisible"
       :close-confirm="true"
       :provider-key="permissionGrantProviderKey"
@@ -96,10 +96,11 @@ import Pagination from '@/components/Pagination'
 import CreateDialog from './components/RoleCreateDialog'
 import EditDialog from './components/RoleEditDialog'
 import PermissionGrant from '@/components/PermissionGrant'
+import MenuGrant from '@/components/MenuGrant'
 
 export default {
   name: 'Index',
-  components: { CreateDialog, EditDialog, Pagination, PermissionGrant },
+  components: { CreateDialog, EditDialog, Pagination, PermissionGrant, MenuGrant },
   mixins: [listMixin],
   data() {
     return {

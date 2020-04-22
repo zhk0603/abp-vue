@@ -1,4 +1,5 @@
 ﻿using Abp.VueTemplate.MenuManagement;
+using Abp.VueTemplate.MenuManagement.Domain.Identity;
 using Abp.VueTemplate.MultiTenancy;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
@@ -15,6 +16,7 @@ using Volo.Abp.TenantManagement;
 namespace Abp.VueTemplate
 {
     [DependsOn(
+        typeof(MenuManagementDomainIdentityModule),
         typeof(MenuManagementDomainModule),
         typeof(VueTemplateDomainSharedModule),
         typeof(AbpAuditLoggingDomainModule),

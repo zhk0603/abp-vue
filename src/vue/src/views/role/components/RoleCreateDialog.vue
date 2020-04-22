@@ -12,7 +12,7 @@
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <RoleCreateOrEditForm :is-create="true" @cancel="onCancel" @successful="onSuccessful" />
+    <RoleCreateOrEditForm v-if="dialogVisible" :is-create="true" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 

@@ -2,6 +2,7 @@
 using Volo.Abp.Localization;
 using Abp.VueTemplate.MenuManagement.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
+using Volo.Abp.PermissionManagement;
 using Volo.Abp.Validation;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
@@ -9,7 +10,8 @@ using Volo.Abp.VirtualFileSystem;
 namespace Abp.VueTemplate.MenuManagement
 {
     [DependsOn(
-        typeof(AbpValidationModule)
+        typeof(AbpValidationModule),
+        typeof(AbpPermissionManagementDomainSharedModule)
     )]
     public class MenuManagementDomainSharedModule : AbpModule
     {

@@ -4,10 +4,12 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.PermissionManagement.HttpApi;
 
 namespace Abp.VueTemplate.MenuManagement
 {
     [DependsOn(
+        typeof(AbpPermissionManagementHttpApiModule),
         typeof(MenuManagementApplicationContractsModule),
         typeof(AbpAspNetCoreMvcModule))]
     public class MenuManagementHttpApiModule : AbpModule

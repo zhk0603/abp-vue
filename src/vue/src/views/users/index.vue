@@ -47,7 +47,7 @@
         >
           <template slot-scope="scope">
             <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>
-            <el-link type="primary" icon="el-icon-setting" @click="permissionGrant(scope.row)">权限</el-link>
+            <el-link type="primary" icon="el-icon-setting" @click="menuGrant(scope.row)">权限</el-link>
             <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
               <el-link slot="reference" type="danger" icon="el-icon-delete">删除</el-link>
             </el-popconfirm>
@@ -80,11 +80,11 @@
       @close="dialogClose"
     />
     <PermissionGrant
-      :visible.sync="permissionGrantDialogVisible"
+      :visible.sync="menuGrantDialogVisible"
       :close-confirm="true"
-      :provider-key="permissionGrantUserId"
+      :provider-key="menuGrantUserId"
       provider-name="U"
-      :name="permissionGrantUserName"
+      :name="menuGrantUserName"
       dialog-width="700px"
       @close="dialogClose"
     />
@@ -97,21 +97,22 @@ import userApi from '@/api/user'
 import roleApi from '@/api/role'
 import CreateDialog from './components/UserCreateDialog'
 import EditDialog from './components/UserEditDialog'
+import MenuGrant from '@/components/MenuGrant'
 import PermissionGrant from '@/components/PermissionGrant'
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'Index',
-  components: { CreateDialog, EditDialog, PermissionGrant, Pagination },
+  components: { CreateDialog, EditDialog, PermissionGrant, MenuGrant, Pagination },
   mixins: [listMixin],
   data() {
     return {
       createDialogVisible: false,
       editDialogVisible: false,
-      permissionGrantDialogVisible: false,
+      menuGrantDialogVisible: false,
       editUserid: '',
-      permissionGrantUserName: '',
-      permissionGrantUserId: '',
+      menuGrantUserName: '',
+      menuGrantUserId: '',
       /**
        * 所有角色。
        */
@@ -151,10 +152,10 @@ export default {
         this.getList()
       })
     },
-    permissionGrant(row) {
-      this.permissionGrantUserId = row.id
-      this.permissionGrantUserName = row.name
-      this.permissionGrantDialogVisible = true
+    menuGrant(row) {
+      this.menuGrantUserId = row.id
+      this.menuGrantUserName = row.name
+      this.menuGrantDialogVisible = true
     },
     dialogClose(refresh) {
       if (refresh) {
@@ -162,8 +163,8 @@ export default {
       }
       this.editUserid = null
 
-      this.permissionGrantUserId = null
-      this.permissionGrantUserName = ''
+      this.menuGrantUserId = null
+      this.menuGrantUserName = ''
     }
   }
 }

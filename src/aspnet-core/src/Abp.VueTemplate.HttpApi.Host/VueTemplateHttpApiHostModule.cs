@@ -143,11 +143,11 @@ namespace Abp.VueTemplate
                     options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.HttpApi.xml"));
                     options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.HttpApi.Host.xml"));
 
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Application.xml"));
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Application.Contracts.xml"));
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Domain.xml"));
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Domain.Shared.xml"));
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.HttpApi.xml"));
+                    //options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Application.xml"));
+                    //options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Application.Contracts.xml"));
+                    //options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Domain.xml"));
+                    //options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Domain.Shared.xml"));
+                    //options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.HttpApi.xml"));
                 });
         }
 

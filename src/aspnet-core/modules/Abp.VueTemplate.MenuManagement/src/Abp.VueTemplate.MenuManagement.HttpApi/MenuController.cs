@@ -55,5 +55,21 @@ namespace Abp.VueTemplate.MenuManagement
         {
             return _menuAppService.GetAllListAsync(input);
         }
+
+        #region menu grant
+
+        [HttpGet("grant")]
+        public Task<GetMenuGrantListResultDto> GetGrantAsync(string providerName, string providerKey)
+        {
+            return _menuAppService.GetGrantAsync(providerName, providerKey);
+        }
+
+        [HttpPut("grant")]
+        public Task UpdateGrantAsync(string providerName, string providerKey, UpdateMenuGrantsDto input)
+        {
+            return _menuAppService.UpdateGrantAsync(providerName, providerKey, input);
+        }
+
+        #endregion
     }
 }

@@ -5,7 +5,7 @@ const menuApi = {}
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-21 19:50:43
+ * @date 2020-04-22 17:29:03
  * @version V1.0.0
  */
 menuApi.get = (id) => {
@@ -18,7 +18,7 @@ menuApi.get = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-21 19:50:43
+ * @date 2020-04-22 17:29:03
  * @version V1.0.0
  */
 menuApi.put = (id, body) => {
@@ -32,7 +32,7 @@ menuApi.put = (id, body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-21 19:50:43
+ * @date 2020-04-22 17:29:03
  * @version V1.0.0
  */
 menuApi.delete = (id) => {
@@ -45,7 +45,7 @@ menuApi.delete = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-21 19:50:43
+ * @date 2020-04-22 17:29:03
  * @version V1.0.0
  */
 menuApi.post = (body) => {
@@ -59,7 +59,7 @@ menuApi.post = (body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-21 19:50:43
+ * @date 2020-04-22 17:29:03
  * @version V1.0.0
  */
 menuApi.getAll = (params) => {
@@ -67,6 +67,35 @@ menuApi.getAll = (params) => {
     url: `/api/menus/all`,
     method: 'get',
     params
+  })
+}
+
+/**
+ * Created by AbpVueCli
+ * @author zhaokun
+ * @date 2020-04-22 17:29:03
+ * @version V1.0.0
+ */
+menuApi.getGrant = (params) => {
+  return request({
+    url: `/api/menus/grant`,
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * Created by AbpVueCli
+ * @author zhaokun
+ * @date 2020-04-22 17:29:03
+ * @version V1.0.0
+ */
+menuApi.putGrant = (params, body) => {
+  return request({
+    url: `/api/menus/grant`,
+    method: 'put',
+    params,
+    data: body
   })
 }
 

@@ -3,10 +3,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
+using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 
 namespace Abp.VueTemplate.MenuManagement.EntityFrameworkCore
 {
     [DependsOn(
+        typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(MenuManagementDomainModule),
         typeof(AbpEntityFrameworkCoreModule)
     )]

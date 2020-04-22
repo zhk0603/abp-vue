@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abp.VueTemplate.MenuManagem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abp.VueTemplate.MenuManagement.HttpApi.Client", "modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.HttpApi.Client\Abp.VueTemplate.MenuManagement.HttpApi.Client.csproj", "{551493FA-F01A-4A61-A1E3-079737AACCB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abp.VueTemplate.MenuManagement.Domain.Identity", "modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.Domain.Identity\Abp.VueTemplate.MenuManagement.Domain.Identity.csproj", "{19B0AA9C-9172-4964-9A63-ABAEFCC65356}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -161,6 +163,10 @@ Global
 		{551493FA-F01A-4A61-A1E3-079737AACCB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{551493FA-F01A-4A61-A1E3-079737AACCB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{551493FA-F01A-4A61-A1E3-079737AACCB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19B0AA9C-9172-4964-9A63-ABAEFCC65356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19B0AA9C-9172-4964-9A63-ABAEFCC65356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19B0AA9C-9172-4964-9A63-ABAEFCC65356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19B0AA9C-9172-4964-9A63-ABAEFCC65356}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,6 +198,7 @@ Global
 		{A38B8DB3-321B-417A-8F27-EDC40BDE17D3} = {D2E43558-FD15-4C1E-BE1D-73A38873C810}
 		{49A08177-7FEB-42F4-8E4F-579DED4D8EAC} = {D2E43558-FD15-4C1E-BE1D-73A38873C810}
 		{551493FA-F01A-4A61-A1E3-079737AACCB5} = {D2E43558-FD15-4C1E-BE1D-73A38873C810}
+		{19B0AA9C-9172-4964-9A63-ABAEFCC65356} = {D2E43558-FD15-4C1E-BE1D-73A38873C810}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}
