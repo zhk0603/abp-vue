@@ -6,23 +6,23 @@
 !-->
 <template>
   <el-dialog
-    title="编辑菜单"
+    title="编辑权限"
     :visible="dialogVisible"
     :before-close="beforeClose"
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <MenuCreateOrEditForm v-if="dialogVisible" :menu-id="menuId" @cancel="onCancel" @successful="onSuccessful" />
+    <PermissionCreateOrEditForm v-if="dialogVisible" :menu-id="menuId" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 
 <script>
-import MenuCreateOrEditForm from './MenuCreateOrEditForm'
+import PermissionCreateOrEditForm from './PermissionCreateOrEditForm'
 import dialogMixin from '@/mixins/dialogMixin'
 
 export default {
-  name: 'MenuEditDialog',
-  components: { MenuCreateOrEditForm },
+  name: 'PermissionEditDialog',
+  components: { PermissionCreateOrEditForm },
   mixins: [dialogMixin],
   props: {
     menuId: {

@@ -56,7 +56,7 @@
               width="500"
               trigger="click"
             >
-              <MenuTreeSelector
+              <CommonTreeSelector
                 node-key="id"
                 :default-checked-keys="[formData.parentId]"
                 :data="allMenu"
@@ -64,7 +64,7 @@
                 :height="300"
                 @checkChange="onCheckChange"
               />
-              <el-input slot="reference" v-model="formData.parentName" class="form-item" size="mini" readonly />
+              <el-input slot="reference" v-model="formData.parentDisplayName" class="form-item" size="mini" readonly />
             </el-popover>
           </el-form-item>
         </el-col>
@@ -105,12 +105,12 @@
 import fromMixin from '@/mixins/formMixin'
 import menuApi from '@/api/menu'
 import { menuViewModel, rules } from './MenuConfig'
-import MenuTreeSelector from './MenuTreeSelector'
+import CommonTreeSelector from '@/components/CommonTreeSelector'
 
 export default {
   name: 'MenuCreateOrEditForm',
   components: {
-    MenuTreeSelector
+    CommonTreeSelector
   },
   mixins: [fromMixin],
   props: {
@@ -188,10 +188,17 @@ export default {
     onCheckChange(nodes) {
       if (nodes.length === 0) {
         this.formData.parentId = null
-        this.formData.parentName = null
+        this.formData.parentDisplayName = null
       } else {
+        if (nodes[0].id === this.formData.id) {
+          this.$message({
+            message: '不能选择自己作为上级菜单',
+            type: 'warning'
+          })
+          return
+        }
         this.formData.parentId = nodes[0].id
-        this.formData.parentName = nodes[0].displayName
+        this.formData.parentDisplayName = nodes[0].displayName
       }
     }
   }

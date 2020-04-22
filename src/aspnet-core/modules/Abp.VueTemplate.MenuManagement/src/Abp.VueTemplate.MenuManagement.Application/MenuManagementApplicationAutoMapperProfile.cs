@@ -13,6 +13,7 @@ namespace Abp.VueTemplate.MenuManagement
 
             CreateMap<Menu, MenuDto>();
             CreateMap<CreateOrUpdateMenuDto, Menu>();
+            CreateMap<CreateOrUpdatePermissionDto, CreateOrUpdateMenuDto>();
         }
     }
 }

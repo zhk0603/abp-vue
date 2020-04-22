@@ -43,7 +43,12 @@
           label="类型"
           width="100"
           show-overflow-tooltip
-        />
+        >
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.menuType === 0" size="small" type="primary">菜单</el-tag>
+            <el-tag v-if="scope.row.menuType === 1" size="small" type="success">权限</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="routerPath"
           label="路由地址"
@@ -94,9 +99,10 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-link type="primary" icon="el-icon-edit" :underline="false" @click="edit(scope.row)">编辑</el-link>
+            <el-link v-if="scope.row.menuType == 0" type="primary" icon="el-icon-plus" title="添加权限" :underline="false" @click="addPermission(scope.row)" />
+            <el-link type="primary" icon="el-icon-edit" :underline="false" @click="edit(scope.row)" />
             <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
-              <el-link slot="reference" type="danger" icon="el-icon-delete" :underline="false">删除</el-link>
+              <el-link slot="reference" type="danger" icon="el-icon-delete" :underline="false" />
             </el-popconfirm>
           </template>
         </el-table-column>
@@ -123,6 +129,21 @@
       dialog-width="700px"
       @close="dialogClose"
     />
+    <PermissionCreateDialog
+      :visible.sync="createPermissionDialogVisible"
+      :close-confirm="true"
+      :parent-menu="permissionParentMenu"
+      dialog-width="500px"
+      @close="dialogClose"
+    />
+    <PermissionEditDialog
+      :visible.sync="editPermissionDialogVisible"
+      :menu-id="editPermissionId"
+      :parent-menu="permissionParentMenu"
+      :close-confirm="true"
+      dialog-width="500px"
+      @close="dialogClose"
+    />
 
   </div>
 </template>
@@ -133,16 +154,28 @@ import menuApi from '@/api/menu'
 import Pagination from '@/components/Pagination'
 import CreateDialog from './components/MenuCreateDialog'
 import EditDialog from './components/MenuEditDialog'
+import PermissionCreateDialog from './components/PermissionCreateDialog'
+import PermissionEditDialog from './components/PermissionEditDialog'
 
 export default {
   name: 'Index',
-  components: { CreateDialog, EditDialog, Pagination },
+  components: {
+    CreateDialog,
+    EditDialog,
+    PermissionCreateDialog,
+    PermissionEditDialog,
+    Pagination
+  },
   mixins: [listMixin],
   data() {
     return {
       createDialogVisible: false,
       editDialogVisible: false,
+      createPermissionDialogVisible: false,
+      editPermissionDialogVisible: false,
       editMenuId: '',
+      permissionParentMenu: null,
+      editPermissionId: '',
       query: {
         name: ''
       }
@@ -170,14 +203,23 @@ export default {
       this.createDialogVisible = true
     },
     edit(row) {
-      this.editMenuId = row.id
-      this.editDialogVisible = true
+      if (row.menuType === 0) {
+        this.editMenuId = row.id
+        this.editDialogVisible = true
+      } else if (row.menuType === 1) {
+        this.editPermissionId = row.id
+        this.editPermissionDialogVisible = true
+      }
     },
     del(row) {
       menuApi.delete(row.id).then(() => {
         this.$message('删除成功')
         this.getList()
       })
+    },
+    addPermission(row) {
+      this.permissionParentMenu = row
+      this.createPermissionDialogVisible = true
     }
   }
 }

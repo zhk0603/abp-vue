@@ -7,6 +7,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Domain.Repositories;
+using static System.String;
 
 namespace Abp.VueTemplate.MenuManagement
 {
@@ -33,6 +34,15 @@ namespace Abp.VueTemplate.MenuManagement
             PermissionChecker(input.PermissionKey);
             return base.CreateAsync(input);
         }
+
+        //public override async Task<MenuDto> GetAsync(Guid id)
+        //{
+        //    await this.CheckGetPolicyAsync().ConfigureAwait(false);
+        //    var entity = await GetEntityByIdAsync(id).ConfigureAwait(false);
+        //    var dto = this.MapToGetOutputDto(entity);
+        //    dto.ParentDisplayName = entity.Parent?.DisplayName;
+        //    return dto;
+        //}
 
         private void PermissionChecker(string permissionName)
         {
@@ -67,9 +77,27 @@ namespace Abp.VueTemplate.MenuManagement
                 var dto = ObjectMapper.Map<Menu, MenuDto>(menu);
                 menuDtos.Add(dto);
                 // AddChildrenMenuRecursively(dto, allMenus);
+
+                SortChildrenMenu(dto);
             }
 
             return Task.FromResult(new PagedResultDto<MenuDto>(allMenus.Count, menuDtos));
+        }
+
+        //public Task<MenuDto> CreatePermissionAsync(CreateOrUpdatePermissionDto input)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<MenuDto> UpdatePermissionAsync(Guid id, CreateOrUpdatePermissionDto input)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        private void SortChildrenMenu(MenuDto dto)
+        {
+            dto.Children.Sort((a, b) => Compare(a.Sort, b.Sort, StringComparison.Ordinal));
+            dto.Children.ForEach(SortChildrenMenu);
         }
 
         private void AddChildrenMenuRecursively(MenuDto parent, List<Menu> allMenus)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Abp.VueTemplate.MenuManagement.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,11 @@ namespace Abp.VueTemplate.MenuManagement
     {
         public MenuRepository(IDbContextProvider<MenuManagementDbContext> dbContextProvider) : base(dbContextProvider)
         {
+        }
+
+        public override IQueryable<Menu> WithDetails()
+        {
+            return GetQueryable().Include(x => x.Parent);
         }
     }
 }

@@ -1,5 +1,5 @@
 <!--
-* @description 菜单选择器
+* @description 公共树形选择器
 * @author zhaokun
 * @date 2020-04-21 19:51:28
 * @version V1.0.0
@@ -23,7 +23,7 @@
         :node-key="nodeKey"
         show-checkbox
         default-expand-all
-        @check-change="onCheckChange"
+        @check="onNodeClick"
       />
     </section>
   </section>
@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'MenuTreeSelector',
+  name: 'CommonTreeSelector',
   props: {
     data: {
       type: Array,
@@ -76,7 +76,7 @@ export default {
     }
   },
   methods: {
-    onCheckChange(data) {
+    onNodeClick(data) {
       const tree = this.$refs['tree']
       const chekckedKeys = tree.getCheckedKeys()
       if (chekckedKeys.length > 1 && !this.multiple) {

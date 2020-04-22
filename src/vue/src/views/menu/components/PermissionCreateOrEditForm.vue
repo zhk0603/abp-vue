@@ -9,121 +9,34 @@
     <el-form
       ref="from"
       :model="formData"
-      :rules="rules"
+      :rules="permissionRules"
       label-width="120px"
       label-position="right"
       size="mini"
     >
       <el-row>
-
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item
-            prop="name"
-            label="name"
+            prop="parentDisplayName"
+            label="上级菜单"
           >
-
-            <el-input v-model="formData.name" class="form-item" size="mini" clearable />
-
+            <el-input v-model="formData.parentDisplayName" class="form-item" size="mini" disabled />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item
             prop="displayName"
-            label="displayName"
+            label="名称"
           >
-
             <el-input v-model="formData.displayName" class="form-item" size="mini" clearable />
-
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item
-            prop="componentPath"
-            label="componentPath"
-          >
-
-            <el-input v-model="formData.componentPath" class="form-item" size="mini" clearable />
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            prop="routerPath"
-            label="routerPath"
-          >
-
-            <el-input v-model="formData.routerPath" class="form-item" size="mini" clearable />
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            prop="parentId"
-            label="parentId"
-          >
-
-            <el-input v-model="formData.parentId" class="form-item" size="mini" clearable />
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            prop="menuType"
-            label="menuType"
-          >
-
-            <el-input v-model="formData.menuType" class="form-item" size="mini" type="number" clearable />
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            prop="icon"
-            label="icon"
-          >
-
-            <el-input v-model="formData.icon" class="form-item" size="mini" clearable />
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            prop="sort"
-            label="sort"
-          >
-
-            <el-input v-model="formData.sort" class="form-item" size="mini" clearable />
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            prop="targetUrl"
-            label="targetUrl"
-          >
-
-            <el-input v-model="formData.targetUrl" class="form-item" size="mini" clearable />
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item
             prop="permissionKey"
-            label="permissionKey"
+            label="权限"
           >
-
             <el-input v-model="formData.permissionKey" class="form-item" size="mini" clearable />
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            prop="id"
-            label="id"
-          >
-
-            <el-input v-model="formData.id" class="form-item" size="mini" clearable />
-
           </el-form-item>
         </el-col>
       </el-row>
@@ -138,7 +51,7 @@
 <script>
 import fromMixin from '@/mixins/formMixin'
 import menuApi from '@/api/menu'
-import { viewModel, rules } from './MenuConfig'
+import { permissionViewModel, permissionRules } from './MenuConfig'
 
 export default {
   name: 'PermissionCreateOrEditForm',
@@ -151,12 +64,18 @@ export default {
     menuId: {
       type: String,
       default: ''
+    },
+    parentMenu: {
+      type: Object,
+      default: function() {
+        return {}
+      }
     }
   },
   data() {
     return {
-      formData: Object.assign({ }, viewModel),
-      rules
+      formData: Object.assign({ }, permissionViewModel),
+      permissionRules
     }
   },
   watch: {
@@ -164,6 +83,18 @@ export default {
       immediate: true,
       handler: function() {
         this.get()
+      }
+    },
+    parentMenu: {
+      deep: true,
+      immediate: true,
+      handler: function(val) {
+        // 将parentMenu的值，填充到formData
+        const {
+          id: parentId,
+          displayName: parentDisplayName
+        } = val
+        this.formData = Object.assign(this.formData, { parentId, parentDisplayName })
       }
     }
   },
@@ -188,7 +119,7 @@ export default {
           action.then(() => {
             this.$message('提交成功')
             this.$emit('successful')
-            this.formData = Object.assign({}, viewModel)
+            this.formData = Object.assign({}, permissionViewModel)
             this.$refs.from.resetFields()
           })
         } else {

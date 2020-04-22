@@ -6,26 +6,32 @@
 !-->
 <template>
   <el-dialog
-    title="创建菜单"
+    title="创建权限"
     class="dialog"
     :visible="dialogVisible"
     :before-close="beforeClose"
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <MenuCreateOrEditForm v-if="dialogVisible" :is-create="true" @cancel="onCancel" @successful="onSuccessful" />
+    <PermissionCreateOrEditForm v-if="dialogVisible" :parent-menu="parentMenu" :is-create="true" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 
 <script>
-import MenuCreateOrEditForm from './MenuCreateOrEditForm'
+import PermissionCreateOrEditForm from './PermissionCreateOrEditForm'
 import dialogMixin from '@/mixins/dialogMixin'
 
 export default {
-  name: 'MenuCreateDialog',
-  components: { MenuCreateOrEditForm },
+  name: 'PermissionCreateDialog',
+  components: { PermissionCreateOrEditForm },
   mixins: [dialogMixin],
   props: {
+    parentMenu: {
+      type: Object,
+      default: function() {
+        return {}
+      }
+    }
   }
 }
 </script>

@@ -14,6 +14,7 @@ namespace Abp.VueTemplate.MenuManagement
         public MenuEnumType MenuType { get; set; }
         public string ComponentPath { get; set; }
         public string RouterPath { get; set; }
+        public string ParentDisplayName { get; set; }
         public Guid? ParentId { get; set; }
         public string Icon { get; set; }
         public string Sort { get; set; }

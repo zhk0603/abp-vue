@@ -4,7 +4,7 @@ export const menuViewModel = {
   'componentPath': '',
   'routerPath': '',
   'parentId': '',
-  'parentName': '',
+  'parentDisplayName': '',
   'menuType': 0,
   'icon': '',
   'sort': '',
@@ -16,7 +16,7 @@ export const rules = {
   'name': [
     {
       'required': true,
-      'message': '请输入名称',
+      'message': '请输入 唯一标识',
       'trigger': 'blur'
     }
   ],
@@ -46,6 +46,25 @@ export const rules = {
       'type': 'integer',
       'message': 'menuType 必须为 integer',
       'trigger': 'change'
+    }
+  ]
+}
+
+export const permissionViewModel = {
+  'name': '',
+  'displayName': '',
+  'parentId': '',
+  'parentDisplayName': '',
+  'menuType': 1,
+  'permissionKey': ''
+}
+
+export const permissionRules = {
+  'displayName': [
+    {
+      'required': true,
+      'message': '请输入 名称',
+      'trigger': 'blur'
     }
   ]
 }
