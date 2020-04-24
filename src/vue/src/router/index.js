@@ -56,60 +56,61 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/users',
-    component: Layout,
-    redirect: '/users/index',
-    children: [
-      {
-        path: 'index',
-        name: 'UserIndex',
-        component: () => import('@/views/users/index'),
-        meta: { title: '用户管理', icon: 'dashboard' }
-      }
-    ]
-  },
-  {
-    path: '/tenant',
-    component: Layout,
-    redirect: '/tenant/index',
-    children: [
-      {
-        path: 'index',
-        name: 'TenantIndex',
-        component: () => import('@/views/tenant/index'),
-        meta: { title: '租户管理', icon: 'dashboard' }
-      }
-    ]
-  },
 
-  {
-    path: '/role',
-    component: Layout,
-    redirect: '/role/index',
-    children: [
-      {
-        path: 'index',
-        name: 'RoleIndex',
-        component: () => import('@/views/role/index'),
-        meta: { title: '角色管理', icon: 'dashboard' }
-      }
-    ]
-  },
+  // {
+  //   path: '/users',
+  //   component: Layout,
+  //   redirect: '/users/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'UserIndex',
+  //       component: () => import('@/views/users/index'),
+  //       meta: { title: '用户管理', icon: 'dashboard' }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/tenant',
+  //   component: Layout,
+  //   redirect: '/tenant/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'TenantIndex',
+  //       component: () => import('@/views/tenant/index'),
+  //       meta: { title: '租户管理', icon: 'dashboard' }
+  //     }
+  //   ]
+  // },
 
-  {
-    path: '/menus',
-    component: Layout,
-    redirect: '/menus/index',
-    children: [
-      {
-        path: 'index',
-        name: 'MenuIndex',
-        component: () => import('@/views/menu/index'),
-        meta: { title: '菜单管理', icon: 'dashboard' }
-      }
-    ]
-  },
+  // {
+  //   path: '/role',
+  //   component: Layout,
+  //   redirect: '/role/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'RoleIndex',
+  //       component: () => import('@/views/role/index'),
+  //       meta: { title: '角色管理', icon: 'dashboard' }
+  //     }
+  //   ]
+  // },
+
+  // {
+  //   path: '/menus',
+  //   component: Layout,
+  //   redirect: '/menus/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'MenuIndex',
+  //       component: () => import('@/views/menu/index'),
+  //       meta: { title: '菜单管理', icon: 'dashboard' }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/signin-oidc',

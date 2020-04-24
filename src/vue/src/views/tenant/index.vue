@@ -16,12 +16,19 @@
         size="mini"
       />
       <el-button class="header-item-btn" type="primary" size="mini" @click="getList">搜索</el-button>
-      <el-button class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>
+      <el-button
+        v-permission="['AbpTenantManagement.Tenants.Create']"
+        class="header-item-btn"
+        type="success"
+        size="mini"
+        @click="create"
+      >新增</el-button>
     </div>
     <div class="app-full-body">
       <el-table
         :data="tableData"
         highlight-current-row
+        size="small"
         @sort-change="onSortChange"
       >
         <el-table-column
@@ -38,9 +45,20 @@
           label="操作"
         >
           <template slot-scope="scope">
-            <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>
-            <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
-              <el-link slot="reference" type="danger" icon="el-icon-delete">删除</el-link>
+            <el-link
+              v-permission="['AbpTenantManagement.Tenants.Update']"
+              type="primary"
+              icon="el-icon-edit"
+              :underline="false"
+              @click="edit(scope.row)"
+            />
+            <el-popconfirm
+              v-permission="['AbpTenantManagement.Tenants.Delete']"
+              placement="top"
+              title="确定删除此项？"
+              @onConfirm="del(scope.row)"
+            >
+              <el-link slot="reference" type="danger" :underline="false" icon="el-icon-delete" />
             </el-popconfirm>
           </template>
         </el-table-column>

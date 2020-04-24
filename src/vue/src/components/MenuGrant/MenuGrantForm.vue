@@ -15,14 +15,14 @@
       :props="defaultProps"
       @check-change="onCheckChange"
     >
-      <!-- <span slot-scope="{ node, data }" class="custom-tree-node">
+      <span slot-scope="{ node, data }" class="custom-tree-node">
         <span>
           {{ node.label }}
           <span v-if="enableDisableFeature">
-            {{ data.grantedProviders && data.grantedProviders.length > 0 ? `(${data.grantedProviders[0].providerName})` : "" }}
+            {{ data.grantedProviders && data.grantedProviders.length > 0 ? `(${data.grantedProviders[0].name})` : "" }}
           </span>
         </span>
-      </span> -->
+      </span>
     </el-tree>
     <el-divider />
     <div class="from-footer">
@@ -34,6 +34,7 @@
 
 <script>
 import menuApi from '@/api/menu'
+import menuGrantApi from '@/api/menuGrant'
 
 export default {
   name: 'MenuGrantForm',
@@ -79,20 +80,23 @@ export default {
   methods: {
     handleCheckAllChange(check) {
       if (check) {
-        this.$refs['tree'].setCheckedKeys(this.allMenuIds)
+        this.allMenuIds.forEach(x => {
+          this.setChecked(x, true, false)
+        })
       } else {
-        this.$refs['tree'].setCheckedKeys([])
+        const checkedKeys = this.$refs['tree'].getCheckedKeys()
+        checkedKeys.forEach(x => {
+          this.setChecked(x, false, false)
+        })
       }
       this.isIndeterminate = false
     },
     async bindData() {
       if (this.providerKey) {
-        await menuApi.getAll().then(res => {
-          this.treeData = res.items
-        })
+        const treeData = (await menuApi.getList()).items
 
         // 读取拥有的权限，初始化选中
-        await menuApi.getGrant({
+        await menuGrantApi.get({
           providerName: this.providerName,
           providerKey: this.providerKey
         }).then(res => {
@@ -103,6 +107,7 @@ export default {
             }
           })
           this.$refs['tree'].setCheckedKeys(this.checkedMenus)
+          this.initTreeData(treeData, res.menuGrants)
         })
       }
     },
@@ -118,7 +123,7 @@ export default {
         x.isGranted = checkedKeys.indexOf(x.id) > -1
       })
 
-      menuApi.putGrant({
+      menuGrantApi.put({
         providerName: this.providerName,
         providerKey: this.providerKey
       }, {
@@ -126,6 +131,48 @@ export default {
       }).then(() => {
         this.$message('提交成功')
         this.$emit('successful')
+      })
+    },
+    initTreeData(treeData, items) {
+      treeData.forEach(x => {
+        if (this.enableDisableFeature) {
+          const arr = items.filter(y => y.id == x.id)
+          if (arr.length > 0) {
+            const provoders = arr[0].grantedProviders
+            let disabled = provoders.length !== 0
+            provoders.forEach(gp => {
+              if (gp.name === 'U') {
+                disabled = false
+              }
+            })
+            x['disabled'] = disabled
+            x['grantedProviders'] = provoders
+          }
+        }
+
+        this.initChildren(x.children, items)
+      })
+
+      this.treeData = treeData
+    },
+    initChildren(treeData, items) {
+      treeData.forEach(x => {
+        if (this.enableDisableFeature) {
+          const arr = items.filter(y => y.id == x.id)
+          if (arr.length > 0) {
+            const provoders = arr[0].grantedProviders
+            let disabled = provoders.length !== 0
+            provoders.forEach(gp => {
+              if (gp.name === 'U') {
+                disabled = false
+              }
+            })
+            x['disabled'] = disabled
+            x['grantedProviders'] = arr[0].grantedProviders
+          }
+        }
+
+        this.initChildren(x.children, items)
       })
     },
     flattenData(res, menus) {
@@ -155,7 +202,11 @@ export default {
       this.isIndeterminate = checkedLen > 0 && checkedLen < this.allMenuIds.length
     },
     setChecked(key, checked = false, deep = false) {
-      this.$refs['tree'].setChecked(key, checked, deep)
+      const tree = this.$refs['tree']
+      const node = tree.getNode(key)
+      if (node.disabled !== true) {
+        this.$refs['tree'].setChecked(key, checked, deep)
+      }
     }
   }
 }

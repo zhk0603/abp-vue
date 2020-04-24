@@ -20,6 +20,11 @@
     "CreateMenu": "CreateMenu",
     "EditMenu": "EditMenu",
     "MenuDeletionConfirmationMessage": "Are you sure to delete the menu {0}?",
-    "SuccessfullyDeleted": "Successfully deleted"
+    "SuccessfullyDeleted": "Successfully deleted",
+    "MenuManagement:MenuManagement": "菜单管理",
+    "MenuManagement:Create": "创建" ,
+    "MenuManagement:Update": "编辑" ,
+    "MenuManagement:Delete": "删除" ,
+    "MenuManagement:CreatePermission": "创建权限" 
   }
-}
+} 

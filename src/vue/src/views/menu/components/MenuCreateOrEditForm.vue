@@ -150,7 +150,7 @@ export default {
       }
     },
     bindData() {
-      menuApi.getAll({ type: 0 }).then(res => {
+      menuApi.getList({ type: 0 }).then(res => {
         this.allMenu = res.items
       })
     },

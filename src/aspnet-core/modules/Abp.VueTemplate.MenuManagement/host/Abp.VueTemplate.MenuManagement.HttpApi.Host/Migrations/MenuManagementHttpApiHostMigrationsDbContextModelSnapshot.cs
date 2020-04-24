@@ -79,6 +79,9 @@ namespace Abp.VueTemplate.MenuManagement.Migrations
                     b.Property<int>("MenuType")
                         .HasColumnType("int");
 
+                    b.Property<int>("MultiTenancySide")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -101,10 +104,6 @@ namespace Abp.VueTemplate.MenuManagement.Migrations
                     b.Property<string>("TargetUrl")
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
-
-                    b.Property<Guid?>("TenantId")
-                        .HasColumnName("TenantId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 

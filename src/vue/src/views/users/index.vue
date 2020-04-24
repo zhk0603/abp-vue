@@ -9,13 +9,20 @@
         size="mini"
       />
       <el-button class="header-item-btn" type="primary" size="mini" @click="getList">搜索</el-button>
-      <el-button class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>
+      <el-button
+        v-permission="['AbpIdentity.Users.Create']"
+        class="header-item-btn"
+        type="success"
+        size="mini"
+        @click="create"
+      >新增</el-button>
     </div>
     <div class="app-full-body">
       <el-table
         :data="tableData"
         :default-sort="{prop: 'creationTime', order: 'descending'}"
         highlight-current-row
+        size="small"
         @sort-change="onSortChange"
       >
         <el-table-column
@@ -46,10 +53,28 @@
           label="操作"
         >
           <template slot-scope="scope">
-            <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>
-            <el-link type="primary" icon="el-icon-setting" @click="menuGrant(scope.row)">权限</el-link>
-            <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
-              <el-link slot="reference" type="danger" icon="el-icon-delete">删除</el-link>
+            <el-link
+              v-permission="['AbpIdentity.Users.Update']"
+              type="primary"
+              icon="el-icon-edit"
+              :underline="false"
+              @click="edit(scope.row)"
+            />
+            <el-link
+              v-permission="['AbpIdentity.Users.ManagePermissions']"
+              type="primary"
+              icon="el-icon-setting"
+              :underline="false"
+              title="权限"
+              @click="menuGrant(scope.row)"
+            />
+            <el-popconfirm
+              v-permission="['AbpIdentity.Users.Delete']"
+              placement="top"
+              title="确定删除此项？"
+              @onConfirm="del(scope.row)"
+            >
+              <el-link slot="reference" type="danger" :underline="false" icon="el-icon-delete" />
             </el-popconfirm>
           </template>
         </el-table-column>
@@ -79,7 +104,7 @@
       dialog-width="700px"
       @close="dialogClose"
     />
-    <PermissionGrant
+    <MenuGrant
       :visible.sync="menuGrantDialogVisible"
       :close-confirm="true"
       :provider-key="menuGrantUserId"
@@ -98,12 +123,11 @@ import roleApi from '@/api/role'
 import CreateDialog from './components/UserCreateDialog'
 import EditDialog from './components/UserEditDialog'
 import MenuGrant from '@/components/MenuGrant'
-import PermissionGrant from '@/components/PermissionGrant'
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'Index',
-  components: { CreateDialog, EditDialog, PermissionGrant, MenuGrant, Pagination },
+  components: { CreateDialog, EditDialog, MenuGrant, Pagination },
   mixins: [listMixin],
   data() {
     return {

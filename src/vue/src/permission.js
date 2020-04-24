@@ -19,7 +19,7 @@ router.beforeEach(async(to, from, next) => {
         store.getters.addRouters.length === 0 &&
         store.state.oidc.access_token
       ) {
-        store.dispatch('dynamicRouter/generateRoutes').then(routers => {
+        store.dispatch('permission/generateRoutes').then(routers => {
           console.log('addRouteres:', routers)
           router.addRoutes(routers)
           next({

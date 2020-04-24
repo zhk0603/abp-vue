@@ -1,16 +1,21 @@
 import { constantRoutes } from '@/router'
 import store from '../index'
 import Layout from '@/layout'
+import menuGrantApi from '@/api/menuGrant'
 
 const _import = require('../../router/_import_' + process.env.NODE_ENV)
 
 const state = {
-  addRouteres: []
+  addRouteres: [],
+  permissions: []
 }
 
 const mutations = {
   setAddRouteres: (state, routers) => {
     state.addRouteres = routers
+  },
+  setPermissions: (state, permissions) => {
+    state.permissions = permissions
   }
 }
 
@@ -25,48 +30,24 @@ const actions = {
     return new Promise(resolve => {
       console.log('generateRoutes……')
       // if (store.state.oidc.access_token && store.getters.addRouters.length === 0) {
-      const routers = getRemoteRouteres()
-      routers.push({
-        path: '*',
-        redirect: '/404',
-        hidden: true
-      })
-      commit('setAddRouteres', routers)
-      // }
+      getRemoteRouteres(commit).then(routers => {
+        routers.push({
+          path: '*',
+          redirect: '/404',
+          hidden: true
+        })
+        commit('setAddRouteres', routers)
 
-      resolve(store.getters.addRouters)
+        resolve(store.getters.addRouters)
+      })
     })
   }
 }
 
-function getRemoteRouteres() {
-  // 这里调用api 获取路由表，假如后台返回的内容如下：
-  var remoteRouters = [
-    // {
-    //   path: '/example',
-    //   component: 'Layout',
-    //   redirect: '/example/table',
-    //   name: 'Example',
-    //   meta: { title: 'Example （Dynamic Router）', icon: 'example' },
-    //   children: [
-    //     {
-    //       path: 'table',
-    //       name: 'Table',
-    //       component: 'table/index',
-    //       meta: { title: 'Table', icon: 'table' }
-    //     },
-    //     {
-    //       path: 'tree',
-    //       name: 'Tree',
-    //       component: 'tree/index',
-    //       meta: { title: 'Tree', icon: 'tree' }
-    //     }
-    //   ]
-    // }
-  ]
-
-  var routers = buildRouteres(remoteRouters)
-
+async function getRemoteRouteres(commit) {
+  var res = await menuGrantApi.getList()
+  commit('setPermissions', res.permissionGrants)
+  var routers = buildRouteres(res.menus)
   return routers
 }
 

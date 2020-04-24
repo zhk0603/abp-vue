@@ -13,6 +13,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import '@/directive' // 注册指令
 
 import * as filters from './filters' // global filters
 // register global utility filters

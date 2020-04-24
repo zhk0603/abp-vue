@@ -30,7 +30,7 @@ export default {
     ...mapGetters([
       'sidebar'
     ]),
-    ...mapGetters('dynamicRouter', ['allRouteres']),
+    ...mapGetters('permission', ['allRouteres']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route

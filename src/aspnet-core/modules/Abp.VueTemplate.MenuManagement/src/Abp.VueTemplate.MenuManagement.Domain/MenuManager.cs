@@ -31,7 +31,8 @@ namespace Abp.VueTemplate.MenuManagement
             _options = options.Value;
 
             _managementProviders = _options.ManagementProviders
-                .Select(c => serviceProvider.GetRequiredService(c) as IMenuManagementProvider).ToList();
+                .Select(c => serviceProvider.GetRequiredService(c) as IMenuManagementProvider)
+                .ToList();
         }
 
         public virtual IReadOnlyList<PermissionDefinition> GetPermissions(string providerName)
@@ -74,6 +75,12 @@ namespace Abp.VueTemplate.MenuManagement
 
         public virtual async Task SetAsync(Guid menuId, string providerName, string providerKey, bool isGranted)
         {
+            var currentGrantInfo = await GetAsync(menuId, providerName, providerKey);
+            if (currentGrantInfo.IsGranted == isGranted)
+            {
+                return;
+            }
+
             var provider = _managementProviders.FirstOrDefault(m => m.Name == providerName);
             if (provider == null)
             {

@@ -18,8 +18,8 @@ namespace Abp.VueTemplate.MenuManagement.Domain.Identity
         {
             Configure<MenuManagementOptions>(options =>
             {
-                options.ManagementProviders.Add<RoleMenuManagementProvider>();
                 options.ManagementProviders.Add<UserMenuManagementProvider>();
+                options.ManagementProviders.Add<RoleMenuManagementProvider>();
             });
         }
     }

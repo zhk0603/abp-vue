@@ -11,6 +11,6 @@ namespace Abp.VueTemplate.MenuManagement
         public string DisplayName { get; set; }
         public string PermissionKey { get; set; }
         public bool IsGranted { get; set; }
-        public List<MenuProviderInfo> Providers { get; set; }
+        public List<MenuProviderInfo> GrantedProviders { get; set; }
     }
 }

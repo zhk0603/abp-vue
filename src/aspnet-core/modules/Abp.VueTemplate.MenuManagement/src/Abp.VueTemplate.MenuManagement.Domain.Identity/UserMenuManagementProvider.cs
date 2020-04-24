@@ -6,7 +6,14 @@ namespace Abp.VueTemplate.MenuManagement.Domain.Identity
 {
     public class UserMenuManagementProvider : MenuManagementProvider
     {
-        public UserMenuManagementProvider(IMenuGrantRepository menuGrantRepository, IPermissionDefinitionManager permissionDefinitionManager, IGuidGenerator guidGenerator, ICurrentTenant currentTenant) : base(menuGrantRepository, permissionDefinitionManager, guidGenerator, currentTenant)
+        public UserMenuManagementProvider(
+            IMenuGrantRepository menuGrantRepository,
+            IPermissionDefinitionManager permissionDefinitionManager,
+            IMenuGrantChecker menuGrantChecker,
+            IGuidGenerator guidGenerator,
+            ICurrentTenant currentTenant
+        ) :
+            base(menuGrantRepository, permissionDefinitionManager, menuGrantChecker, guidGenerator, currentTenant)
         {
         }
 

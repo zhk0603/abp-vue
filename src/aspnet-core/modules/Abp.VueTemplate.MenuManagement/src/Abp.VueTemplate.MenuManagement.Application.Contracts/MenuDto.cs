@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.PermissionManagement;
 
 namespace Abp.VueTemplate.MenuManagement
 {

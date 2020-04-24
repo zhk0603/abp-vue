@@ -19,17 +19,16 @@ namespace Abp.VueTemplate.MenuManagement
             _menuAppService = menuAppService;
         }
 
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("{id}")]
         public Task<MenuDto> GetAsync(Guid id)
         {
             return _menuAppService.GetAsync(id);
         }
 
-        [NonAction]
+        [HttpGet]
         public Task<PagedResultDto<MenuDto>> GetListAsync(MenuRequestDto input)
         {
-            throw new NotImplementedException();
+            return _menuAppService.GetListAsync(input);
         }
 
         [HttpPost]
@@ -49,27 +48,5 @@ namespace Abp.VueTemplate.MenuManagement
         {
             return _menuAppService.DeleteAsync(id);
         }
-
-        [HttpGet("all")]
-        public Task<PagedResultDto<MenuDto>> GetAllListAsync(MenuRequestDto input)
-        {
-            return _menuAppService.GetAllListAsync(input);
-        }
-
-        #region menu grant
-
-        [HttpGet("grant")]
-        public Task<GetMenuGrantListResultDto> GetGrantAsync(string providerName, string providerKey)
-        {
-            return _menuAppService.GetGrantAsync(providerName, providerKey);
-        }
-
-        [HttpPut("grant")]
-        public Task UpdateGrantAsync(string providerName, string providerKey, UpdateMenuGrantsDto input)
-        {
-            return _menuAppService.UpdateGrantAsync(providerName, providerKey, input);
-        }
-
-        #endregion
     }
 }

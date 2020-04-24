@@ -7,9 +7,8 @@ using Volo.Abp.MultiTenancy;
 
 namespace Abp.VueTemplate.MenuManagement
 {
-    public class Menu : FullAuditedAggregateRoot<Guid>, IMultiTenant
+    public class Menu : FullAuditedAggregateRoot<Guid>
     {
-        public virtual Guid? TenantId { get; protected set; }
         public virtual string Name { get; protected set; }
         public virtual string DisplayName { get; protected set; }
         public virtual MenuEnumType MenuType { get; protected set; }
@@ -21,19 +20,24 @@ namespace Abp.VueTemplate.MenuManagement
         public virtual string Sort { get; set; }
         public virtual string TargetUrl { get; set; } // window.open _blank 
         public virtual string PermissionKey { get; set; } // 此菜单关联的权限key.
+        public virtual MultiTenancySides MultiTenancySide { get; set; }
         public virtual Collection<Menu> Children { get; set; }
-     
+
         protected Menu()
         {
         }
 
-        public Menu(Guid id, string name, string displayName, MenuEnumType menuType, Guid? tenantId)
+        public Menu(
+            string name,
+            string displayName,
+            MenuEnumType menuType,
+            MultiTenancySides multiTenancySide = MultiTenancySides.Both
+        )
         {
-            Id = id;
             Name = name;
             DisplayName = displayName;
             MenuType = menuType;
-            TenantId = tenantId;
+            MultiTenancySide = multiTenancySide;
 
             Children = new Collection<Menu>();
         }

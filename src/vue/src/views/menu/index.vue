@@ -15,7 +15,13 @@
         size="mini"
       />
       <el-button class="header-item-btn" type="primary" size="mini" @click="getList">搜索</el-button>
-      <el-button class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>
+      <el-button
+        v-permission="['MenuManagement.Menus.Create']"
+        class="header-item-btn"
+        type="success"
+        size="mini"
+        @click="create"
+      >新增</el-button>
     </div>
     <div class="app-full-body">
       <el-table
@@ -99,9 +105,28 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-link v-if="scope.row.menuType == 0" type="primary" icon="el-icon-plus" title="添加权限" :underline="false" @click="addPermission(scope.row)" />
-            <el-link type="primary" icon="el-icon-edit" :underline="false" @click="edit(scope.row)" />
-            <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
+            <el-link
+              v-if="scope.row.menuType == 0"
+              v-permission="['MenuManagement.Menus.CreatePermission']"
+              type="primary"
+              icon="el-icon-plus"
+              title="添加权限"
+              :underline="false"
+              @click="addPermission(scope.row)"
+            />
+            <el-link
+              v-permission="['MenuManagement.Menus.Update']"
+              type="primary"
+              icon="el-icon-edit"
+              :underline="false"
+              @click="edit(scope.row)"
+            />
+            <el-popconfirm
+              v-permission="['MenuManagement.Menus.Delete']"
+              placement="top"
+              title="确定删除此项？"
+              @onConfirm="del(scope.row)"
+            >
               <el-link slot="reference" type="danger" icon="el-icon-delete" :underline="false" />
             </el-popconfirm>
           </template>
@@ -186,7 +211,7 @@ export default {
   },
   methods: {
     getList() {
-      menuApi.getAll({
+      menuApi.getList({
         name: this.query.name
       }).then(res => {
         this.tableData = res.items

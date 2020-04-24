@@ -8,12 +8,19 @@
   <div class="app-full-container">
     <div class="app-full-header">
 
-      <el-button class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>
+      <el-button
+        v-permission="['AbpIdentity.Roles.Create']"
+        class="header-item-btn"
+        type="success"
+        size="mini"
+        @click="create"
+      >新增</el-button>
     </div>
     <div class="app-full-body">
       <el-table
         :data="tableData"
         highlight-current-row
+        size="small"
         @sort-change="onSortChange"
       >
 
@@ -47,10 +54,27 @@
           label="操作"
         >
           <template slot-scope="scope">
-            <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>
-            <el-link type="primary" icon="el-icon-setting" @click="permissionGrant(scope.row)">权限</el-link>
-            <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
-              <el-link slot="reference" type="danger" icon="el-icon-delete">删除</el-link>
+            <el-link
+              v-permission="['AbpIdentity.Roles.Update']"
+              type="primary"
+              icon="el-icon-edit"
+              :underline="false"
+              @click="edit(scope.row)"
+            />
+            <el-link
+              v-permission="['AbpIdentity.Roles.ManagePermissions']"
+              type="primary"
+              icon="el-icon-setting"
+              :underline="false"
+              @click="permissionGrant(scope.row)"
+            />
+            <el-popconfirm
+              v-permission="['AbpIdentity.Roles.Delete']"
+              placement="top"
+              title="确定删除此项？"
+              @onConfirm="del(scope.row)"
+            >
+              <el-link slot="reference" type="danger" :underline="false" icon="el-icon-delete" />
             </el-popconfirm>
           </template>
         </el-table-column>
@@ -95,12 +119,11 @@ import roleApi from '@/api/role'
 import Pagination from '@/components/Pagination'
 import CreateDialog from './components/RoleCreateDialog'
 import EditDialog from './components/RoleEditDialog'
-import PermissionGrant from '@/components/PermissionGrant'
 import MenuGrant from '@/components/MenuGrant'
 
 export default {
   name: 'Index',
-  components: { CreateDialog, EditDialog, Pagination, PermissionGrant, MenuGrant },
+  components: { CreateDialog, EditDialog, Pagination, MenuGrant },
   mixins: [listMixin],
   data() {
     return {

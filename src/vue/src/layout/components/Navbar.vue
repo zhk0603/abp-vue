@@ -19,8 +19,11 @@
           <a target="_blank" href="https://github.com/zhk0603/abp-vue">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
-          <el-dropdown-item divided>
+          <el-dropdown-item v-if="oidcIsAuthenticated" divided>
             <span style="display:block;" @click="logout">Log Out</span>
+          </el-dropdown-item>
+          <el-dropdown-item v-if="!oidcIsAuthenticated" divided>
+            <span style="display:block;" @click="authenticateOidcPopup">Log In</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -43,7 +46,8 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar'
-    ])
+    ]),
+    ...mapGetters('oidc', ['oidcIsAuthenticated'])
   },
   methods: {
     toggleSideBar() {
@@ -52,7 +56,7 @@ export default {
     logout() {
       this.signOutOidc()
     },
-    ...mapActions('oidc', ['signOutOidc', 'removeOidcUser'])
+    ...mapActions('oidc', ['authenticateOidcPopup', 'signOutOidc', 'removeOidcUser'])
   }
 }
 </script>

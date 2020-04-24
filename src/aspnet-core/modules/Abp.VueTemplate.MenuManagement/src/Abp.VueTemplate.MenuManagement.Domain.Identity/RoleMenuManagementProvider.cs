@@ -12,14 +12,18 @@ namespace Abp.VueTemplate.MenuManagement.Domain.Identity
     {
         private readonly IUserRoleFinder _userRoleFinder;
 
-        public RoleMenuManagementProvider(IMenuGrantRepository menuGrantRepository, 
-            IPermissionDefinitionManager permissionDefinitionManager, 
-            IGuidGenerator guidGenerator, 
+        public RoleMenuManagementProvider(
+            IMenuGrantRepository menuGrantRepository,
+            IPermissionDefinitionManager permissionDefinitionManager,
+            IMenuGrantChecker menuGrantChecker,
+            IGuidGenerator guidGenerator,
             ICurrentTenant currentTenant,
-            IUserRoleFinder userRoleFinder) : base(menuGrantRepository, 
-            permissionDefinitionManager, 
-            guidGenerator, 
-            currentTenant)
+            IUserRoleFinder userRoleFinder) : base(menuGrantRepository,
+            permissionDefinitionManager,
+            menuGrantChecker,
+            guidGenerator,
+            currentTenant
+        )
         {
             _userRoleFinder = userRoleFinder;
         }
@@ -32,7 +36,7 @@ namespace Abp.VueTemplate.MenuManagement.Domain.Identity
             if (providerName == Name)
             {
                 return new MenuGrantInfo(
-                    await MenuGrantRepository.FindAsync(menuId, providerName, providerKey) != null,
+                    (await MenuGrantChecker.CheckAsync(menuId, providerName, providerKey)).IsGranted,
                     providerKey
                 );
             }
@@ -44,8 +48,8 @@ namespace Abp.VueTemplate.MenuManagement.Domain.Identity
 
                 foreach (var roleName in roleNames)
                 {
-                    var permissionGrant = await MenuGrantRepository.FindAsync(menuId, Name, roleName);
-                    if (permissionGrant != null)
+                    var grantCache = await MenuGrantChecker.CheckAsync(menuId, Name, roleName);
+                    if (grantCache.IsGranted)
                     {
                         return new MenuGrantInfo(true, roleName);
                     }
