@@ -12,3 +12,9 @@ abp-vue是前后端分离的，前端采用了Vue，通过菜单模块实现了�
 ### [✨cli工具](https://github.com/zhk0603/abp-vue/tree/master/src/cli/AbpVueCli)
 为了快速开发vue程序，所以开发了一个通过读取OpenApi文档，并自动生成了一些基础项目代码，以减轻工作量。  
 此项目基本思路及源码来源 [abphelper.cli](https://github.com/EasyAbp/AbpHelper.CLI)，在此表示感谢 🎉🎉。
+
+![image](https://github.com/zhk0603/abp-vue/blob/master/src/img/img%20(1).png)
+![image](https://github.com/zhk0603/abp-vue/blob/master/src/img/img%20(2).png)
+![image](https://github.com/zhk0603/abp-vue/blob/master/src/img/img%20(3).png)
+![image](https://github.com/zhk0603/abp-vue/blob/master/src/img/img%20(4).png)
+![image](https://github.com/zhk0603/abp-vue/blob/master/src/img/img%20(5).png)
