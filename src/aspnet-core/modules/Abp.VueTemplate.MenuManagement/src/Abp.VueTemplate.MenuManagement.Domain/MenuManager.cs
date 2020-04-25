@@ -10,23 +10,30 @@ using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Services;
 using Volo.Abp.MultiTenancy;
+using Volo.Abp.PermissionManagement;
 
 namespace Abp.VueTemplate.MenuManagement
 {
     public class MenuManager : IMenuManager, ITransientDependency
     {
         private readonly IPermissionDefinitionManager _permissionDefinitionManager;
+        private readonly IMenuGrantRepository _menuGrantRepository;
+        private readonly IPermissionManager _permissionManager;
         private readonly ICurrentTenant _currentTenant;
         private readonly IReadOnlyList<IMenuManagementProvider> _managementProviders;
         private readonly MenuManagementOptions _options;
 
         public MenuManager(
             IPermissionDefinitionManager permissionDefinitionManager,
+          IMenuGrantRepository menuGrantRepository,
+            IPermissionManager permissionManager,
             IOptions<MenuManagementOptions> options,
             IServiceProvider serviceProvider,
             ICurrentTenant currentTenant)
         {
             _permissionDefinitionManager = permissionDefinitionManager;
+            _menuGrantRepository = menuGrantRepository;
+            _permissionManager = permissionManager;
             _currentTenant = currentTenant;
             _options = options.Value;
 
@@ -88,6 +95,23 @@ namespace Abp.VueTemplate.MenuManagement
             }
 
             await provider.SetAsync(menuId, providerKey, isGranted);
+        }
+
+        public virtual async Task UpdatePermissionGrantAsync(Guid menuId, string oldPermission, string newPermission)
+        {
+            var menuGrants = await _menuGrantRepository.GetGrantByMenuIdAsync(menuId);
+            foreach (var g in menuGrants)
+            {
+                if (!oldPermission.IsNullOrEmpty())
+                {
+                    await _permissionManager.SetAsync(oldPermission, g.ProviderName, g.ProviderKey, false);
+                }
+
+                if (!newPermission.IsNullOrEmpty())
+                {
+                    await _permissionManager.SetAsync(newPermission, g.ProviderName, g.ProviderKey, true);
+                }
+            }
         }
     }
 }

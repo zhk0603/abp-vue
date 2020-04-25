@@ -19,5 +19,7 @@ namespace Abp.VueTemplate.MenuManagement
             string providerKey,
             CancellationToken cancellationToken = default
         );
+
+        Task<List<MenuGrant>> GetGrantByMenuIdAsync(Guid menuId);
     }
 }

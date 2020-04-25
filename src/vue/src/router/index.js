@@ -129,6 +129,11 @@ export const constantRoutes = [
     meta: {
       isOidcCallback: true
     }
+  },
+  {
+    path: '/signin-oidc-popup',
+    component: () => import('@/views/signin-oidc-popup'),
+    hidden: true
   }
 ]
 

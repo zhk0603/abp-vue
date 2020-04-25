@@ -11,5 +11,6 @@ namespace Abp.VueTemplate.MenuManagement
         IReadOnlyList<PermissionDefinition> GetPermissions(string providerName);
         Task<MenuWithGrantedProviders> GetAsync(Guid menuId, string providerName, string providerKey);
         Task SetAsync(Guid menuId, string providerName, string providerKey, bool isGranted);
+        Task UpdatePermissionGrantAsync(Guid menuId, string oldPermission, string newPermission);
     }
 }

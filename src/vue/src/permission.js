@@ -5,7 +5,7 @@ import 'nprogress/nprogress.css' // progress bar style
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
-
+console.log('router:', router)
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
@@ -17,7 +17,7 @@ router.beforeEach(async(to, from, next) => {
     if (hasAccess) {
       if (
         store.getters.addRouters.length === 0 &&
-        store.state.oidc.access_token
+        store.getters['oidc/oidcIsAuthenticated']
       ) {
         store.dispatch('permission/generateRoutes').then(routers => {
           console.log('addRouteres:', routers)

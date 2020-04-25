@@ -25,6 +25,7 @@ module.exports = {
     redirect_uri: `${vueBase}/signin-oidc`,
     post_logout_redirect_uri: `${vueBase}/`,
     silent_redirect_uri: `${vueBase}/silent-renew-oidc`,
+    popup_redirect_uri: `${vueBase}/signin-oidc-popup`,
     scope: 'VueTemplate role openid profile address email phone',
     response_type: 'id_token token',
     automaticSilentRenew: true,

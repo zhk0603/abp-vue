@@ -69,6 +69,7 @@
               @click="permissionGrant(scope.row)"
             />
             <el-popconfirm
+              v-if="!scope.row.isStatic"
               v-permission="['AbpIdentity.Roles.Delete']"
               placement="top"
               title="确定删除此项？"

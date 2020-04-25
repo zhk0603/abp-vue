@@ -23,7 +23,7 @@
             <span style="display:block;" @click="logout">Log Out</span>
           </el-dropdown-item>
           <el-dropdown-item v-if="!oidcIsAuthenticated" divided>
-            <span style="display:block;" @click="authenticateOidcPopup">Log In</span>
+            <span style="display:block;" @click="login">Log In</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -41,7 +41,6 @@ export default {
     Breadcrumb,
     Hamburger
   },
-
   computed: {
     ...mapGetters([
       'sidebar',
@@ -55,6 +54,13 @@ export default {
     },
     logout() {
       this.signOutOidc()
+    },
+    login() {
+      this.authenticateOidcPopup().then(() => {
+        if (this.oidcIsAuthenticated) {
+          location.reload() // 登录成功后，刷新页面，获取菜单、权限
+        }
+      })
     },
     ...mapActions('oidc', ['authenticateOidcPopup', 'signOutOidc', 'removeOidcUser'])
   }

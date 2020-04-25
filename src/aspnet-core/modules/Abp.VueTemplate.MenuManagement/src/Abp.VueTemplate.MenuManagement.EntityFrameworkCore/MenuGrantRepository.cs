@@ -18,7 +18,7 @@ namespace Abp.VueTemplate.MenuManagement
         {
         }
 
-        public async Task<MenuGrant> FindAsync(Guid menuId, string providerName, string providerKey,
+        public virtual async Task<MenuGrant> FindAsync(Guid menuId, string providerName, string providerKey,
             CancellationToken cancellationToken = default)
         {
             return await DbSet
@@ -30,7 +30,7 @@ namespace Abp.VueTemplate.MenuManagement
                 );
         }
 
-        public async Task<List<MenuGrant>> GetListAsync(string providerName, string providerKey,
+        public virtual async Task<List<MenuGrant>> GetListAsync(string providerName, string providerKey,
             CancellationToken cancellationToken = default)
         {
             return await DbSet.Where(x => x.ProviderKey == providerKey &&
@@ -50,6 +50,11 @@ namespace Abp.VueTemplate.MenuManagement
             //        IsGranted = true
             //    }
             //).ToListAsync(GetCancellationToken(cancellationToken));
+        }
+
+        public virtual async Task<List<MenuGrant>> GetGrantByMenuIdAsync(Guid menuId)
+        {
+            return await DbSet.Where(x => x.MenuId == menuId).ToListAsync();
         }
     }
 }

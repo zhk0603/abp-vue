@@ -138,7 +138,8 @@ namespace Abp.VueTemplate.IdentityServer
                     (configurationSection["VueTemplate_Vue:ClientSecret"] ?? "1q2w3e*").Sha256(),
                     redirectUri: $"{webClientRootUrl}signin-oidc",
                     postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc",
-                    silentRenewUrl: $"{webClientRootUrl}silent-renew-oidc"
+                    silentRenewUrl: $"{webClientRootUrl}silent-renew-oidc",
+                    popupRedirectUri: $"{webClientRootUrl}signin-oidc-popup"
                 );
             }
 
@@ -163,7 +164,8 @@ namespace Abp.VueTemplate.IdentityServer
             string redirectUri = null,
             string postLogoutRedirectUri = null,
             IEnumerable<string> permissions = null,
-            string silentRenewUrl = null)
+            string silentRenewUrl = null,
+            string popupRedirectUri = null)
         {
             var client = await _clientRepository.FindByCliendIdAsync(name);
             if (client == null)
@@ -225,6 +227,14 @@ namespace Abp.VueTemplate.IdentityServer
                 if (client.FindRedirectUri(silentRenewUrl) == null)
                 {
                     client.AddRedirectUri(silentRenewUrl);
+                }
+            }
+
+            if (popupRedirectUri != null)
+            {
+                if (client.FindRedirectUri(popupRedirectUri) == null)
+                {
+                    client.AddRedirectUri(popupRedirectUri);
                 }
             }
 

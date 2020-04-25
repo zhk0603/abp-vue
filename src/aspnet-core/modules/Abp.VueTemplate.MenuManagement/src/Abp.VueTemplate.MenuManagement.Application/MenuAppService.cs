@@ -10,33 +10,51 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.MultiTenancy;
+using Volo.Abp.PermissionManagement;
 
 namespace Abp.VueTemplate.MenuManagement
 {
+    [Authorize]
     public class MenuAppService : CrudAppService<Menu, MenuDto, Guid, MenuRequestDto,
             CreateOrUpdateMenuDto, CreateOrUpdateMenuDto>,
         IMenuAppService
     {
         private readonly IPermissionDefinitionManager _permissionDefinitionManager;
+        private readonly IMenuGrantRepository _menuGrantRepository;
+        private readonly IMenuManager _menuManager;
+        private readonly IPermissionManager _permissionManager;
 
         public MenuAppService(
             IRepository<Menu, Guid> repository,
-            IPermissionDefinitionManager permissionDefinitionManager
+            IPermissionDefinitionManager permissionDefinitionManager,
+            IMenuGrantRepository menuGrantRepository,
+            IMenuManager menuManager,
+            IPermissionManager permissionManager
         ) : base(repository)
         {
             _permissionDefinitionManager = permissionDefinitionManager;
+            _menuGrantRepository = menuGrantRepository;
+            _menuManager = menuManager;
+            _permissionManager = permissionManager;
         }
 
-        protected override string GetPolicyName => MenuManagementPermissions.Menus.Default;
         protected override string GetListPolicyName => MenuManagementPermissions.Menus.Default;
         protected override string CreatePolicyName => MenuManagementPermissions.Menus.Create;
         protected override string UpdatePolicyName => MenuManagementPermissions.Menus.Update;
         protected override string DeletePolicyName => MenuManagementPermissions.Menus.Delete;
 
-        public override Task<MenuDto> UpdateAsync(Guid id, CreateOrUpdateMenuDto input)
+        public override async Task<MenuDto> UpdateAsync(Guid id, CreateOrUpdateMenuDto input)
         {
             PermissionChecker(input.PermissionKey);
-            return base.UpdateAsync(id, input);
+
+            // 当更新菜单权限时，同时刷 PermissionGrant
+            var menu = await GetEntityByIdAsync(id);
+            if (menu.PermissionKey != input.PermissionKey)
+            {
+                await _menuManager.UpdatePermissionGrantAsync(id, menu.PermissionKey, input.PermissionKey);
+            }
+
+            return await base.UpdateAsync(id, input);
         }
 
         public override Task<MenuDto> CreateAsync(CreateOrUpdateMenuDto input)

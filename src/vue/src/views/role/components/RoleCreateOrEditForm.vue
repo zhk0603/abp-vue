@@ -22,9 +22,7 @@
             prop="name"
             label="角色名称"
           >
-
-            <el-input v-model="formData.name" class="form-item" size="mini" clearable />
-
+            <el-input v-model="formData.name" class="form-item" size="mini" :disabled="formData.isStatic" clearable />
           </el-form-item>
         </el-col>
         <el-col :span="24">

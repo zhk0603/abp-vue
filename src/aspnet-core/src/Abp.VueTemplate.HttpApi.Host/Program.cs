@@ -19,7 +19,7 @@ namespace Abp.VueTemplate
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Async(c => c.File("Logs/logs.txt"))
-                .WriteTo.Console()
+                //.WriteTo.Console()
                 .CreateLogger();
 
             try
