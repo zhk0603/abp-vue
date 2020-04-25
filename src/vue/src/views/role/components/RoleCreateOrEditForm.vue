@@ -89,9 +89,9 @@ export default {
     }
   },
   methods: {
-    async get() {
+    get() {
       if (this.roleId) {
-        await roleApi.get(this.roleId).then(res => {
+        roleApi.get(this.roleId).then(res => {
           this.formData = Object.assign(this.formData, res)
         })
       }

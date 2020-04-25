@@ -89,7 +89,7 @@
             prop="permissionKey"
             label="权限"
           >
-            <el-input v-model="formData.permissionKey" class="form-item" size="mini" clearable />
+            <PermissionSelector :value.sync="formData.permissionKey" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -106,11 +106,13 @@ import fromMixin from '@/mixins/formMixin'
 import menuApi from '@/api/menu'
 import { menuViewModel, rules } from './MenuConfig'
 import CommonTreeSelector from '@/components/CommonTreeSelector'
+import PermissionSelector from './PermissionSelector'
 
 export default {
   name: 'MenuCreateOrEditForm',
   components: {
-    CommonTreeSelector
+    CommonTreeSelector,
+    PermissionSelector
   },
   mixins: [fromMixin],
   props: {
@@ -142,9 +144,9 @@ export default {
     this.bindData()
   },
   methods: {
-    async get() {
+    get() {
       if (this.menuId) {
-        await menuApi.get(this.menuId).then(res => {
+        menuApi.get(this.menuId).then(res => {
           this.formData = Object.assign(this.formData, res)
         })
       }

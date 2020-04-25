@@ -77,9 +77,9 @@ export default {
     }
   },
   methods: {
-    async get() {
+    get() {
       if (this.tenantId) {
-        await tenantApi.get(this.tenantId).then(res => {
+        tenantApi.get(this.tenantId).then(res => {
           this.formData = Object.assign(this.formData, res)
         })
       }

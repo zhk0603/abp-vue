@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abp.VueTemplate.MenuManagement.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Authorization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.MultiTenancy;
@@ -20,22 +22,19 @@ namespace Abp.VueTemplate.MenuManagement
         IMenuAppService
     {
         private readonly IPermissionDefinitionManager _permissionDefinitionManager;
-        private readonly IMenuGrantRepository _menuGrantRepository;
         private readonly IMenuManager _menuManager;
-        private readonly IPermissionManager _permissionManager;
+        private readonly IStringLocalizerFactory _stringLocalizerFactory;
 
         public MenuAppService(
             IRepository<Menu, Guid> repository,
             IPermissionDefinitionManager permissionDefinitionManager,
-            IMenuGrantRepository menuGrantRepository,
             IMenuManager menuManager,
-            IPermissionManager permissionManager
+            IStringLocalizerFactory stringLocalizerFactory
         ) : base(repository)
         {
             _permissionDefinitionManager = permissionDefinitionManager;
-            _menuGrantRepository = menuGrantRepository;
             _menuManager = menuManager;
-            _permissionManager = permissionManager;
+            _stringLocalizerFactory = stringLocalizerFactory;
         }
 
         protected override string GetListPolicyName => MenuManagementPermissions.Menus.Default;
@@ -55,6 +54,61 @@ namespace Abp.VueTemplate.MenuManagement
             }
 
             return await base.UpdateAsync(id, input);
+        }
+
+        public virtual Task<List<AuthPolicyDto>> GetAuthPolicies()
+        {
+            var result = new List<AuthPolicyDto>();
+            var groups = _permissionDefinitionManager.GetGroups();
+            var multiTenancySide = CurrentTenant.GetMultiTenancySide();
+            foreach (var group in groups)
+            {
+                if (group.Permissions.Count == 0)
+                {
+                    continue;
+                }
+
+                foreach (var permission in group.Permissions)
+                {
+                    if (!permission.MultiTenancySide.HasFlag(multiTenancySide))
+                    {
+                        continue;
+                    }
+
+                    var policy = new AuthPolicyDto()
+                    {
+                        Name = permission.Name,
+                        DisplayName = permission.DisplayName.Localize(_stringLocalizerFactory),
+                        Children = new List<AuthPolicyDto>
+                        {
+                            new AuthPolicyDto
+                            {
+                                Name = permission.Name,
+                                DisplayName = permission.DisplayName.Localize(_stringLocalizerFactory)
+                            }
+                        }
+                    };
+                    result.Add(policy);
+
+                    foreach (var c in permission.Children)
+                    {
+                        if (!c.MultiTenancySide.HasFlag(multiTenancySide))
+                        {
+                            continue;
+                        }
+
+                        policy.Children.Add(new AuthPolicyDto
+                        {
+                            Name = c.Name,
+                            DisplayName = c.DisplayName.Localize(_stringLocalizerFactory)
+                        });
+                    }
+                }
+
+                
+            }
+
+            return Task.FromResult(result);
         }
 
         public override Task<MenuDto> CreateAsync(CreateOrUpdateMenuDto input)

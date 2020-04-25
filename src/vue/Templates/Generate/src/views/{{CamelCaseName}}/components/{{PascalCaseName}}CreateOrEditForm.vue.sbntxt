@@ -75,9 +75,9 @@ export default {
     }
   },
   methods: {
-    async get() {
+    get() {
       if (this.{{CamelCaseName}}Id) {
-        await {{CamelCaseName}}Api.get(this.{{CamelCaseName}}Id).then(res => {
+        {{CamelCaseName}}Api.get(this.{{CamelCaseName}}Id).then(res => {
           this.formData = Object.assign(this.formData, res)
         })
       }

@@ -96,7 +96,7 @@ export default {
         const treeData = (await menuApi.getList()).items
 
         // 读取拥有的权限，初始化选中
-        await menuGrantApi.get({
+        menuGrantApi.get({
           providerName: this.providerName,
           providerKey: this.providerKey
         }).then(res => {

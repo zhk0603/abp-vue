@@ -11,5 +11,6 @@ namespace Abp.VueTemplate.MenuManagement
     public interface
         IMenuAppService : ICrudAppService<MenuDto, Guid, MenuRequestDto, CreateOrUpdateMenuDto>
     {
+        Task<List<AuthPolicyDto>> GetAuthPolicies();
     }
 }

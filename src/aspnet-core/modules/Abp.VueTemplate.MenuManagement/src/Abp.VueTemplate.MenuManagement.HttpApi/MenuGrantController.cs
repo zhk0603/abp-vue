@@ -19,19 +19,19 @@ namespace Abp.VueTemplate.MenuManagement
         }
 
         [HttpGet("list")]
-        public Task<GetMenuResultDto> GetListAsync()
+        public virtual Task<GetMenuResultDto> GetListAsync()
         {
             return _menuGrantAppService.GetListAsync();
         }
 
         [HttpGet]
-        public Task<GetMenuGrantListResultDto> GetAsync(string providerName, string providerKey)
+        public virtual Task<GetMenuGrantListResultDto> GetAsync(string providerName, string providerKey)
         {
             return _menuGrantAppService.GetAsync(providerName, providerKey);
         }
 
         [HttpPut]
-        public Task UpdateAsync(string providerName, string providerKey, UpdateMenuGrantsDto input)
+        public virtual Task UpdateAsync(string providerName, string providerKey, UpdateMenuGrantsDto input)
         {
             return _menuGrantAppService.UpdateAsync(providerName, providerKey, input);
         }

@@ -52,9 +52,17 @@ namespace Abp.VueTemplate.MenuManagement
             //).ToListAsync(GetCancellationToken(cancellationToken));
         }
 
-        public virtual async Task<List<MenuGrant>> GetGrantByMenuIdAsync(Guid menuId)
+        public virtual async Task<List<MenuGrant>> GetGrantByMenuIdAsync(Guid menuId, bool noTracking = true)
         {
-            return await DbSet.Where(x => x.MenuId == menuId).ToListAsync();
+            var query = DbSet
+                .Where(x => x.MenuId == menuId);
+
+            if (noTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return await query.ToListAsync();
         }
     }
 }

@@ -141,12 +141,11 @@ export default {
     async get() {
       if (this.userId) {
         rules['password'][0].required = false
-        await userApi.get(this.userId).then(res => {
-          this.formData = Object.assign(this.formData, res)
-        })
-        await userApi.getRoles(this.userId).then(res => {
-          this.formData.roleNames = res.items.map(x => x.name)
-        })
+        const user = await userApi.get(this.userId)
+        this.formData = Object.assign(this.formData, user)
+
+        const roles = await userApi.getRoles(this.userId)
+        this.formData.roleNames = roles.items.map(x => x.name)
       }
     },
     submitForm() {

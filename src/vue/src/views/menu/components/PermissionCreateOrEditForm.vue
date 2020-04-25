@@ -36,7 +36,7 @@
             prop="permissionKey"
             label="权限"
           >
-            <el-input v-model="formData.permissionKey" class="form-item" size="mini" clearable />
+            <PermissionSelector :filter-group="parentPermission" :value.sync="formData.permissionKey" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -52,9 +52,11 @@
 import fromMixin from '@/mixins/formMixin'
 import menuApi from '@/api/menu'
 import { permissionViewModel, permissionRules } from './MenuConfig'
+import PermissionSelector from './PermissionSelector'
 
 export default {
   name: 'PermissionCreateOrEditForm',
+  components: { PermissionSelector },
   mixins: [fromMixin],
   props: {
     isCreate: {
@@ -75,7 +77,8 @@ export default {
   data() {
     return {
       formData: Object.assign({ }, permissionViewModel),
-      permissionRules
+      permissionRules,
+      parentPermission: ''
     }
   },
   watch: {
@@ -94,14 +97,16 @@ export default {
           id: parentId,
           displayName: parentDisplayName
         } = val
+        // this.parentPermission = val.permissionKey
+        // debugger
         this.formData = Object.assign(this.formData, { parentId, parentDisplayName })
       }
     }
   },
   methods: {
-    async get() {
+    get() {
       if (this.menuId) {
-        await menuApi.get(this.menuId).then(res => {
+        menuApi.get(this.menuId).then(res => {
           this.formData = Object.assign(this.formData, res)
         })
       }

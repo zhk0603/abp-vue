@@ -26,6 +26,7 @@
     <div class="app-full-body">
       <el-table
         :data="tableData"
+        :expand-row-keys="expandKeys"
         highlight-current-row
         row-key="id"
         size="small"
@@ -201,6 +202,7 @@ export default {
       editMenuId: '',
       permissionParentMenu: null,
       editPermissionId: '',
+      expandKeys: [],
       query: {
         name: ''
       }
@@ -216,6 +218,11 @@ export default {
       }).then(res => {
         this.tableData = res.items
         this.updateTotalCount(res.totalCount)
+
+        // 展开第一级
+        res.items.forEach(x => {
+          this.expandKeys.push(x.id)
+        })
       })
     },
     dialogClose(refresh) {
