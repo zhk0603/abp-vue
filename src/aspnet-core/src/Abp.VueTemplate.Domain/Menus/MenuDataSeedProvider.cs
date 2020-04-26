@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Abp.VueTemplate.MenuManagement;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Guids;
 using Volo.Abp.MultiTenancy;
 
 namespace Abp.VueTemplate.Menus
@@ -15,111 +16,114 @@ namespace Abp.VueTemplate.Menus
     {
         private readonly IMenuRepository _menuRepository;
         private readonly ICurrentTenant _currentTenant;
+        private readonly IGuidGenerator _guidGenerator;
 
         public MenuDataSeedProvider(
             IMenuRepository menuRepository,
-            ICurrentTenant currentTenant
+            ICurrentTenant currentTenant,
+            IGuidGenerator guidGenerator
         )
         {
             _menuRepository = menuRepository;
             _currentTenant = currentTenant;
+            _guidGenerator = guidGenerator;
         }
 
         public List<Menu> Menus => new List<Menu>
         {
-            new Menu("UserIndex", "用户管理", MenuEnumType.Menu)
+            new Menu(_guidGenerator.Create(), "UserIndex", "用户管理", MenuEnumType.Menu)
             {
                 Sort = "1",
                 PermissionKey = "AbpIdentity.Users",
                 Children = new Collection<Menu>
                 {
-                    new Menu("", "创建", MenuEnumType.Permission)
+                    new Menu(_guidGenerator.Create(),"", "创建", MenuEnumType.Permission)
                     {
                         PermissionKey = "AbpIdentity.Users.Create"
                     },
-                    new Menu("", "更新", MenuEnumType.Permission)
+                    new Menu(_guidGenerator.Create(),"", "更新", MenuEnumType.Permission)
                     {
                         PermissionKey = "AbpIdentity.Users.Update"
                     },
-                    new Menu("", "删除", MenuEnumType.Permission)
+                    new Menu(_guidGenerator.Create(),"", "删除", MenuEnumType.Permission)
                     {
                         PermissionKey = "AbpIdentity.Users.Delete"
                     },
-                    new Menu("", "管理权限", MenuEnumType.Permission)
+                    new Menu(_guidGenerator.Create(),"", "管理权限", MenuEnumType.Permission)
                     {
                         PermissionKey = "AbpIdentity.Users.ManagePermissions"
                     }
                 }
             },
-            new Menu("RoleIndex", "角色管理", MenuEnumType.Menu)
+            new Menu(_guidGenerator.Create(),"RoleIndex", "角色管理", MenuEnumType.Menu)
             {
                 Sort = "2",
                 PermissionKey = "AbpIdentity.Roles",
                 Children = new Collection<Menu>
                 {
-                    new Menu("", "创建", MenuEnumType.Permission)
+                    new Menu(_guidGenerator.Create(),"", "创建", MenuEnumType.Permission)
                     {
                         PermissionKey = "AbpIdentity.Roles.Create"
                     },
-                    new Menu("", "更新", MenuEnumType.Permission)
+                    new Menu(_guidGenerator.Create(),"", "更新", MenuEnumType.Permission)
                     {
                         PermissionKey = "AbpIdentity.Roles.Update"
                     },
-                    new Menu("", "删除", MenuEnumType.Permission)
+                    new Menu(_guidGenerator.Create(),"", "删除", MenuEnumType.Permission)
                     {
                         PermissionKey = "AbpIdentity.Roles.Delete"
                     },
-                    new Menu("", "管理权限", MenuEnumType.Permission)
+                    new Menu(_guidGenerator.Create(),"", "管理权限", MenuEnumType.Permission)
                     {
                         PermissionKey = "AbpIdentity.Roles.ManagePermissions"
                     }
                 }
             },
-            new Menu("TenantIndex", "租户管理", MenuEnumType.Menu, MultiTenancySides.Host)
+            new Menu(_guidGenerator.Create(),"TenantIndex", "租户管理", MenuEnumType.Menu, MultiTenancySides.Host)
             {
                 Sort = "3",
                 PermissionKey = "AbpTenantManagement.Tenants",
                 Children = new Collection<Menu>
                 {
-                    new Menu("", "创建", MenuEnumType.Permission, MultiTenancySides.Host)
+                    new Menu(_guidGenerator.Create(),"", "创建", MenuEnumType.Permission, MultiTenancySides.Host)
                     {
                         PermissionKey = "AbpTenantManagement.Tenants.Create"
                     },
-                    new Menu("", "更新", MenuEnumType.Permission, MultiTenancySides.Host)
+                    new Menu(_guidGenerator.Create(),"", "更新", MenuEnumType.Permission, MultiTenancySides.Host)
                     {
                         PermissionKey = "AbpTenantManagement.Tenants.Update"
                     },
-                    new Menu("", "删除", MenuEnumType.Permission, MultiTenancySides.Host)
+                    new Menu(_guidGenerator.Create(),"", "删除", MenuEnumType.Permission, MultiTenancySides.Host)
                     {
                         PermissionKey = "AbpTenantManagement.Tenants.Delete"
                     },
-                    new Menu("", "管理功能", MenuEnumType.Permission,
+                    new Menu(_guidGenerator.Create(),"", "管理功能", MenuEnumType.Permission,
                         MultiTenancySides.Host)
                     {
                         PermissionKey = "AbpTenantManagement.Tenants.ManageFeatures"
                     },
-                    new Menu("", "管理链接字符串", MenuEnumType.Permission,
+                    new Menu(_guidGenerator.Create(),"", "管理链接字符串", MenuEnumType.Permission,
                         MultiTenancySides.Host)
                     {
                         PermissionKey = "AbpTenantManagement.Tenants.ManageConnectionStrings"
                     }
                 }
             },
-            new Menu("MenuIndex", "菜单管理", MenuEnumType.Menu, MultiTenancySides.Host)
+            new Menu(_guidGenerator.Create(),"MenuIndex", "菜单管理", MenuEnumType.Menu, MultiTenancySides.Host)
             {
                 Sort = "4",
                 PermissionKey = "MenuManagement.Menus",
                 Children = new Collection<Menu>
                 {
-                    new Menu("", "创建", MenuEnumType.Permission, MultiTenancySides.Host)
+                    new Menu(_guidGenerator.Create(),"", "创建", MenuEnumType.Permission, MultiTenancySides.Host)
                     {
                         PermissionKey = "MenuManagement.Menus.Create"
                     },
-                    new Menu("", "更新", MenuEnumType.Permission, MultiTenancySides.Host)
+                    new Menu(_guidGenerator.Create(),"", "更新", MenuEnumType.Permission, MultiTenancySides.Host)
                     {
                         PermissionKey = "MenuManagement.Menus.Update"
                     },
-                    new Menu("", "删除", MenuEnumType.Permission, MultiTenancySides.Host)
+                    new Menu(_guidGenerator.Create(),"", "删除", MenuEnumType.Permission, MultiTenancySides.Host)
                     {
                         PermissionKey = "MenuManagement.Menus.Delete"
                     }

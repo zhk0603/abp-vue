@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.Uow;
 
 namespace Abp.VueTemplate.MenuManagement
 {
@@ -42,13 +43,15 @@ namespace Abp.VueTemplate.MenuManagement
         protected IMenuGrantRepository MenuGrantRepository { get; }
         protected IGuidGenerator GuidGenerator { get; }
         protected ICurrentTenant CurrentTenant { get; }
+        protected IUnitOfWorkManager UnitOfWorkManager { get; }
         public IMenuDataSeedProvider MenuDataSeedProvider { get; set; }
 
         public MenuDataSeedContributor(
             IMenuRepository menuRepository,
             IMenuGrantRepository menuGrantRepository,
             IGuidGenerator guidGenerator,
-            ICurrentTenant currentTenant
+            ICurrentTenant currentTenant,
+            Volo.Abp.Uow.IUnitOfWorkManager unitOfWorkManager
         )
         {
             MenuRepository = menuRepository;
@@ -56,6 +59,7 @@ namespace Abp.VueTemplate.MenuManagement
             MenuDataSeedProvider = NullMenuDataSeeder.Instance;
             GuidGenerator = guidGenerator;
             CurrentTenant = currentTenant;
+            UnitOfWorkManager = unitOfWorkManager;
         }
 
         public async Task SeedAsync(DataSeedContext context)
@@ -73,8 +77,10 @@ namespace Abp.VueTemplate.MenuManagement
                     continue;
                 }
 
-                await MenuRepository.InsertAsync(menu);
+                await MenuRepository.InsertAsync(menu, true);
             }
+
+            await UnitOfWorkManager.Current.SaveChangesAsync();
         }
 
         private async Task InsertMenuGrantAsync(DataSeedContext context)
