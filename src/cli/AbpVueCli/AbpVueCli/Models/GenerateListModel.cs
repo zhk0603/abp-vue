@@ -8,6 +8,7 @@ namespace AbpVueCli.Models
     {
         public bool GenerateCreate { get; set; }
         public bool GenerateEdit { get; set; }
+        public bool PermissionControl { get; set; }
         public IEnumerable<OpenApiParameterWrap> QueryParams { get; set; }
         public IDictionary<string,OpenApiSchema> ListProperty { get; set; }
     }
@@ -16,6 +17,7 @@ namespace AbpVueCli.Models
     {
         bool GenerateCreate { get; set; }
         bool GenerateEdit { get; set; }
+        bool PermissionControl { get; set; }
         IEnumerable<OpenApiParameterWrap> QueryParams { get; set; }
         IDictionary<string, OpenApiSchema> ListProperty { get; set; }
     }

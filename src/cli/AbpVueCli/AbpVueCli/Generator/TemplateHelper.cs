@@ -148,6 +148,22 @@ namespace AbpVueCli.Generator
 
             return JsonConvert.SerializeObject(rulesDic, Formatting.Indented);
         }
+        
+        public static string GenerateColumns(OpenApiSchema apiSchema)
+        {
+            var columns = new List<JObject>();
+            if(apiSchema != null)
+            {
+                foreach (var propertyItem in apiSchema.Properties)
+                {
+                    var obj = new JObject();
+                    obj["prop"] = propertyItem.Key;
+                    obj["label"] = propertyItem.Value.Description ?? propertyItem.Key;
+                    columns.Add(obj);
+                }
+            }
+            return JsonConvert.SerializeObject(columns, Formatting.Indented);
+        }
 
         private static string GetJsFormatType(OpenApiSchema propertySchema)
         {

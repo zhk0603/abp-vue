@@ -51,7 +51,7 @@ namespace Abp.VueTemplate.MenuManagement
             IMenuGrantRepository menuGrantRepository,
             IGuidGenerator guidGenerator,
             ICurrentTenant currentTenant,
-            Volo.Abp.Uow.IUnitOfWorkManager unitOfWorkManager
+            IUnitOfWorkManager unitOfWorkManager
         )
         {
             MenuRepository = menuRepository;

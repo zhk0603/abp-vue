@@ -18,7 +18,7 @@ namespace AbpVueCli.Commands
         public CrudCommand(IServiceProvider serviceProvider) : base(serviceProvider, "crud", "根据指定的模块生成CRUD的相关文件")
         {
             AddArgument(new Argument<string>("module") {Description = "模块名称"});
-            AddArgument(new Argument<string>("modulePrefix") {Description = "模块api路径的前缀"});
+            AddArgument(new Argument<string>("modulePrefix") {Description = "模块api路径的前缀，如果要生成空模板，则输入：“empty”"});
 
             AddOption(new Option(new string[] { "-d", "--directory" }, "项目目录。")
             {
@@ -40,7 +40,7 @@ namespace AbpVueCli.Commands
 
         private async Task Run(GenerateCommandOptionBasic options)
         {
-            
+
             await RunWorkflow(builder =>
             {
                 builder
@@ -57,6 +57,12 @@ namespace AbpVueCli.Commands
                         {
                             step.VariableName = "Overwrite";
                             step.ValueExpression = new JavaScriptExpression<bool>("Option.Overwrite");
+                        })
+                    .Then<SetVariable>(
+                        step =>
+                        {
+                            step.VariableName = "PermissionControl";
+                            step.ValueExpression = new JavaScriptExpression<bool>("!Option.NoPermissionControl");
                         })
                     .Then<ProjectFinderStep>()
                     .Then<ProjectInfoProviderStep>()
@@ -84,15 +90,15 @@ namespace AbpVueCli.Commands
                         }
                     );
 
-                    //.Then<GenerateApiStep>()
+                //.Then<GenerateApiStep>()
 
-                    //.Then<PostApiFinderStep>()
-                    //.Then<GenerateModelStep>()
-                    //.Then<GenerateCreateViewStep>()
-                    //.Then<GenerateEditViewStep>()
+                //.Then<PostApiFinderStep>()
+                //.Then<GenerateModelStep>()
+                //.Then<GenerateCreateViewStep>()
+                //.Then<GenerateEditViewStep>()
 
-                    //.Then<GetListApiFinderStep>()
-                    //.Then<GenerateListViewStep>();
+                //.Then<GetListApiFinderStep>()
+                //.Then<GenerateListViewStep>();
 
                 return builder.Build();
             });

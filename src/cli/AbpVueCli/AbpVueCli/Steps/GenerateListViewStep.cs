@@ -17,6 +17,7 @@ namespace AbpVueCli.Steps
         protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context, CancellationToken cancellationToken)
         {
             var modelInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
+            var permissionControl = context.GetVariable<bool>("PermissionControl");
 
             var appDir = AppDomain.CurrentDomain.BaseDirectory;
             var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src", "views");
@@ -36,6 +37,7 @@ namespace AbpVueCli.Steps
 
                 GenerateCreate = true,
                 GenerateEdit = true,
+                PermissionControl = permissionControl,
                 QueryParams = TemplateHelper.GetQueryParameters(modelInfo.ProjectInfo, getListApi.Operation),
                 ListProperty = GetListProperty(getListApi, modelInfo.ProjectInfo)
             };

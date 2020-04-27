@@ -32,6 +32,11 @@ namespace AbpVueCli.Commands
                 Argument = new Argument<bool>()
             });
 
+            AddOption(new Option(new[] { "--no-permission-control" }, "不生成权限控制。")
+            {
+                Argument = new Argument<bool>()
+            });
+
             Handler = CommandHandler.Create((GenerateCommandOptionBasic options) => Run(options));
         }
 
@@ -52,6 +57,12 @@ namespace AbpVueCli.Commands
                         {
                             step.VariableName = "Overwrite";
                             step.ValueExpression = new JavaScriptExpression<bool>("Option.Overwrite");
+                        })
+                    .Then<SetVariable>(
+                        step =>
+                        {
+                            step.VariableName = "PermissionControl";
+                            step.ValueExpression = new JavaScriptExpression<bool>("!Option.NoPermissionControl");
                         })
                     .Then<ProjectFinderStep>()
                     .Then<ProjectInfoProviderStep>()

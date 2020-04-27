@@ -47,30 +47,31 @@ namespace AbpVueCli
             //    "-u", "zhaokun",
             //    "-e", "abc@abc.com",
             //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
-            //    "--overwrite",
+            //    //"--overwrite",
             //    "-s", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue" // VueProject根目录
             //};
 
             // sy - project
-            args = new string[]
-            {
-                "generate",
-                "crud",
-                "car",
-                "empty",
-                "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
-            };
-
-            // abp-vue
             //args = new string[]
             //{
             //    "generate",
             //    "crud",
-            //    "role",
-            //    "/api/identity/roles",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
-            //    "-o"
+            //    "car",
+            //    "empty",
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
             //};
+
+            // abp-vue
+            args = new string[]
+            {
+                "generate",
+                "crud",
+                "menu",
+                "/api/menus",
+                "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+                "-o",
+                "--no-permission-control"
+            };
 
             //args = new string[]
             //{
@@ -100,12 +101,13 @@ namespace AbpVueCli
             //{
             //    "generate",
             //    "list",
-            //    "tenant",
-            //    "/api/multi-tenancy/tenants",
+            //    "role",
+            //    "/api/identity/roles",
             //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
             //     "-o",
             //    "-f",
-            //    "../test-out"
+            //    "../test-out",
+            //    // "--no-permission-control"
             //};
 
             //args = new string[]

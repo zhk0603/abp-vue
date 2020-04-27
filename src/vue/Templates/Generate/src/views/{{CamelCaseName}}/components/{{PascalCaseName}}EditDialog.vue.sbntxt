@@ -12,7 +12,7 @@
     :width="dialogWidth"
     @close="closeDialog"
   >
-    <{{PascalCaseName}}CreateOrEditForm :{{CamelCaseName}}Id="{{CamelCaseName}}Id" @cancel="onCancel" @successful="onSuccessful" />
+    <{{PascalCaseName}}CreateOrEditForm v-if="dialogVisible" :{{CamelCaseName}}Id="{{CamelCaseName}}Id" @cancel="onCancel" @successful="onSuccessful" />
   </el-dialog>
 </template>
 

@@ -8,7 +8,7 @@ const {{ CamelCaseName }}Api = {}
  * @date {{date.to_string date.now `%F %T`}}
  * @version V1.0.0
  */
-{{ CamelCaseName }}Api.{{ helper.generate_api_func_name Option api }} => {
+{{ CamelCaseName }}Api.{{ helper.generate_api_func_name ModuleInfo.Option api }} => {
   return request({
     url: `{{helper.generate_api_url api.Url}}`,
     method: '{{api.Method | string.downcase }}'{{helper.generate_api_params api}}
