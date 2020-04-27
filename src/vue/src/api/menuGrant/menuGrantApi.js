@@ -5,7 +5,7 @@ const menuGrantApi = {}
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-24 09:59:57
+ * @date 2020-04-27 09:57:50
  * @version V1.0.0
  */
 menuGrantApi.getList = () => {
@@ -18,7 +18,7 @@ menuGrantApi.getList = () => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-24 09:59:57
+ * @date 2020-04-27 09:57:50
  * @version V1.0.0
  */
 menuGrantApi.get = (params) => {
@@ -32,7 +32,7 @@ menuGrantApi.get = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-24 09:59:57
+ * @date 2020-04-27 09:57:50
  * @version V1.0.0
  */
 menuGrantApi.put = (params, body) => {

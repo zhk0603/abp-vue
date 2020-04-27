@@ -22,7 +22,10 @@ namespace AbpVueCli.Steps
             var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src", "views");
             if (!Directory.Exists(tempDir))
                 throw new DirectoryNotFoundException($"模板目录 {tempDir} 不存在。");
-            var targetDirectory = Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "views");
+
+            string targetDirectory = modelInfo.Option.OutputFolder.IsNullOrWhiteSpace()
+                ? Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "views")
+                : Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, modelInfo.Option.OutputFolder));
 
             ModuleApiOperation postApi = context.GetVariable<ModuleApiOperation>("PostModuleApi");
             var apiSchema = postApi.Operation.RequestBody.Content.First().Value.Schema;

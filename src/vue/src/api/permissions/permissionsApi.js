@@ -5,7 +5,7 @@ const permissionsApi = {}
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:51:28
+ * @date 2020-04-27 09:56:59
  * @version V1.0.0
  */
 permissionsApi.getList = (params) => {
@@ -19,7 +19,7 @@ permissionsApi.getList = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:51:28
+ * @date 2020-04-27 09:57:02
  * @version V1.0.0
  */
 permissionsApi.put = (params, body) => {

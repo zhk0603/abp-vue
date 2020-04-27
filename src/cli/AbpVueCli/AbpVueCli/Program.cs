@@ -46,9 +46,9 @@ namespace AbpVueCli
             //    "-o", "https://localhost:44314/swagger/v1/swagger.json",
             //    "-u", "zhaokun",
             //    "-e", "abc@abc.com",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views",
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
             //    "--overwrite",
-            //    "-s", "." // VueProject根目录
+            //    "-s", @"D:\tmp" // VueProject根目录
             //};
 
             // sy-project
@@ -72,15 +72,17 @@ namespace AbpVueCli
             //    "-o"
             //};
 
-            args = new string[]
-            {
-                "generate",
-                "api",
-                "tenant",
-                "/api/multi-tenancy/tenants",
-                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
-                "-o"
-            };
+            //args = new string[]
+            //{
+            //    "generate",
+            //    "api",
+            //    "AbpTenant",
+            //    "/api/abp/multi-tenancy/tenants",
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //    "-o",
+            //    "-f",
+            //    "../test-out"
+            //};
 
             //args = new string[]
             //{
@@ -88,7 +90,10 @@ namespace AbpVueCli
             //    "model",
             //    "tenant",
             //    "/api/multi-tenancy/tenants",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //    "-o",
+            //    "-f",
+            //    "../test-out"
             //};
 
             //args = new string[]
@@ -97,7 +102,10 @@ namespace AbpVueCli
             //    "list",
             //    "tenant",
             //    "/api/multi-tenancy/tenants",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //     "-o",
+            //    "-f",
+            //    "../test-out"
             //};
 
             //args = new string[]
@@ -106,7 +114,10 @@ namespace AbpVueCli
             //    "create",
             //    "tenant",
             //    "/api/multi-tenancy/tenants",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //    "-o",
+            //    "-f",
+            //    "../test-out"
             //};
 
             //args = new string[]
@@ -115,9 +126,10 @@ namespace AbpVueCli
             //    "edit",
             //    "tenant",
             //    "/api/multi-tenancy/tenants",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
-
-            //    "--no-overwrite"
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //    "-o",
+            //    "-f",
+            //    "../test-out"
             //};
 #endif
 
