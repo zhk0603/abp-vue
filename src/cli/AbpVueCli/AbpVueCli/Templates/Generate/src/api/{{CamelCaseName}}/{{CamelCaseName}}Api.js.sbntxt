@@ -1,10 +1,10 @@
 ﻿import request from '@/utils/request'
 
 const {{ CamelCaseName }}Api = {}
-{{ for api in ModuleApis }}
+{{ for api in ModuleInfo.ModuleApis }}
 /**
  * {{api.Operation.Summary | object.default "Created by AbpVueCli" }}
- * @author {{ProjectInfo.UserName}}
+ * @author {{ModuleInfo.ProjectInfo.UserName}}
  * @date {{date.to_string date.now `%F %T`}}
  * @version V1.0.0
  */

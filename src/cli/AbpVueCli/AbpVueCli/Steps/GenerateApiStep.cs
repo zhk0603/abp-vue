@@ -17,7 +17,7 @@ namespace AbpVueCli.Steps
         protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context,
             CancellationToken cancellationToken)
         {
-            var modelInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
+            var moduleInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
 
             var appDir = AppDomain.CurrentDomain.BaseDirectory;
             var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src",
@@ -25,12 +25,17 @@ namespace AbpVueCli.Steps
             if (!Directory.Exists(tempDir))
                 throw new DirectoryNotFoundException($"模板目录 {tempDir} 不存在。");
 
-            string targetDirectory = modelInfo.Option.OutputFolder.IsNullOrWhiteSpace() ?
+            string targetDirectory = moduleInfo.Option.OutputFolder.IsNullOrWhiteSpace() ?
                     Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "api") : 
-                    Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, modelInfo.Option.OutputFolder));
+                    Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, moduleInfo.Option.OutputFolder));
             
             var overwrite = context.GetVariable<bool>("Overwrite");
-            await GenerateFiles(tempDir, targetDirectory, modelInfo, overwrite);
+            await GenerateFiles(tempDir, targetDirectory,
+                new BasicGenerateModel
+                {
+                    Name = moduleInfo.Name,
+                    ModuleInfo = moduleInfo
+                }, overwrite);
 
             return Done();
         }

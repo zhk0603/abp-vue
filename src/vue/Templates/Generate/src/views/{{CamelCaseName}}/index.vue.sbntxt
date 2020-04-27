@@ -1,6 +1,6 @@
 <!--
 * @description Created by AbpVueCli
-* @author {{ProjectInfo.UserName}}
+* @author {{ModuleInfo.ProjectInfo.UserName}}
 * @date {{date.to_string date.now `%F %T`}}
 * @version V1.0.0
 !-->
@@ -120,7 +120,7 @@ export default {
   methods: {
     getList() {
       {{ CamelCaseName }}Api.getList(this.query).then(res => {
-        this.tableData = res.{{ProjectInfo.ListPropertySchemaPath}}
+        this.tableData = res.{{ModuleInfo.ProjectInfo.ListPropertySchemaPath}}
         this.updateTotalCount(res.totalCount)
       })
     },

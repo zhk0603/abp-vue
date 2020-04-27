@@ -104,42 +104,45 @@ namespace AbpVueCli.Generator
         {
             var rulesDic = new Dictionary<string, List<JObject>>();
 
-            foreach (var propertyItem in apiSchema.Properties)
+            if (apiSchema != null)
             {
-                var rules = new List<JObject>();
-
-                if (apiSchema.Required.Contains(propertyItem.Key))
+                foreach (var propertyItem in apiSchema.Properties)
                 {
-                    var requiredRule = new JObject();
-                    requiredRule["required"] = true;
-                    requiredRule["message"] = $"请输入{propertyItem.Value.Description ?? propertyItem.Key}";
-                    requiredRule["trigger"] = "blur";
-                    rules.Add(requiredRule);
-                }
+                    var rules = new List<JObject>();
 
-                if (propertyItem.Value.MinLength.HasValue)
-                {
-                    var lenRule = new JObject();
-                    lenRule["min"] = propertyItem.Value.MinLength;
-                    lenRule["max"] = propertyItem.Value.MaxLength;
-                    lenRule["message"] = $"长度在 {propertyItem.Value.MinLength} 到 {propertyItem.Value.MaxLength} 个字符";
-                    lenRule["trigger"] = "blur";
-                    rules.Add(lenRule);
-                }
+                    if (apiSchema.Required.Contains(propertyItem.Key))
+                    {
+                        var requiredRule = new JObject();
+                        requiredRule["required"] = true;
+                        requiredRule["message"] = $"请输入{propertyItem.Value.Description ?? propertyItem.Key}";
+                        requiredRule["trigger"] = "blur";
+                        rules.Add(requiredRule);
+                    }
 
-                //if (!propertyItem.Value.Type.IsNullOrWhiteSpace())
-                //{
-                //    var formatRule = new JObject();
-                //    formatRule["type"] = GetJsFormatType(propertyItem.Value);
-                //    formatRule["message"] =
-                //        $"{propertyItem.Value.Description ?? propertyItem.Key} 必须为 {formatRule["type"]}";
-                //    formatRule["trigger"] = "change";
-                //    rules.Add(formatRule);
-                //}
+                    if (propertyItem.Value.MinLength.HasValue)
+                    {
+                        var lenRule = new JObject();
+                        lenRule["min"] = propertyItem.Value.MinLength;
+                        lenRule["max"] = propertyItem.Value.MaxLength;
+                        lenRule["message"] = $"长度在 {propertyItem.Value.MinLength} 到 {propertyItem.Value.MaxLength} 个字符";
+                        lenRule["trigger"] = "blur";
+                        rules.Add(lenRule);
+                    }
 
-                if (rules.Count > 0)
-                {
-                    rulesDic.Add(propertyItem.Key, rules);
+                    //if (!propertyItem.Value.Type.IsNullOrWhiteSpace())
+                    //{
+                    //    var formatRule = new JObject();
+                    //    formatRule["type"] = GetJsFormatType(propertyItem.Value);
+                    //    formatRule["message"] =
+                    //        $"{propertyItem.Value.Description ?? propertyItem.Key} 必须为 {formatRule["type"]}";
+                    //    formatRule["trigger"] = "change";
+                    //    rules.Add(formatRule);
+                    //}
+
+                    if (rules.Count > 0)
+                    {
+                        rulesDic.Add(propertyItem.Key, rules);
+                    }
                 }
             }
 

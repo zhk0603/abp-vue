@@ -48,18 +48,18 @@ namespace AbpVueCli
             //    "-e", "abc@abc.com",
             //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
             //    "--overwrite",
-            //    "-s", @"D:\tmp" // VueProject根目录
+            //    "-s", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue" // VueProject根目录
             //};
 
-            // sy-project
-            //args = new string[]
-            //{
-            //    "generate",
-            //    "crud",
-            //    "car",
-            //    "/api/car",
-            //    "-d", @"D:\Workspaces\02.ty-tfs\sy-project-collection\sy-project\sy-project\vue"
-            //};
+            // sy - project
+            args = new string[]
+            {
+                "generate",
+                "crud",
+                "car",
+                "empty",
+                "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            };
 
             // abp-vue
             //args = new string[]

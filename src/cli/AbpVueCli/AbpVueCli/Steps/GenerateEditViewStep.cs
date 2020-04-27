@@ -34,7 +34,6 @@ namespace AbpVueCli.Steps
             {
                 Name = modelInfo.Name,
                 ModuleInfo = modelInfo,
-                ProjectInfo = modelInfo.ProjectInfo,
                 Properties = apiSchema.Properties
             };
 

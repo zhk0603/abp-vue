@@ -33,9 +33,7 @@ namespace AbpVueCli.Steps
             {
                 Name = modelInfo.Name,
                 ModuleInfo = modelInfo,
-                ProjectInfo = modelInfo.ProjectInfo,
 
-                ApiOperation = getListApi,
                 GenerateCreate = true,
                 GenerateEdit = true,
                 QueryParams = TemplateHelper.GetQueryParameters(modelInfo.ProjectInfo, getListApi.Operation),

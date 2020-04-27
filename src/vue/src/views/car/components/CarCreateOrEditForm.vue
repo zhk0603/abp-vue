@@ -1,7 +1,7 @@
 <!--
 * @description Created by AbpVueCli
-* @author {{ModuleInfo.ProjectInfo.UserName}}
-* @date {{date.to_string date.now `%F %T`}}
+* @author zhaokun
+* @date 2020-04-27 15:52:05
 * @version V1.0.0
 !-->
 <template>
@@ -11,28 +11,11 @@
       :model="formData"
       :rules="rules"
       label-width="120px"
-{{ if Properties | array.size < 10 }}      label-position="top"{{else}}      label-position="right"{{ end }}
+      label-position="top"
       size="mini"
     >
       <el-row>
-{{ for prop in Properties }}
-{{ if Properties | array.size < 10 }}        <el-col :span="24">
-{{ else }}        <el-col :span="12">{{ end }}
-          <el-form-item
-            prop="{{prop.Key}}"
-            label="{{prop.Value.Description | object.default prop.Key}}"
-          >
-{{ if prop.Value.Type == 'boolean' }}
-            <el-switch v-model="formData.{{prop.Key}}" />
-{{ else if prop.Value.Type == 'integer' }}
-            <el-input v-model="formData.{{prop.Key}}" class="form-item" size="mini" type="number" clearable />
-{{ else if prop.Value.Format == 'date-time'}}
-            <el-date-picker v-model="formData.{{prop.Key}}" class="form-item" size="mini" type="date" />
-{{ else }}
-            <el-input v-model="formData.{{prop.Key}}" class="form-item" size="mini" clearable />
-{{ end }}
-          </el-form-item>
-        </el-col>{{ end }}
+
       </el-row>
     </el-form>
     <div class="from-footer">
@@ -44,18 +27,18 @@
 
 <script>
 import fromMixin from '@/mixins/formMixin'
-import {{CamelCaseName}}Api from '@/api/{{CamelCaseName}}'
-import { viewModel, rules } from './{{PascalCaseName}}Config'
+import carApi from '@/api/car'
+import { viewModel, rules } from './CarConfig'
 
 export default {
-  name: '{{PascalCaseName}}CreateOrEditForm',
+  name: 'CarCreateOrEditForm',
   mixins: [fromMixin],
   props: {
     isCreate: {
       type: Boolean,
       default: false
     },
-    {{CamelCaseName}}Id: {
+    carId: {
       type: String,
       default: ''
     }
@@ -67,7 +50,7 @@ export default {
     }
   },
   watch: {
-    {{CamelCaseName}}Id: {
+    carId: {
       immediate: true,
       handler: function() {
         this.get()
@@ -76,8 +59,8 @@ export default {
   },
   methods: {
     get() {
-      if (this.{{CamelCaseName}}Id) {
-        {{CamelCaseName}}Api.get(this.{{CamelCaseName}}Id).then(res => {
+      if (this.carId) {
+        carApi.get(this.carId).then(res => {
           this.formData = Object.assign(this.formData, res)
         })
       }
@@ -104,10 +87,10 @@ export default {
       })
     },
     doPost() {
-      return {{CamelCaseName}}Api.post(this.formData)
+      return carApi.post(this.formData)
     },
     doPut() {
-      return {{CamelCaseName}}Api.put(this.{{CamelCaseName}}Id, this.formData)
+      return carApi.put(this.carId, this.formData)
     },
     cancel() {
       this.$refs.from.resetFields()

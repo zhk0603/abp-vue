@@ -32,7 +32,10 @@ namespace AbpVueCli.Steps
             //        where match
             //        select item).ToList();
 
-            if (moduleApiPathItems.Count == 0)
+            var emptyModule = "empty".Equals(options.ModulePrefix, StringComparison.OrdinalIgnoreCase);
+            context.SetVariable("EmptyModule", emptyModule);
+
+            if (moduleApiPathItems.Count == 0 && !emptyModule)
             {
                 Logger.LogWarning("找不到模块：{module} 的任何接口。", options.Module);
                 return base.Fault("");
