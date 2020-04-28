@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.Application\Abp.VueTemplate.MenuManagement.Application.csproj" />
+    <ProjectReference Include="..\..\modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.Application\Abp.VueTemplate.MenuManagement.Application.csproj" />
     <ProjectReference Include="..\Abp.VueTemplate.Domain\Abp.VueTemplate.Domain.csproj" />
     <ProjectReference Include="..\Abp.VueTemplate.Application.Contracts\Abp.VueTemplate.Application.Contracts.csproj" />
   </ItemGroup>

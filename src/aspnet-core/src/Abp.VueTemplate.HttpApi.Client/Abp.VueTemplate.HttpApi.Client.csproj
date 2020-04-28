@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.HttpApi.Client\Abp.VueTemplate.MenuManagement.HttpApi.Client.csproj" />
+    <ProjectReference Include="..\..\modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.HttpApi.Client\Abp.VueTemplate.MenuManagement.HttpApi.Client.csproj" />
     <ProjectReference Include="..\Abp.VueTemplate.Application.Contracts\Abp.VueTemplate.Application.Contracts.csproj" />
   </ItemGroup>
 

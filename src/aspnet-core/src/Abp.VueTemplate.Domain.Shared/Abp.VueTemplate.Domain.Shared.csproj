@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.Domain.Shared\Abp.VueTemplate.MenuManagement.Domain.Shared.csproj" />
+    <ProjectReference Include="..\..\modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.Domain.Shared\Abp.VueTemplate.MenuManagement.Domain.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -139,14 +139,17 @@ namespace Abp.VueTemplate
                     });
 
                     options.OperationFilter<HttpHeaderOperationFilter>();
-
-                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Application.xml"));
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Application.Contracts.xml"));
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Domain.xml"));
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Domain.Shared.xml"));
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.HttpApi.xml"));
-                    options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.HttpApi.Host.xml"));
+                    var hostingEnvironment = context.Services.GetHostingEnvironment();
+                    if (hostingEnvironment.IsDevelopment())
+                    {
+                        var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                        options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Application.xml"));
+                        options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Application.Contracts.xml"));
+                        options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Domain.xml"));
+                        options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Domain.Shared.xml"));
+                        options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.HttpApi.xml"));
+                        options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.HttpApi.Host.xml"));
+                    }
 
                     //options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Application.xml"));
                     //options.IncludeXmlComments(Path.Combine(basePath, "Abp.VueTemplate.Permission.Application.Contracts.xml"));
