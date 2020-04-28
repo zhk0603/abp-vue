@@ -38,7 +38,7 @@ namespace AbpVueCli.Commands
                 Argument = new Argument<string>()
             });
 
-            AddOption(new Option(new string[] {"-s", "--save-templates"}, "将模板保存到指定的目录中，支持绝对路径与相对路径，相对路径以Vue项目的根目录为起点。")
+            AddOption(new Option(new string[] {"-s", "--save-templates"}, "将模板保存到指定的目录中，支持绝对路径与相对路径，相对路径以当前执行目录为起点。")
             {
                 Argument = new Argument<string>()
             });

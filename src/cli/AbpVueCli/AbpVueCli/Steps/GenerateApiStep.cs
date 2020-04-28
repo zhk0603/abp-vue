@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AbpVueCli.Generator;
@@ -16,31 +17,41 @@ namespace AbpVueCli.Steps
         protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context,
             CancellationToken cancellationToken)
         {
-            var modelInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
+            var moduleInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
 
             var appDir = AppDomain.CurrentDomain.BaseDirectory;
             var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src",
                 "api");
             if (!Directory.Exists(tempDir))
                 throw new DirectoryNotFoundException($"模板目录 {tempDir} 不存在。");
-            var targetDirectory = Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "api");
 
+            string targetDirectory = moduleInfo.Option.OutputFolder.IsNullOrWhiteSpace() ?
+                    Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "api") : 
+                    Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, moduleInfo.Option.OutputFolder));
+            
             var overwrite = context.GetVariable<bool>("Overwrite");
-            await GenerateFiles(tempDir, targetDirectory, modelInfo, overwrite);
+            await GenerateFiles(tempDir, targetDirectory,
+                new BasicGenerateModel
+                {
+                    Name = moduleInfo.Name,
+                    ModuleInfo = moduleInfo
+                }, overwrite);
 
             return Done();
         }
 
         private async Task GenerateFiles(string sourceDirectory, string targetDirectory, object model, bool overwrite)
         {
+            string[] whiteFiles = {"ExtensionApi.js.sbntxt", "index.js.sbntxt"};
             foreach (var file in Directory.EnumerateFiles(sourceDirectory, "*.sbntxt", SearchOption.AllDirectories))
             {
-                if (file.EndsWith("ExtensionApi.js.sbntxt"))
+                var o = overwrite;
+                if (whiteFiles.Any(w => file.EndsWith(w)))
                 {
-                    overwrite = false;
+                    o = false;
                 }
 
-                await GenerateFileAsync(sourceDirectory, targetDirectory, file, model, overwrite);
+                await GenerateFileAsync(sourceDirectory, targetDirectory, file, model, o);
             }
         }
     }

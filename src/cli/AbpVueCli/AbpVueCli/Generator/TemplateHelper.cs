@@ -26,6 +26,7 @@ namespace AbpVueCli.Generator
              * 获取详情   get      {path}/{id}
              * 新增       post     {path}
              * 编辑:      put      {path}/{id}
+             * 编辑:      put      {path}
              * 删除:      delete   {path}/{id}
              */
 
@@ -33,37 +34,13 @@ namespace AbpVueCli.Generator
             List<string> @params = new List<string>();
             if (api.Url.Equals(options.ModulePrefix, StringComparison.OrdinalIgnoreCase))
             {
-                if (api.Method.Equals("get", StringComparison.OrdinalIgnoreCase))
-                {
-                    funcName = "getList";
-                    @params.Add("params");
-                }
-                else if (api.Method.Equals("post", StringComparison.OrdinalIgnoreCase))
-                {
-                    funcName = "post";
-                    @params.Add("body");
-                }
+                funcName = api.Method.Equals("get", StringComparison.OrdinalIgnoreCase) ? "getList" : api.Method.ToLower();
             }
-            else if (api.Url.Equals(options.ModulePrefix + "/{id}", StringComparison.OrdinalIgnoreCase))
-            {
-                if (api.Method.Equals("get", StringComparison.OrdinalIgnoreCase))
-                {
-                    funcName = "get";
-                    @params.Add("id");
-                }
-                else if (api.Method.Equals("put", StringComparison.OrdinalIgnoreCase))
-                {
-                    funcName = "put";
-                    @params.Add("id");
-                    @params.Add("body");
-
-                }
-                else if (api.Method.Equals("delete", StringComparison.OrdinalIgnoreCase))
-                {
-                    funcName = "delete";
-                    @params.Add("id");
-                }
-            }
+            //else if (api.Url.Equals(options.ModulePrefix + "/{id}", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    funcName = api.Method.ToLower();
+            //    @params.Add("id");
+            //}
             else
             {
                 var path = api.Url.Substring(options.ModulePrefix.Length)
@@ -73,7 +50,7 @@ namespace AbpVueCli.Generator
                     .Select(x => x.ToPascalCase())
                     .ToList();
 
-                if (path.Count > 0 && !(path[0].StartsWith("get", StringComparison.OrdinalIgnoreCase) ||
+                if (path.Count == 0 || path.Count > 0 && !(path[0].StartsWith("get", StringComparison.OrdinalIgnoreCase) ||
                                         path[0].StartsWith("delete", StringComparison.OrdinalIgnoreCase) ||
                                         path[0].StartsWith("post", StringComparison.OrdinalIgnoreCase) ||
                                         path[0].StartsWith("put", StringComparison.OrdinalIgnoreCase)))
@@ -127,46 +104,65 @@ namespace AbpVueCli.Generator
         {
             var rulesDic = new Dictionary<string, List<JObject>>();
 
-            foreach (var propertyItem in apiSchema.Properties)
+            if (apiSchema != null)
             {
-                var rules = new List<JObject>();
-
-                if (apiSchema.Required.Contains(propertyItem.Key))
+                foreach (var propertyItem in apiSchema.Properties)
                 {
-                    var requiredRule = new JObject();
-                    requiredRule["required"] = true;
-                    requiredRule["message"] = $"请输入{propertyItem.Value.Description ?? propertyItem.Key}";
-                    requiredRule["trigger"] = "blur";
-                    rules.Add(requiredRule);
-                }
+                    var rules = new List<JObject>();
 
-                if (propertyItem.Value.MinLength.HasValue)
-                {
-                    var lenRule = new JObject();
-                    lenRule["min"] = propertyItem.Value.MinLength;
-                    lenRule["max"] = propertyItem.Value.MaxLength;
-                    lenRule["message"] = $"长度在 {propertyItem.Value.MinLength} 到 {propertyItem.Value.MaxLength} 个字符";
-                    lenRule["trigger"] = "blur";
-                    rules.Add(lenRule);
-                }
+                    if (apiSchema.Required.Contains(propertyItem.Key))
+                    {
+                        var requiredRule = new JObject();
+                        requiredRule["required"] = true;
+                        requiredRule["message"] = $"请输入{propertyItem.Value.Description ?? propertyItem.Key}";
+                        requiredRule["trigger"] = "blur";
+                        rules.Add(requiredRule);
+                    }
 
-                if (!propertyItem.Value.Type.IsNullOrWhiteSpace())
-                {
-                    var formatRule = new JObject();
-                    formatRule["type"] = GetJsFormatType(propertyItem.Value);
-                    formatRule["message"] =
-                        $"{propertyItem.Value.Description ?? propertyItem.Key} 必须为 {formatRule["type"]}";
-                    formatRule["trigger"] = "change";
-                    rules.Add(formatRule);
-                }
+                    if (propertyItem.Value.MinLength.HasValue)
+                    {
+                        var lenRule = new JObject();
+                        lenRule["min"] = propertyItem.Value.MinLength;
+                        lenRule["max"] = propertyItem.Value.MaxLength;
+                        lenRule["message"] = $"长度在 {propertyItem.Value.MinLength} 到 {propertyItem.Value.MaxLength} 个字符";
+                        lenRule["trigger"] = "blur";
+                        rules.Add(lenRule);
+                    }
 
-                if (rules.Count > 0)
-                {
-                    rulesDic.Add(propertyItem.Key, rules);
+                    //if (!propertyItem.Value.Type.IsNullOrWhiteSpace())
+                    //{
+                    //    var formatRule = new JObject();
+                    //    formatRule["type"] = GetJsFormatType(propertyItem.Value);
+                    //    formatRule["message"] =
+                    //        $"{propertyItem.Value.Description ?? propertyItem.Key} 必须为 {formatRule["type"]}";
+                    //    formatRule["trigger"] = "change";
+                    //    rules.Add(formatRule);
+                    //}
+
+                    if (rules.Count > 0)
+                    {
+                        rulesDic.Add(propertyItem.Key, rules);
+                    }
                 }
             }
 
             return JsonConvert.SerializeObject(rulesDic, Formatting.Indented);
+        }
+        
+        public static string GenerateColumns(OpenApiSchema apiSchema)
+        {
+            var columns = new List<JObject>();
+            if(apiSchema != null)
+            {
+                foreach (var propertyItem in apiSchema.Properties)
+                {
+                    var obj = new JObject();
+                    obj["prop"] = propertyItem.Key;
+                    obj["label"] = propertyItem.Value.Description ?? propertyItem.Key;
+                    columns.Add(obj);
+                }
+            }
+            return JsonConvert.SerializeObject(columns, Formatting.Indented);
         }
 
         private static string GetJsFormatType(OpenApiSchema propertySchema)

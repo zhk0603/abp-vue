@@ -5,7 +5,7 @@ const userApi = {}
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:21:04
+ * @date 2020-04-27 10:18:28
  * @version V1.0.0
  */
 userApi.get = (id) => {
@@ -18,7 +18,7 @@ userApi.get = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:21:04
+ * @date 2020-04-27 10:18:28
  * @version V1.0.0
  */
 userApi.put = (id, body) => {
@@ -32,7 +32,7 @@ userApi.put = (id, body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:21:04
+ * @date 2020-04-27 10:18:28
  * @version V1.0.0
  */
 userApi.delete = (id) => {
@@ -45,7 +45,7 @@ userApi.delete = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:21:04
+ * @date 2020-04-27 10:18:28
  * @version V1.0.0
  */
 userApi.getList = (params) => {
@@ -59,7 +59,7 @@ userApi.getList = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:21:04
+ * @date 2020-04-27 10:18:28
  * @version V1.0.0
  */
 userApi.post = (body) => {
@@ -73,7 +73,7 @@ userApi.post = (body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:21:04
+ * @date 2020-04-27 10:18:28
  * @version V1.0.0
  */
 userApi.getRoles = (id) => {
@@ -86,7 +86,7 @@ userApi.getRoles = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:21:04
+ * @date 2020-04-27 10:18:28
  * @version V1.0.0
  */
 userApi.putRoles = (id, body) => {
@@ -100,7 +100,7 @@ userApi.putRoles = (id, body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:21:04
+ * @date 2020-04-27 10:18:28
  * @version V1.0.0
  */
 userApi.getByUsername = (userName) => {
@@ -113,7 +113,7 @@ userApi.getByUsername = (userName) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:21:04
+ * @date 2020-04-27 10:18:28
  * @version V1.0.0
  */
 userApi.getByEmail = (email) => {

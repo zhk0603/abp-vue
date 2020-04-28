@@ -9,7 +9,6 @@ namespace AbpVueCli.Models
         public string CamelCaseName => Name.ToCamelCase();
         public string PascalCaseName => Name.ToPascalCase();
 
-        public ProjectInfo ProjectInfo { get; set; }
         public ModuleInfo ModuleInfo { get; set; }
     }
 }

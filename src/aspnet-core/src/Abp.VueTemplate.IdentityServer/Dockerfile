@@ -10,11 +10,12 @@ WORKDIR /src
 COPY ["src/Abp.VueTemplate.IdentityServer/Abp.VueTemplate.IdentityServer.csproj", "src/Abp.VueTemplate.IdentityServer/"]
 COPY ["src/Abp.VueTemplate.EntityFrameworkCore.DbMigrations/Abp.VueTemplate.EntityFrameworkCore.DbMigrations.csproj", "src/Abp.VueTemplate.EntityFrameworkCore.DbMigrations/"]
 COPY ["src/Abp.VueTemplate.EntityFrameworkCore/Abp.VueTemplate.EntityFrameworkCore.csproj", "src/Abp.VueTemplate.EntityFrameworkCore/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.EntityFrameworkCore/Abp.VueTemplate.MenuManagement.EntityFrameworkCore.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.EntityFrameworkCore/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain/Abp.VueTemplate.MenuManagement.Domain.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain.Shared/Abp.VueTemplate.MenuManagement.Domain.Shared.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain.Shared/"]
 COPY ["src/Abp.VueTemplate.Domain/Abp.VueTemplate.Domain.csproj", "src/Abp.VueTemplate.Domain/"]
-COPY ["src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Domain/Abp.VueTemplate.Permission.Domain.csproj", "src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Domain/"]
-COPY ["src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Domain.Shared/Abp.VueTemplate.Permission.Domain.Shared.csproj", "src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Domain.Shared/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain.Identity/Abp.VueTemplate.MenuManagement.Domain.Identity.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain.Identity/"]
 COPY ["src/Abp.VueTemplate.Domain.Shared/Abp.VueTemplate.Domain.Shared.csproj", "src/Abp.VueTemplate.Domain.Shared/"]
-COPY ["src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.EntityFrameworkCore/Abp.VueTemplate.Permission.EntityFrameworkCore.csproj", "src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.EntityFrameworkCore/"]
 RUN dotnet restore "src/Abp.VueTemplate.IdentityServer/Abp.VueTemplate.IdentityServer.csproj"
 COPY . .
 WORKDIR "/src/src/Abp.VueTemplate.IdentityServer"

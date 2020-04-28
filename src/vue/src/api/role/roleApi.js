@@ -5,7 +5,7 @@ const roleApi = {}
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:22:55
+ * @date 2020-04-27 10:15:27
  * @version V1.0.0
  */
 roleApi.getAll = () => {
@@ -18,7 +18,7 @@ roleApi.getAll = () => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:22:55
+ * @date 2020-04-27 10:15:27
  * @version V1.0.0
  */
 roleApi.getList = (params) => {
@@ -32,7 +32,7 @@ roleApi.getList = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:22:55
+ * @date 2020-04-27 10:15:27
  * @version V1.0.0
  */
 roleApi.post = (body) => {
@@ -46,7 +46,7 @@ roleApi.post = (body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:22:55
+ * @date 2020-04-27 10:15:27
  * @version V1.0.0
  */
 roleApi.get = (id) => {
@@ -59,7 +59,7 @@ roleApi.get = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:22:55
+ * @date 2020-04-27 10:15:27
  * @version V1.0.0
  */
 roleApi.put = (id, body) => {
@@ -73,7 +73,7 @@ roleApi.put = (id, body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:22:55
+ * @date 2020-04-27 10:15:27
  * @version V1.0.0
  */
 roleApi.delete = (id) => {

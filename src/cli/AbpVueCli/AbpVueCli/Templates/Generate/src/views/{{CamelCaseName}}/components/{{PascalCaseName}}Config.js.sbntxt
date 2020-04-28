@@ -1,3 +1,5 @@
 ﻿export const viewModel = {{helper.generate_view_model RequestBodySchema}}
 
+export const columns = {{helper.generate_columns RequestBodySchema}}
+
 export const rules = {{helper.generate_rules RequestBodySchema}}

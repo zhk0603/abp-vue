@@ -5,7 +5,7 @@ const menuApi = {}
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-25 15:42:35
+ * @date 2020-04-27 10:01:45
  * @version V1.0.0
  */
 menuApi.get = (id) => {
@@ -18,7 +18,7 @@ menuApi.get = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-25 15:42:35
+ * @date 2020-04-27 10:01:45
  * @version V1.0.0
  */
 menuApi.put = (id, body) => {
@@ -32,7 +32,7 @@ menuApi.put = (id, body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-25 15:42:35
+ * @date 2020-04-27 10:01:45
  * @version V1.0.0
  */
 menuApi.delete = (id) => {
@@ -45,7 +45,7 @@ menuApi.delete = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-25 15:42:35
+ * @date 2020-04-27 10:01:45
  * @version V1.0.0
  */
 menuApi.getList = (params) => {
@@ -59,7 +59,7 @@ menuApi.getList = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-25 15:42:35
+ * @date 2020-04-27 10:01:45
  * @version V1.0.0
  */
 menuApi.post = (body) => {
@@ -73,7 +73,7 @@ menuApi.post = (body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-25 15:42:35
+ * @date 2020-04-27 10:01:45
  * @version V1.0.0
  */
 menuApi.getAuthPolicies = () => {

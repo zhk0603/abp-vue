@@ -17,12 +17,16 @@ namespace AbpVueCli.Steps
         protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context, CancellationToken cancellationToken)
         {
             var modelInfo = context.GetVariable<ModuleInfo>("ModuleInfo");
+            var permissionControl = context.GetVariable<bool>("PermissionControl");
 
             var appDir = AppDomain.CurrentDomain.BaseDirectory;
             var tempDir = Path.Combine(appDir, context.GetVariable<string>("TemplateDirectory"), "Generate", "src", "views");
             if (!Directory.Exists(tempDir))
                 throw new DirectoryNotFoundException($"模板目录 {tempDir} 不存在。");
-            var targetDirectory = Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "views");
+
+            string targetDirectory = modelInfo.Option.OutputFolder.IsNullOrWhiteSpace()
+                ? Path.Combine(context.GetVariable<string>("ProjectDirectory"), "src", "views")
+                : Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, modelInfo.Option.OutputFolder));
 
             ModuleApiOperation getListApi = context.GetVariable<ModuleApiOperation>("GetListModuleApi");
 
@@ -30,11 +34,10 @@ namespace AbpVueCli.Steps
             {
                 Name = modelInfo.Name,
                 ModuleInfo = modelInfo,
-                ProjectInfo = modelInfo.ProjectInfo,
 
-                ApiOperation = getListApi,
                 GenerateCreate = true,
                 GenerateEdit = true,
+                PermissionControl = permissionControl,
                 QueryParams = TemplateHelper.GetQueryParameters(modelInfo.ProjectInfo, getListApi.Operation),
                 ListProperty = GetListProperty(getListApi, modelInfo.ProjectInfo)
             };

@@ -46,41 +46,44 @@ namespace AbpVueCli
             //    "-o", "https://localhost:44314/swagger/v1/swagger.json",
             //    "-u", "zhaokun",
             //    "-e", "abc@abc.com",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue\src\views",
-            //    "--overwrite",
-            //    "-s", "." // VueProject根目录
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //    //"--overwrite",
+            //    "-s", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue" // VueProject根目录
             //};
 
-            // sy-project
+            // sy - project
             //args = new string[]
             //{
             //    "generate",
             //    "crud",
             //    "car",
-            //    "/api/car",
-            //    "-d", @"D:\Workspaces\02.ty-tfs\sy-project-collection\sy-project\sy-project\vue"
+            //    "empty",
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
             //};
 
             // abp-vue
-            //args = new string[]
-            //{
-            //    "generate",
-            //    "crud",
-            //    "role",
-            //    "/api/identity/roles",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
-            //    "-o"
-            //};
-
             args = new string[]
             {
                 "generate",
-                "api",
-                "tenant",
-                "/api/multi-tenancy/tenants",
-                "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
-                "-o"
+                "crud",
+                "menu",
+                "/api/menus",
+                "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+                "-o",
+                "--no-permission-control"
             };
+
+            //args = new string[]
+            //{
+            //    "generate",
+            //    "api",
+            //    "AbpTenant",
+            //    "/api/abp/multi-tenancy/tenants",
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //    "-o",
+            //    "-f",
+            //    "../test-out"
+            //};
 
             //args = new string[]
             //{
@@ -88,16 +91,23 @@ namespace AbpVueCli
             //    "model",
             //    "tenant",
             //    "/api/multi-tenancy/tenants",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //    "-o",
+            //    "-f",
+            //    "../test-out"
             //};
 
             //args = new string[]
             //{
             //    "generate",
             //    "list",
-            //    "tenant",
-            //    "/api/multi-tenancy/tenants",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //    "role",
+            //    "/api/identity/roles",
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //     "-o",
+            //    "-f",
+            //    "../test-out",
+            //    // "--no-permission-control"
             //};
 
             //args = new string[]
@@ -106,7 +116,10 @@ namespace AbpVueCli
             //    "create",
             //    "tenant",
             //    "/api/multi-tenancy/tenants",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue"
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //    "-o",
+            //    "-f",
+            //    "../test-out"
             //};
 
             //args = new string[]
@@ -115,9 +128,10 @@ namespace AbpVueCli
             //    "edit",
             //    "tenant",
             //    "/api/multi-tenancy/tenants",
-            //    "-d", @"D:\Workspaces\01.github\zhk0603\abp-vue\src\vue",
-
-            //    "--no-overwrite"
+            //    "-d", @"C:\Workspaces\github\zhk0603\abp-vue\src\vue",
+            //    "-o",
+            //    "-f",
+            //    "../test-out"
             //};
 #endif
 

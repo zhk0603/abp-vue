@@ -1,6 +1,6 @@
 <!--
 * @description Created by AbpVueCli
-* @author {{ProjectInfo.UserName}}
+* @author {{ModuleInfo.ProjectInfo.UserName}}
 * @date {{date.to_string date.now `%F %T`}}
 * @version V1.0.0
 !-->
@@ -30,7 +30,7 @@
         size="mini"
       />{{ end }}{{ end }}
 {{ if QueryParams != empty }}      <el-button class="header-item-btn" type="primary" size="mini" @click="getList">搜索</el-button>{{ end}}
-{{ if GenerateCreate }}      <el-button class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>{{ end }}
+{{ if GenerateCreate }}      <el-button {{if PermissionControl}} v-permission="['{{PascalCaseName}}.Create']" {{end}}class="header-item-btn" type="success" size="mini" @click="create">新增</el-button>{{ end }}
     </div>
     <div class="app-full-body">
       <el-table
@@ -59,8 +59,8 @@
           label="操作"
         >
           <template slot-scope="scope">
-{{ if GenerateEdit }}            <el-link type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>{{ end }}
-            <el-popconfirm placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
+{{ if GenerateEdit }}            <el-link {{if PermissionControl}} v-permission="['{{PascalCaseName}}.Update']" {{end}}type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-link>{{ end }}
+            <el-popconfirm {{if PermissionControl}} v-permission="['{{PascalCaseName}}.Delete']" {{end}}placement="top" title="确定删除此项？" @onConfirm="del(scope.row)">
               <el-link slot="reference" type="danger" icon="el-icon-delete">删除</el-link>
             </el-popconfirm>
           </template>
@@ -120,7 +120,7 @@ export default {
   methods: {
     getList() {
       {{ CamelCaseName }}Api.getList(this.query).then(res => {
-        this.tableData = res.{{ProjectInfo.ListPropertySchemaPath}}
+        this.tableData = res.{{ModuleInfo.ProjectInfo.ListPropertySchemaPath}}
         this.updateTotalCount(res.totalCount)
       })
     },

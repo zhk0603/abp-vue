@@ -1,6 +1,6 @@
 <!--
 * @description Created by AbpVueCli
-* @author {{ProjectInfo.UserName}}
+* @author {{ModuleInfo.ProjectInfo.UserName}}
 * @date {{date.to_string date.now `%F %T`}}
 * @version V1.0.0
 !-->

@@ -13,9 +13,12 @@ namespace AbpVueCli.Extensions
         public static string ToJson(this OpenApiSchema apiSchema)
         {
             var modelObject = new JObject();
-            foreach (var property in apiSchema.Properties)
+            if (apiSchema != null)
             {
-                modelObject.Add(property.Key, GetDefaultValue(property.Value));
+                foreach (var property in apiSchema.Properties)
+                {
+                    modelObject.Add(property.Key, GetDefaultValue(property.Value));
+                }
             }
 
             return modelObject.ToString();

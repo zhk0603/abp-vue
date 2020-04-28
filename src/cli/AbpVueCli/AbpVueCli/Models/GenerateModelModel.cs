@@ -2,8 +2,13 @@
 
 namespace AbpVueCli.Models
 {
-    public class GenerateModelModel : BasicGenerateModel
+    public class GenerateModelModel : BasicGenerateModel, IGenerateModelModel
     {
         public OpenApiSchema RequestBodySchema { get; set; }
+    }
+
+    public interface IGenerateModelModel
+    {
+        OpenApiSchema RequestBodySchema { get; set; }
     }
 }

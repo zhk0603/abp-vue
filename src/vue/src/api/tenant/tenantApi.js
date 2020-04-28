@@ -5,7 +5,7 @@ const tenantApi = {}
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:24:40
+ * @date 2020-04-27 10:17:19
  * @version V1.0.0
  */
 tenantApi.get = (id) => {
@@ -18,7 +18,7 @@ tenantApi.get = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:24:40
+ * @date 2020-04-27 10:17:19
  * @version V1.0.0
  */
 tenantApi.put = (id, body) => {
@@ -32,7 +32,7 @@ tenantApi.put = (id, body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:24:40
+ * @date 2020-04-27 10:17:19
  * @version V1.0.0
  */
 tenantApi.delete = (id) => {
@@ -45,7 +45,7 @@ tenantApi.delete = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:24:40
+ * @date 2020-04-27 10:17:19
  * @version V1.0.0
  */
 tenantApi.getList = (params) => {
@@ -59,7 +59,7 @@ tenantApi.getList = (params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:24:40
+ * @date 2020-04-27 10:17:19
  * @version V1.0.0
  */
 tenantApi.post = (body) => {
@@ -73,7 +73,7 @@ tenantApi.post = (body) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:24:40
+ * @date 2020-04-27 10:17:19
  * @version V1.0.0
  */
 tenantApi.getDefaultConnectionString = (id) => {
@@ -86,7 +86,7 @@ tenantApi.getDefaultConnectionString = (id) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:24:40
+ * @date 2020-04-27 10:17:19
  * @version V1.0.0
  */
 tenantApi.putDefaultConnectionString = (id, params) => {
@@ -100,7 +100,7 @@ tenantApi.putDefaultConnectionString = (id, params) => {
 /**
  * Created by AbpVueCli
  * @author zhaokun
- * @date 2020-04-20 15:24:40
+ * @date 2020-04-27 10:17:19
  * @version V1.0.0
  */
 tenantApi.deleteDefaultConnectionString = (id) => {

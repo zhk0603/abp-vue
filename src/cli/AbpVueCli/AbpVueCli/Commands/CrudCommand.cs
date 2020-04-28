@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using AbpVueCli.Extensions;
 using AbpVueCli.Steps;
 using AbpVueCli.Utils;
+using Elsa;
 using Elsa.Activities;
+using Elsa.Activities.ControlFlow.Activities;
 using Elsa.Scripting.JavaScript;
 
 namespace AbpVueCli.Commands
@@ -16,7 +18,7 @@ namespace AbpVueCli.Commands
         public CrudCommand(IServiceProvider serviceProvider) : base(serviceProvider, "crud", "根据指定的模块生成CRUD的相关文件")
         {
             AddArgument(new Argument<string>("module") {Description = "模块名称"});
-            AddArgument(new Argument<string>("modulePrefix") {Description = "模块api路径的前缀"});
+            AddArgument(new Argument<string>("modulePrefix") {Description = "模块api路径的前缀，如果要生成空模板，则输入：“empty”"});
 
             AddOption(new Option(new string[] { "-d", "--directory" }, "项目目录。")
             {
@@ -28,11 +30,17 @@ namespace AbpVueCli.Commands
                 Argument = new Argument<bool>()
             });
 
+            AddOption(new Option(new[] { "--no-permission-control" }, "不生成权限控制。")
+            {
+                Argument = new Argument<bool>()
+            });
+
             Handler = CommandHandler.Create((GenerateCommandOptionBasic options) => Run(options));
         }
 
         private async Task Run(GenerateCommandOptionBasic options)
         {
+
             await RunWorkflow(builder =>
             {
                 builder
@@ -41,7 +49,8 @@ namespace AbpVueCli.Commands
                     .Then<SetVariable>(step =>
                     {
                         step.VariableName = "Option";
-                        step.ValueExpression = new JavaScriptExpression<GenerateCommandOptionBasic>($"({options.ToJson()})");
+                        step.ValueExpression =
+                            new JavaScriptExpression<GenerateCommandOptionBasic>($"({options.ToJson()})");
                     })
                     .Then<SetVariable>(
                         step =>
@@ -49,21 +58,47 @@ namespace AbpVueCli.Commands
                             step.VariableName = "Overwrite";
                             step.ValueExpression = new JavaScriptExpression<bool>("Option.Overwrite");
                         })
+                    .Then<SetVariable>(
+                        step =>
+                        {
+                            step.VariableName = "PermissionControl";
+                            step.ValueExpression = new JavaScriptExpression<bool>("!Option.NoPermissionControl");
+                        })
                     .Then<ProjectFinderStep>()
                     .Then<ProjectInfoProviderStep>()
                     .Then<OpenApiDocumentProviderStep>()
 
                     .Then<PreGenerateStep>()
+                    .Then<IfElse>(
+                        step => step.ConditionExpression =
+                            new JavaScriptExpression<bool>("EmptyModule"),
+                        ifElse =>
+                        {
+                            ifElse.When(OutcomeNames.False)
+                                .Then<GenerateApiStep>()
 
-                    .Then<GenerateApiStep>()
+                                .Then<PostApiFinderStep>()
+                                .Then<GenerateModelStep>()
+                                .Then<GenerateCreateViewStep>()
+                                .Then<GenerateEditViewStep>()
 
-                    .Then<PostApiFinderStep>()
-                    .Then<GenerateModelStep>()
-                    .Then<GenerateCreateViewStep>()
-                    .Then<GenerateEditViewStep>()
+                                .Then<GetListApiFinderStep>()
+                                .Then<GenerateListViewStep>();
 
-                    .Then<GetListApiFinderStep>()
-                    .Then<GenerateListViewStep>();
+                            ifElse.When(OutcomeNames.True)
+                                .Then<GenerateEmptyModuleStep>();
+                        }
+                    );
+
+                //.Then<GenerateApiStep>()
+
+                //.Then<PostApiFinderStep>()
+                //.Then<GenerateModelStep>()
+                //.Then<GenerateCreateViewStep>()
+                //.Then<GenerateEditViewStep>()
+
+                //.Then<GetListApiFinderStep>()
+                //.Then<GenerateListViewStep>();
 
                 return builder.Build();
             });

@@ -1,14 +1,14 @@
 import request from '@/utils/request'
 
 const {{ CamelCaseName }}Api = {}
-{{ for api in ModuleApis }}
+{{ for api in ModuleInfo.ModuleApis }}
 /**
  * {{api.Operation.Summary | object.default "Created by AbpVueCli" }}
- * @author {{ProjectInfo.UserName}}
+ * @author {{ModuleInfo.ProjectInfo.UserName}}
  * @date {{date.to_string date.now `%F %T`}}
  * @version V1.0.0
  */
-{{ CamelCaseName }}Api.{{ helper.generate_api_func_name Option api }} => {
+{{ CamelCaseName }}Api.{{ helper.generate_api_func_name ModuleInfo.Option api }} => {
   return request({
     url: `{{helper.generate_api_url api.Url}}`,
     method: '{{api.Method | string.downcase }}'{{helper.generate_api_params api}}

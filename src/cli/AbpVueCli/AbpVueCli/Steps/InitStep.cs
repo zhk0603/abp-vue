@@ -41,7 +41,7 @@ namespace AbpVueCli.Steps
             if (!option.SaveTemplates.IsNullOrWhiteSpace())
             {
                 // 保存模板到指定文件夹。
-                templatePath = Path.GetFullPath(Path.Combine(projectDir, option.SaveTemplates, "Templates"));
+                templatePath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, option.SaveTemplates, "Templates"));
                 if (!Directory.Exists(templatePath))
                 {
                     var dirInfo = Directory.CreateDirectory(templatePath);

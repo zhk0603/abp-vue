@@ -22,6 +22,11 @@ namespace AbpVueCli.Commands
                 Argument = new Argument<string>()
             });
 
+            AddOption(new Option(new[] { "-f", "--output-folder" }, "指定文件输出的文件夹，支持绝对路径与相对路径，相对路径以当前执行目录为起点。")
+            {
+                Argument = new Argument<string>()
+            });
+
             AddOption(new Option(new[] { "-o", "--overwrite" }, "指定覆盖现有文件")
             {
                 Argument = new Argument<bool>()

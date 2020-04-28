@@ -28,12 +28,14 @@ namespace Abp.VueTemplate.MenuManagement
         }
 
         public Menu(
+            Guid id,
             string name,
             string displayName,
             MenuEnumType menuType,
             MultiTenancySides multiTenancySide = MultiTenancySides.Both
         )
         {
+            Id = id;
             Name = name;
             DisplayName = displayName;
             MenuType = menuType;
