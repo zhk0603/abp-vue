@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
+
 <doc>
-    <assembly>
-        <name>Abp.VueTemplate.HttpApi.Host</name>
-    </assembly>
-    <members>
-    </members>
+	<assembly>
+		<name>Abp.VueTemplate.HttpApi.Host</name>
+	</assembly>
+	<members>
+	</members>
 </doc>

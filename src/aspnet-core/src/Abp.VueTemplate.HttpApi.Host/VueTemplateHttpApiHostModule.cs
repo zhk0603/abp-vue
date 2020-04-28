@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Abp.VueTemplate.EntityFrameworkCore;
+using Abp.VueTemplate.MultiTenancy;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Abp.VueTemplate.EntityFrameworkCore;
-using Abp.VueTemplate.MultiTenancy;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.Extensions.Options;
-using StackExchange.Redis;
+using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
@@ -27,8 +27,6 @@ using Volo.Abp.Caching;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
-using Microsoft.Extensions.PlatformAbstractions;
-using Volo.Abp.PermissionManagement;
 
 namespace Abp.VueTemplate
 {
@@ -39,7 +37,7 @@ namespace Abp.VueTemplate
         typeof(VueTemplateApplicationModule),
         typeof(VueTemplateEntityFrameworkCoreDbMigrationsModule),
         typeof(AbpAspNetCoreSerilogModule)
-        )]
+    )]
     public class VueTemplateHttpApiHostModule : AbpModule
     {
         private const string DefaultCorsPolicyName = "Default";
@@ -61,10 +59,7 @@ namespace Abp.VueTemplate
 
         private void ConfigureCache(IConfiguration configuration)
         {
-            Configure<AbpDistributedCacheOptions>(options =>
-            {
-                options.KeyPrefix = "VueTemplate:";
-            });
+            Configure<AbpDistributedCacheOptions>(options => { options.KeyPrefix = "VueTemplate:"; });
         }
 
         private void ConfigureVirtualFileSystem(ServiceConfigurationContext context)
@@ -75,10 +70,14 @@ namespace Abp.VueTemplate
             {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath));
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath));
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationContractsModule>(Path.Combine(hostingEnvironment.ContentRootPath));
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationModule>(Path.Combine(hostingEnvironment.ContentRootPath));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(
+                        Path.Combine(hostingEnvironment.ContentRootPath));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(
+                        Path.Combine(hostingEnvironment.ContentRootPath));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationContractsModule>(
+                        Path.Combine(hostingEnvironment.ContentRootPath));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationModule>(
+                        Path.Combine(hostingEnvironment.ContentRootPath));
 
                     //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain.Shared"));
                     //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain"));
@@ -115,7 +114,7 @@ namespace Abp.VueTemplate
                     options.SwaggerDoc("v1", new OpenApiInfo {Title = "VueTemplate API", Version = "v1"});
                     options.DocInclusionPredicate((docName, description) => true);
 
-                    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                     {
                         Description = "在下框中输入请求头中需要添加 Jwt Token：Bearer Token",
                         Name = "Authorization",
@@ -175,7 +174,8 @@ namespace Abp.VueTemplate
         private void ConfigureRedis(
             ServiceConfigurationContext context,
             IConfiguration configuration,
-            IWebHostEnvironment hostingEnvironment)
+            IWebHostEnvironment hostingEnvironment
+        )
         {
             context.Services.AddStackExchangeRedisCache(options =>
             {
@@ -226,14 +226,12 @@ namespace Abp.VueTemplate
             {
                 app.UseMultiTenancy();
             }
+
             app.UseAuthorization();
             app.UseAbpRequestLocalization();
 
             app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "VueTemplate API");
-            });
+            app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "VueTemplate API"); });
 
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
@@ -250,12 +248,12 @@ namespace Abp.VueTemplate
 
             if (requiredAuth)
             {
-                operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
-                operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
+                operation.Responses.Add("401", new OpenApiResponse {Description = "Unauthorized"});
+                operation.Responses.Add("403", new OpenApiResponse {Description = "Forbidden"});
 
                 var oAuthScheme = new OpenApiSecurityScheme
                 {
-                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                    Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "Bearer"}
                 };
 
                 operation.Security = new List<OpenApiSecurityRequirement>
@@ -275,7 +273,7 @@ namespace Abp.VueTemplate
 
             if (!required && context.MethodInfo.GetCustomAttribute<AllowAnonymousAttribute>(true) == null)
             {
-                required = ((ControllerActionDescriptor)context.ApiDescription.ActionDescriptor)
+                required = ((ControllerActionDescriptor) context.ApiDescription.ActionDescriptor)
                     .ControllerTypeInfo
                     .GetCustomAttribute<AuthorizeAttribute>(true) != null;
             }
