@@ -6,7 +6,6 @@ using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
-using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
@@ -39,7 +38,6 @@ namespace Abp.VueTemplate.EntityFrameworkCore
             builder.ConfigureIdentity();
             builder.ConfigureFeatureManagement();
             builder.ConfigureTenantManagement();
-            builder.ConfigureMenuManagement();
 
             /* Configure customizations for entities from the modules included  */
 
@@ -50,11 +48,8 @@ namespace Abp.VueTemplate.EntityFrameworkCore
 
             /* Configure your own tables/entities inside the ConfigureVueTemplate method */
 
+            builder.ConfigureMenuManagement();
             builder.ConfigureVueTemplate();
-            builder.ConfigureMenuManagement(options =>
-            {
-                options.TablePrefix = "App_";
-            });
         }
     }
 }

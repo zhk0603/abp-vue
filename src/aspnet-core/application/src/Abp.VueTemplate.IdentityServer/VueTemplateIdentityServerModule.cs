@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Abp.VueTemplate.EntityFrameworkCore;
 using Localization.Resources.AbpUi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
@@ -30,10 +31,17 @@ using Volo.Abp.VirtualFileSystem;
 using IdentityServer4.Services;
 using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
+using Volo.Abp.PermissionManagement.EntityFrameworkCore;
+using Volo.Abp.SettingManagement.EntityFrameworkCore;
+using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
 namespace Abp.VueTemplate
 {
     [DependsOn(
+        typeof(VueTemplateEntityFrameworkCoreModule),
+        typeof(AbpSettingManagementEntityFrameworkCoreModule),
+        typeof(AbpPermissionManagementEntityFrameworkCoreModule),
+        typeof(AbpTenantManagementEntityFrameworkCoreModule),
         typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
         typeof(AbpAutofacModule),
@@ -86,6 +94,11 @@ namespace Abp.VueTemplate
             Configure<AppUrlOptions>(options =>
             {
                 options.Applications["MVC"].RootUrl = configuration["App:SelfUrl"];
+            });
+
+            Configure<AbpBackgroundJobOptions>(options =>
+            {
+                options.IsJobExecutionEnabled = false;
             });
 
             Configure<AbpDistributedCacheOptions>(options =>
