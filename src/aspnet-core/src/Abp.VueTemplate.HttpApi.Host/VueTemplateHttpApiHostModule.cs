@@ -59,7 +59,7 @@ namespace Abp.VueTemplate
 
         private void ConfigureCache(IConfiguration configuration)
         {
-            Configure<AbpDistributedCacheOptions>(options => { options.KeyPrefix = "VueTemplate:"; });
+            Configure<AbpDistributedCacheOptions>(options => { options.KeyPrefix = "VueTemplate:"; }); 
         }
 
         private void ConfigureVirtualFileSystem(ServiceConfigurationContext context)
