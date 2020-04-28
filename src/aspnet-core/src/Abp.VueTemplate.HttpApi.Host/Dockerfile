@@ -9,18 +9,19 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["src/Abp.VueTemplate.HttpApi.Host/Abp.VueTemplate.HttpApi.Host.csproj", "src/Abp.VueTemplate.HttpApi.Host/"]
 COPY ["src/Abp.VueTemplate.HttpApi/Abp.VueTemplate.HttpApi.csproj", "src/Abp.VueTemplate.HttpApi/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.HttpApi/Abp.VueTemplate.MenuManagement.HttpApi.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.HttpApi/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Application.Contracts/Abp.VueTemplate.MenuManagement.Application.Contracts.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Application.Contracts/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain.Shared/Abp.VueTemplate.MenuManagement.Domain.Shared.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain.Shared/"]
 COPY ["src/Abp.VueTemplate.Application.Contracts/Abp.VueTemplate.Application.Contracts.csproj", "src/Abp.VueTemplate.Application.Contracts/"]
-COPY ["src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Application.Contracts/Abp.VueTemplate.Permission.Application.Contracts.csproj", "src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Application.Contracts/"]
-COPY ["src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Domain.Shared/Abp.VueTemplate.Permission.Domain.Shared.csproj", "src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Domain.Shared/"]
 COPY ["src/Abp.VueTemplate.Domain.Shared/Abp.VueTemplate.Domain.Shared.csproj", "src/Abp.VueTemplate.Domain.Shared/"]
-COPY ["src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.HttpApi/Abp.VueTemplate.Permission.HttpApi.csproj", "src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.HttpApi/"]
 COPY ["src/Abp.VueTemplate.Application/Abp.VueTemplate.Application.csproj", "src/Abp.VueTemplate.Application/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Application/Abp.VueTemplate.MenuManagement.Application.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Application/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain/Abp.VueTemplate.MenuManagement.Domain.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain/"]
 COPY ["src/Abp.VueTemplate.Domain/Abp.VueTemplate.Domain.csproj", "src/Abp.VueTemplate.Domain/"]
-COPY ["src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Domain/Abp.VueTemplate.Permission.Domain.csproj", "src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Domain/"]
-COPY ["src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Application/Abp.VueTemplate.Permission.Application.csproj", "src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.Application/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain.Identity/Abp.VueTemplate.MenuManagement.Domain.Identity.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.Domain.Identity/"]
 COPY ["src/Abp.VueTemplate.EntityFrameworkCore.DbMigrations/Abp.VueTemplate.EntityFrameworkCore.DbMigrations.csproj", "src/Abp.VueTemplate.EntityFrameworkCore.DbMigrations/"]
 COPY ["src/Abp.VueTemplate.EntityFrameworkCore/Abp.VueTemplate.EntityFrameworkCore.csproj", "src/Abp.VueTemplate.EntityFrameworkCore/"]
-COPY ["src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.EntityFrameworkCore/Abp.VueTemplate.Permission.EntityFrameworkCore.csproj", "src/modules/Abp.VueTemplate.Permission/src/Abp.VueTemplate.Permission.EntityFrameworkCore/"]
+COPY ["modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.EntityFrameworkCore/Abp.VueTemplate.MenuManagement.EntityFrameworkCore.csproj", "modules/Abp.VueTemplate.MenuManagement/src/Abp.VueTemplate.MenuManagement.EntityFrameworkCore/"]
 RUN dotnet restore "src/Abp.VueTemplate.HttpApi.Host/Abp.VueTemplate.HttpApi.Host.csproj"
 COPY . .
 WORKDIR "/src/src/Abp.VueTemplate.HttpApi.Host"
