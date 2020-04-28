@@ -40,7 +40,7 @@ namespace Abp.VueTemplate
     )]
     public class VueTemplateHttpApiHostModule : AbpModule
     {
-        private const string DefaultCorsPolicyName = "Default";
+        private const string DefaultCorsPolicyName = "Default"; 
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
