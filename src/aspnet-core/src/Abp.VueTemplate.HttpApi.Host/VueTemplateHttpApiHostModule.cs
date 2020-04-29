@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -101,7 +102,7 @@ namespace Abp.VueTemplate
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = true;
+                    options.RequireHttpsMetadata = false;
                     options.ApiName = "VueTemplate";
                 });
         }
@@ -211,6 +212,8 @@ namespace Abp.VueTemplate
                         .AllowCredentials();
                 });
             });
+
+            IdentityModelEventSource.ShowPII = true;
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Abp.VueTemplate.Localization;
 using Abp.VueTemplate.MultiTenancy;
+using IdentityServer4.Configuration;
 using StackExchange.Redis;
 using Volo.Abp;
 using Volo.Abp.Account;
@@ -29,6 +30,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.VirtualFileSystem;
 using IdentityServer4.Services;
+using Microsoft.IdentityModel.Logging;
 using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
@@ -82,12 +84,17 @@ namespace Abp.VueTemplate
                 options.ApplicationName = "AuthServer";
             });
 
+            Configure<IdentityServerOptions>(options => { options.IssuerUri = "AuthServer"; });
+
             if (hostingEnvironment.IsDevelopment())
             {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain.Shared"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath));
+
+                    //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain.Shared"));
+                    //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain"));
                 });
             }
 
@@ -137,6 +144,8 @@ namespace Abp.VueTemplate
                         .AllowCredentials();
                 });
             });
+
+            IdentityModelEventSource.ShowPII = true;
         }
         
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
