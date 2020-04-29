@@ -41,7 +41,7 @@ namespace Abp.VueTemplate
     )]
     public class VueTemplateHttpApiHostModule : AbpModule
     {
-        private const string DefaultCorsPolicyName = "Default";
+        private const string DefaultCorsPolicyName = "Default"; 
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
@@ -60,7 +60,7 @@ namespace Abp.VueTemplate
 
         private void ConfigureCache(IConfiguration configuration)
         {
-            Configure<AbpDistributedCacheOptions>(options => { options.KeyPrefix = "VueTemplate:"; });
+            Configure<AbpDistributedCacheOptions>(options => { options.KeyPrefix = "VueTemplate:"; }); 
         }
 
         private void ConfigureVirtualFileSystem(ServiceConfigurationContext context)
