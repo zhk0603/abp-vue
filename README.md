@@ -1,6 +1,8 @@
 # abp-vue
 abp account、 identity、tenant 模块前端部分的vue实现
 
+[在线预览](http://abp-vue.dd.ixq-soft.cn:8080/)  （我部署在树莓派，可能有时后会访问不了，或者比较慢。）
+
 ### [✨后端api](https://github.com/zhk0603/abp-vue/tree/master/src/aspnet-core)
   此项目是abp-vue的后端接口项目，使用abp cli创建的，所以默认集成了官方id4、 identity、 tenant-management 等模块。
 ### [✨菜单模块](https://github.com/zhk0603/abp-vue/tree/master/src/aspnet-core/modules/Abp.VueTemplate.MenuManagement)
