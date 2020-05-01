@@ -10,19 +10,15 @@ services:
       - mysql-data:/var/lib/mysql
 
   idp-api:
-    image: "idp-api:${TAG:-latest}"
-    build:
-      context: ./
-      dockerfile: src/Abp.VueTemplate.IdentityServer/Dockerfile.raspberrypi-arm32
+    image: "idp-api:latest"
+    environment:
+      - App__SelfUrl=http://abp-vue.dd.ixq-soft.cn:8080/idp
     depends_on:
       - redis
       - mysql
 
   host-api:
-    image: "host-api:${TAG:-latest}"
-    build:
-      context: ./
-      dockerfile: src/Abp.VueTemplate.HttpApi.Host/Dockerfile.raspberrypi-arm32
+    image: "host-api:latest"
     depends_on:
       - redis
       - mysql

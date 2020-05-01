@@ -9,23 +9,22 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=123456
     ports:
-      - 3309:3306
+      - 3306:3306
 
   idp-api:
     environment:
-      - ASPNETCORE_URLS=http://0.0.0.0:8001
-      - App__SelfUrl=http://localhost:8001
+      - App__SelfUrl=http://localhost:80
       - Redis__Configuration=redis
       - ConnectionStrings__Default=Server=mysql;Port=3306;Database=VueTemplate;Uid=root;Pwd=123456;
       - ConnectionStrings__AbpIdentityServer=Server=mysql;Port=3306;Database=VueTemplate_Idp;Uid=root;Pwd=123456;
     ports:
-      - 8001:8001
+      - 8001:80
 
   host-api:
     environment:
       - Redis__Configuration=redis
       - ConnectionStrings__Default=Server=mysql;Port=3306;Database=VueTemplate;Uid=root;Pwd=123456;
       - ConnectionStrings__AbpIdentityServer=Server=mysql;Port=3306;Database=VueTemplate_Idp;Uid=root;Pwd=123456;
-      - AuthServer__Authority=http://idp-api:8001
+      - AuthServer__Authority=http://idp-api:80
     ports:
       - 8002:80
