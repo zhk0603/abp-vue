@@ -5,7 +5,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster-arm32v7 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["src/Abp.VueTemplate.HttpApi.Host/Abp.VueTemplate.HttpApi.Host.csproj", "src/Abp.VueTemplate.HttpApi.Host/"]
 COPY ["src/Abp.VueTemplate.HttpApi/Abp.VueTemplate.HttpApi.csproj", "src/Abp.VueTemplate.HttpApi/"]
@@ -15,7 +15,7 @@ COPY ["src/Abp.VueTemplate.Application/Abp.VueTemplate.Application.csproj", "src
 COPY ["src/Abp.VueTemplate.Domain/Abp.VueTemplate.Domain.csproj", "src/Abp.VueTemplate.Domain/"]
 COPY ["src/Abp.VueTemplate.EntityFrameworkCore.DbMigrations/Abp.VueTemplate.EntityFrameworkCore.DbMigrations.csproj", "src/Abp.VueTemplate.EntityFrameworkCore.DbMigrations/"]
 COPY ["src/Abp.VueTemplate.EntityFrameworkCore/Abp.VueTemplate.EntityFrameworkCore.csproj", "src/Abp.VueTemplate.EntityFrameworkCore/"]
-RUN dotnet restore "src/Abp.VueTemplate.HttpApi.Host/Abp.VueTemplate.HttpApi.Host.csproj"
+RUN dotnet restore "src/Abp.VueTemplate.HttpApi.Host/Abp.VueTemplate.HttpApi.Host.csproj" -r linux-arm
 COPY . .
 WORKDIR "/src/src/Abp.VueTemplate.HttpApi.Host"
 RUN dotnet build "Abp.VueTemplate.HttpApi.Host.csproj" -r linux-arm -c Release -o /app/build
