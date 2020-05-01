@@ -8,6 +8,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.Targets" Version="3.1.0" PrivateAssets="all" />
     <ProjectReference Include="..\..\modules\Abp.VueTemplate.MenuManagement\src\Abp.VueTemplate.MenuManagement.EntityFrameworkCore\Abp.VueTemplate.MenuManagement.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Abp.VueTemplate.Domain\Abp.VueTemplate.Domain.csproj" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="2.6.0" />

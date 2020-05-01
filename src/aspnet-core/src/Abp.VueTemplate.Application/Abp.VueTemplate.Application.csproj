@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.Targets" Version="3.1.0" PrivateAssets="all" />
     <PackageReference Include="Volo.Abp.Account.Application" Version="2.6.0" />
     <PackageReference Include="Volo.Abp.Identity.Application" Version="2.6.0" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="2.6.0" />
