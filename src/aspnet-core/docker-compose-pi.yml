@@ -1,0 +1,32 @@
+version: "3.0"
+
+services:
+  redis:
+    image: redis:alpine
+
+  mysql:
+    image: mysql:8.0.20
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  idp-api:
+    image: "idp-api:${TAG:-latest}"
+    build:
+      context: ./
+      dockerfile: src/Abp.VueTemplate.IdentityServer/Dockerfile
+    depends_on:
+      - redis
+      - mysql
+
+  host-api:
+    image: "host-api:${TAG:-latest}"
+    build:
+      context: ./
+      dockerfile: src/Abp.VueTemplate.HttpApi.Host/Dockerfile
+    depends_on:
+      - redis
+      - mysql
+      - idp-api
+
+volumes:
+  mysql-data:
