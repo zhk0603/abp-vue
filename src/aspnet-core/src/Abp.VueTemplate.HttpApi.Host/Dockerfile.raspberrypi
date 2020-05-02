@@ -15,13 +15,13 @@ COPY ["src/Abp.VueTemplate.Application/Abp.VueTemplate.Application.csproj", "src
 COPY ["src/Abp.VueTemplate.Domain/Abp.VueTemplate.Domain.csproj", "src/Abp.VueTemplate.Domain/"]
 COPY ["src/Abp.VueTemplate.EntityFrameworkCore.DbMigrations/Abp.VueTemplate.EntityFrameworkCore.DbMigrations.csproj", "src/Abp.VueTemplate.EntityFrameworkCore.DbMigrations/"]
 COPY ["src/Abp.VueTemplate.EntityFrameworkCore/Abp.VueTemplate.EntityFrameworkCore.csproj", "src/Abp.VueTemplate.EntityFrameworkCore/"]
-RUN dotnet restore "src/Abp.VueTemplate.HttpApi.Host/Abp.VueTemplate.HttpApi.Host.csproj" -r linux-arm
+RUN dotnet restore "src/Abp.VueTemplate.HttpApi.Host/Abp.VueTemplate.HttpApi.Host.csproj" -r linux-arm64
 COPY . .
 WORKDIR "/src/src/Abp.VueTemplate.HttpApi.Host"
-RUN dotnet build "Abp.VueTemplate.HttpApi.Host.csproj" -r linux-arm -c Release -o /app/build
+RUN dotnet build "Abp.VueTemplate.HttpApi.Host.csproj" -r linux-arm64 -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Abp.VueTemplate.HttpApi.Host.csproj" -r linux-arm -c Release -o /app/publish
+RUN dotnet publish "Abp.VueTemplate.HttpApi.Host.csproj" -r linux-arm64 -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

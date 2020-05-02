@@ -11,13 +11,13 @@ COPY ["src/Abp.VueTemplate.IdentityServer/Abp.VueTemplate.IdentityServer.csproj"
 COPY ["src/Abp.VueTemplate.Domain/Abp.VueTemplate.Domain.csproj", "src/Abp.VueTemplate.Domain/"]
 COPY ["src/Abp.VueTemplate.Domain.Shared/Abp.VueTemplate.Domain.Shared.csproj", "src/Abp.VueTemplate.Domain.Shared/"]
 COPY ["src/Abp.VueTemplate.EntityFrameworkCore/Abp.VueTemplate.EntityFrameworkCore.csproj", "src/Abp.VueTemplate.EntityFrameworkCore/"]
-RUN dotnet restore "src/Abp.VueTemplate.IdentityServer/Abp.VueTemplate.IdentityServer.csproj" -r linux-arm
+RUN dotnet restore "src/Abp.VueTemplate.IdentityServer/Abp.VueTemplate.IdentityServer.csproj" -r linux-arm64
 COPY . .
 WORKDIR "/src/src/Abp.VueTemplate.IdentityServer"
-RUN dotnet build "Abp.VueTemplate.IdentityServer.csproj" -r linux-arm -c Release -o /app/build
+RUN dotnet build "Abp.VueTemplate.IdentityServer.csproj" -r linux-arm64 -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Abp.VueTemplate.IdentityServer.csproj" -r linux-arm -c Release -o /app/publish
+RUN dotnet publish "Abp.VueTemplate.IdentityServer.csproj" -r linux-arm64 -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
