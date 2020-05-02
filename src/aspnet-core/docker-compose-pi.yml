@@ -13,7 +13,7 @@ services:
     image: "idp-api:${TAG:-latest}"
     build:
       context: ./
-      dockerfile: src/Abp.VueTemplate.IdentityServer/Dockerfile.raspberrypi-arm32
+      dockerfile: src/Abp.VueTemplate.IdentityServer/Dockerfile.raspberrypi
     depends_on:
       - redis
       - mysql
@@ -22,7 +22,7 @@ services:
     image: "host-api:${TAG:-latest}"
     build:
       context: ./
-      dockerfile: src/Abp.VueTemplate.HttpApi.Host/Dockerfile.raspberrypi-arm32
+      dockerfile: src/Abp.VueTemplate.HttpApi.Host/Dockerfile.raspberrypi
     depends_on:
       - redis
       - mysql
