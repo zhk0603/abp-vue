@@ -152,6 +152,7 @@ namespace Abp.VueTemplate
         {
             var app = context.GetApplicationBuilder();
 
+            app.UsePathBase("/idp");
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();

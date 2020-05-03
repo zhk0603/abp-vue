@@ -220,6 +220,7 @@ namespace Abp.VueTemplate
         {
             var app = context.GetApplicationBuilder();
 
+            app.UsePathBase("/api");
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
