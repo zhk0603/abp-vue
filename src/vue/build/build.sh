@@ -17,4 +17,4 @@ if [ "$(docker ps -qa -f name=abpvue_frontend)" ]; then
 fi
 
 #启动新容器
-docker run --name abpvue_frontend -d -p 8080:80 abpvue_frontend:latest
+docker run --name abpvue_frontend -d -p 8080:80 --link abpvue_idp-api_1:idp-api abpvue_host-api_1:host-api abpvue_frontend:latest
