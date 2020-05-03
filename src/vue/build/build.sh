@@ -3,7 +3,7 @@
 cd /abpvue/vue/
 ls -l
 
-docker load < abpvue_frontend.tar
+docker build -t abpvue_frontend:v$BUILD_NUMBER .
 docker tag abpvue_frontend:v$BUILD_NUMBER abpvue_frontend:latest
 
 # 停止
