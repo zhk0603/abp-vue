@@ -19,7 +19,10 @@
     </p>
 
   </div>
-  <p v-else-if="oidcAuthenticationIsChecked">You are not signed in</p>
+  <div v-else-if="oidcAuthenticationIsChecked">
+    <p>You are not signed in</p>
+    <el-button @click="authenticateOidc">登录</el-button>
+  </div>
   <p v-else>Silent renew is in progress...</p>
 </template>
 
@@ -42,7 +45,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('oidc', ['authenticateOidcSilent'])
+    ...mapActions('oidc', ['authenticateOidc', 'authenticateOidcSilent'])
   }
 }
 </script>

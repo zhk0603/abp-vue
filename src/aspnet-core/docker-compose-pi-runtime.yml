@@ -12,8 +12,8 @@ services:
   idp-api:
     image: "idp-api:latest"
     environment:
-      - App__SelfUrl=http://abp-vue.dd.ixq-soft.cn:8080/idp
-      - App__PathBase=/idp
+      - App__SelfUrl=http://abp-vue-idp.dd.ixq-soft.cn:8080
+      - App__CorsOrigins=http://*.dd.ixq-soft.cn:8080
     depends_on:
       - redis
       - mysql
@@ -21,7 +21,7 @@ services:
   host-api:
     image: "host-api:latest"
     environment:
-      - App__PathBase=/api
+      - App__CorsOrigins=http://*.dd.ixq-soft.cn:8080
     depends_on:
       - redis
       - mysql
