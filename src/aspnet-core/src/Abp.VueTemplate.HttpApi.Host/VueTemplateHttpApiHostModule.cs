@@ -15,7 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -71,19 +70,10 @@ namespace Abp.VueTemplate
             {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath));
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath));
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationContractsModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath));
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath));
-
-                    //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain.Shared"));
-                    //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain"));
-                    //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationContractsModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Application.Contracts"));
-                    //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Application"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain.Shared"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationContractsModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Application.Contracts"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateApplicationModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Application"));
                 });
             }
         }
@@ -212,15 +202,18 @@ namespace Abp.VueTemplate
                         .AllowCredentials();
                 });
             });
-
-            IdentityModelEventSource.ShowPII = true;
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
             var app = context.GetApplicationBuilder();
+            var configuration = context.GetConfiguration();
+            var pathBase = configuration.GetValue<string>("App:PathBase");
+            if (!pathBase.IsNullOrWhiteSpace())
+            {
+                app.UsePathBase(pathBase);
+            }
 
-            app.UsePathBase("/api");
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
@@ -235,7 +228,7 @@ namespace Abp.VueTemplate
             app.UseAbpRequestLocalization();
 
             app.UseSwagger();
-            app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "VueTemplate API"); });
+            app.UseSwaggerUI(options => { options.SwaggerEndpoint($"{pathBase}/swagger/v1/swagger.json", "VueTemplate API"); });
 
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();

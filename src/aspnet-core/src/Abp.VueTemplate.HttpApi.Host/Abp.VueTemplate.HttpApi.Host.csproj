@@ -37,8 +37,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Abp.VueTemplate.Application\Abp.VueTemplate.Application.csproj" />
-		<ProjectReference
-			Include="..\Abp.VueTemplate.EntityFrameworkCore.DbMigrations\Abp.VueTemplate.EntityFrameworkCore.DbMigrations.csproj" />
+		<ProjectReference Include="..\Abp.VueTemplate.EntityFrameworkCore.DbMigrations\Abp.VueTemplate.EntityFrameworkCore.DbMigrations.csproj" />
 		<ProjectReference Include="..\Abp.VueTemplate.HttpApi\Abp.VueTemplate.HttpApi.csproj" />
 	</ItemGroup>
 
@@ -50,9 +49,7 @@
 	</ItemGroup>
 
 	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/bundleconfig" />
-		</VisualStudio>
+		<VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio>
 	</ProjectExtensions>
 
 </Project>

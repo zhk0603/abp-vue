@@ -13,12 +13,15 @@ services:
     image: "idp-api:latest"
     environment:
       - App__SelfUrl=http://abp-vue.dd.ixq-soft.cn:8080/idp
+      - App__PathBase=/idp
     depends_on:
       - redis
       - mysql
 
   host-api:
     image: "host-api:latest"
+    environment:
+      - App__PathBase=/api
     depends_on:
       - redis
       - mysql

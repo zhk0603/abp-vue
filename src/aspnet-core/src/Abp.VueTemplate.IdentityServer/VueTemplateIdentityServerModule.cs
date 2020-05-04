@@ -15,10 +15,7 @@ using StackExchange.Redis;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
-using Volo.Abp.AspNetCore.Mvc.UI;
-using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Auditing;
 using Volo.Abp.Autofac;
@@ -27,10 +24,8 @@ using Volo.Abp.Caching;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.UI;
 using Volo.Abp.VirtualFileSystem;
-using IdentityServer4.Services;
-using Microsoft.IdentityModel.Logging;
+using Microsoft.Extensions.Configuration;
 using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
@@ -90,11 +85,8 @@ namespace Abp.VueTemplate
             {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath));
-                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath));
-
-                    //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain.Shared"));
-                    //options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain.Shared"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<VueTemplateDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VueTemplate.Domain"));
                 });
             }
 
@@ -144,15 +136,18 @@ namespace Abp.VueTemplate
                         .AllowCredentials();
                 });
             });
-
-            IdentityModelEventSource.ShowPII = true;
         }
-        
+
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
             var app = context.GetApplicationBuilder();
 
-            app.UsePathBase("/idp");
+            var configuration = context.GetConfiguration();
+            var pathBase = configuration.GetValue<string>("App:PathBase"); 
+            if (!pathBase.IsNullOrWhiteSpace())
+            {
+                app.UsePathBase(pathBase);
+            }
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
