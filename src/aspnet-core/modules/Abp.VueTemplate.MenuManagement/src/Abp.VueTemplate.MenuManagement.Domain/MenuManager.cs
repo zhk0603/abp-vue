@@ -102,7 +102,7 @@ namespace Abp.VueTemplate.MenuManagement
             var menuGrants = await _menuGrantRepository.GetGrantByMenuIdAsync(menuId);
             foreach (var g in menuGrants)
             {
-                if (!oldPermission.IsNullOrEmpty())
+                if (!oldPermission.IsNullOrEmpty() && !newPermission.IsNullOrEmpty()) // 菜单原本有权限控制，修改为无权限控制：这种情况不清除授权，视为开放权限。
                 {
                     await _permissionManager.SetAsync(oldPermission, g.ProviderName, g.ProviderKey, false);
                 }

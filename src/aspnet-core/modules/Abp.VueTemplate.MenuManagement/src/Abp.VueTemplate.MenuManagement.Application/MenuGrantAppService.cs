@@ -107,7 +107,7 @@ namespace Abp.VueTemplate.MenuManagement
                     var dto = new UpdatePermissionDto
                     {
                         Name = x.Name,
-                        IsGranted = menuDto?.IsGranted ?? false // 默认不给予授权，如果菜单与权限绑定，则以菜单的授权为主。
+                        IsGranted = menuDto?.IsGranted ?? true // 默认给予授权，如果菜单与权限绑定，则以菜单的授权为主。
                     };
 
                     return dto;

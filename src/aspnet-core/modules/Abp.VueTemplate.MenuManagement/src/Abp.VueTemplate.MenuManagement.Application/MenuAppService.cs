@@ -44,7 +44,7 @@ namespace Abp.VueTemplate.MenuManagement
 
         public override async Task<MenuDto> UpdateAsync(Guid id, CreateOrUpdateMenuDto input)
         {
-            PermissionChecker(input.PermissionKey);
+            PermissionChecker(input.PermissionKey, id);
 
             // 当更新菜单权限时，同时刷 PermissionGrant
             var menu = await GetEntityByIdAsync(id);
@@ -117,8 +117,10 @@ namespace Abp.VueTemplate.MenuManagement
             return base.CreateAsync(input);
         }
 
-        public override Task<PagedResultDto<MenuDto>> GetListAsync(MenuRequestDto input)
+        public override async Task<PagedResultDto<MenuDto>> GetListAsync(MenuRequestDto input)
         {
+            await CheckGetListPolicyAsync();
+
             var multiTenancySide = CurrentTenant.GetMultiTenancySide();
 
             var allMenus = Repository
@@ -146,10 +148,10 @@ namespace Abp.VueTemplate.MenuManagement
                 SortChildrenMenu(dto);
             }
 
-            return Task.FromResult(new PagedResultDto<MenuDto>(allMenus.Count, menuDtos));
+            return new PagedResultDto<MenuDto>(allMenus.Count, menuDtos);
         }
 
-        private void PermissionChecker(string permissionName)
+        private void PermissionChecker(string permissionName, Guid? menuId = null)
         {
             if (!permissionName.IsNullOrWhiteSpace())
             {
@@ -157,6 +159,12 @@ namespace Abp.VueTemplate.MenuManagement
                 if (permission == null)
                 {
                     throw new UserFriendlyException($"未知的权限:“{permissionName}”。");
+                }
+
+                var menu = Repository.FirstOrDefault(x => x.PermissionKey == permissionName && x.Id != menuId);
+                if (menu != null)
+                {
+                    throw new UserFriendlyException($"权限已经被菜单“{menu.DisplayName}”绑定。");
                 }
             }
         }
