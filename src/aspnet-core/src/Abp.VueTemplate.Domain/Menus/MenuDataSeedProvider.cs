@@ -134,6 +134,10 @@ namespace Abp.VueTemplate.Menus
                             {
                                 PermissionKey = "MenuManagement.Menus.Create"
                             },
+                            new Menu(_guidGenerator.Create(), "", "创建权限", MenuEnumType.Permission, MultiTenancySides.Host)
+                            {
+                                PermissionKey = "MenuManagement.Menus.CreatePermission"
+                            },
                             new Menu(_guidGenerator.Create(), "", "更新", MenuEnumType.Permission, MultiTenancySides.Host)
                             {
                                 PermissionKey = "MenuManagement.Menus.Update"

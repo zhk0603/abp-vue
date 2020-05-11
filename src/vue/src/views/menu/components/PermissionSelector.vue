@@ -8,6 +8,7 @@
   <el-select
     v-model="selVal"
     filterable
+    clearable
     class="form-item"
     placeholder="请选择"
     @change="onChange"
