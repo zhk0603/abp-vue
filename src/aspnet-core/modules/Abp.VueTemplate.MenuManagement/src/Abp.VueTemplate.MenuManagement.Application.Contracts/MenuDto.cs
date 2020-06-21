@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement;
 
 namespace Abp.VueTemplate.MenuManagement
@@ -21,6 +22,7 @@ namespace Abp.VueTemplate.MenuManagement
         public string Sort { get; set; }
         public string TargetUrl { get; set; } // window.open _blank 
         public string PermissionKey { get; set; } // 此菜单关联的权限key.
+        public MultiTenancySides MultiTenancySide { get; set; }
         public List<MenuDto> Children { get; set; } = new List<MenuDto>();
     }
 }

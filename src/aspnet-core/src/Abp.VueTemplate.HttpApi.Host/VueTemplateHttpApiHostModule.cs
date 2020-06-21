@@ -232,7 +232,7 @@ namespace Abp.VueTemplate
 
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
-            app.UseMvcWithDefaultRouteAndArea();
+            app.UseConfiguredEndpoints();
         }
     }
 

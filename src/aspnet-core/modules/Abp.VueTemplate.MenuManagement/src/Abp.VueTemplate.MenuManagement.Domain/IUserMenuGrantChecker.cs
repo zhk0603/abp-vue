@@ -37,6 +37,11 @@ namespace Abp.VueTemplate.MenuManagement
                 return false;
             }
 
+            if (menu.PermissionKey.IsNullOrWhiteSpace())
+            {
+                return true;
+            }
+
             var isGranted = false;
             var content = new MenuGrantRuntimeCheckerContent
             {

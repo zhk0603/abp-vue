@@ -162,7 +162,7 @@ namespace Abp.VueTemplate
             app.UseAbpRequestLocalization();
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
-            app.UseMvcWithDefaultRouteAndArea();
+            app.UseConfiguredEndpoints();
         }
     }
 }

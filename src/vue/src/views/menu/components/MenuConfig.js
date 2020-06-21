@@ -9,7 +9,8 @@ export const menuViewModel = {
   'icon': '',
   'sort': '',
   'targetUrl': '',
-  'permissionKey': ''
+  'permissionKey': '',
+  'multiTenancySide': 3
 }
 
 export const rules = {
@@ -68,3 +69,14 @@ export const permissionRules = {
     }
   ]
 }
+
+export const multiTenancySides = [{
+  value: 1,
+  text: '租户'
+}, {
+  value: 2,
+  text: '宿主'
+}, {
+  value: 3,
+  text: '宿主和租户'
+}]

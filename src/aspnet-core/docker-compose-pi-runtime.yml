@@ -3,14 +3,17 @@ version: "3.0"
 services:
   redis:
     image: redis:alpine
+    restart: always
 
   mysql:
     image: ibex/debian-mysql-server-5.7
+    restart: always
     volumes:
       - mysql-data:/var/lib/mysql
 
   idp-api:
     image: "idp-api:latest"
+    restart: always
     environment:
       - App__SelfUrl=http://abp-vue-idp.dd.ixq-soft.cn:8080
       - App__CorsOrigins=http://*.dd.ixq-soft.cn:8080,http://localhost:9528
@@ -20,6 +23,7 @@ services:
 
   host-api:
     image: "host-api:latest"
+    restart: always
     environment:
       - App__CorsOrigins=http://*.dd.ixq-soft.cn:8080,http://localhost:9528
     depends_on:

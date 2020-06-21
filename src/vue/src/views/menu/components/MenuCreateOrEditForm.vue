@@ -92,6 +92,21 @@
             <PermissionSelector :value.sync="formData.permissionKey" />
           </el-form-item>
         </el-col>
+        <el-col :span="12">
+          <el-form-item
+            prop="multiTenancySide"
+            label="多租户"
+          >
+            <el-select v-model="formData.multiTenancySide" placeholder="请选择">
+              <el-option
+                v-for="item in multiTenancySides"
+                :key="item.value"
+                :label="item.text"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
     <div class="from-footer">
@@ -104,7 +119,7 @@
 <script>
 import fromMixin from '@/mixins/formMixin'
 import menuApi from '@/api/menu'
-import { menuViewModel, rules } from './MenuConfig'
+import { menuViewModel, rules, multiTenancySides } from './MenuConfig'
 import CommonTreeSelector from '@/components/CommonTreeSelector'
 import PermissionSelector from './PermissionSelector'
 
@@ -129,7 +144,8 @@ export default {
     return {
       allMenu: [],
       formData: Object.assign({}, menuViewModel),
-      rules
+      rules,
+      multiTenancySides
     }
   },
   watch: {
