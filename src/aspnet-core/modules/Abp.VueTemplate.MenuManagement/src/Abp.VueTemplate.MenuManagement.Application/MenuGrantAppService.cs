@@ -53,7 +53,7 @@ namespace Abp.VueTemplate.MenuManagement
                 )
                 .OrderBy(x => x.Sort)
                 .ToList()
-                .Where(x=> !x.ParentId.HasValue).ToList(); // 根节点
+                .Where(x => !x.ParentId.HasValue).ToList(); // 根节点
 
             var menuDtos = new List<VueMenu>();
             foreach (var menu in rootMenus)
@@ -63,7 +63,7 @@ namespace Abp.VueTemplate.MenuManagement
                 {
                     var dto = ObjectMapper.Map<Menu, VueMenu>(menu);
                     menuDtos.Add(dto);
-                    FilterChildrenMenuRecursively(menu, dto);
+                    await FilterChildrenMenuRecursivelyAsync(menu, dto);
                 }
             }
 
@@ -89,7 +89,7 @@ namespace Abp.VueTemplate.MenuManagement
             await CheckProviderPolicy(providerName);
             return await InternalGetAsync(providerName, providerKey);
         }
-    
+
         public virtual async Task UpdateAsync(string providerName, string providerKey, UpdateMenuGrantsDto input)
         {
             await CheckProviderPolicy(providerName);
@@ -168,16 +168,19 @@ namespace Abp.VueTemplate.MenuManagement
             await AuthorizationService.CheckAsync(policyName);
         }
 
-        private void FilterChildrenMenuRecursively(Menu parent,VueMenu vueMenu)
+        private async Task FilterChildrenMenuRecursivelyAsync(Menu parent, VueMenu vueMenu)
         {
             if (parent.Children != null)
             {
                 vueMenu.Children = new List<VueMenu>();
-                foreach (var menu in parent.Children.Where( x => _userMenuGrantChecker.CheckAsync(_principalAccessor.Principal, x).Result))
+                foreach (var menu in parent.Children)
                 {
-                    var dto = ObjectMapper.Map<Menu, VueMenu>(menu);
-                    vueMenu.Children.Add(dto);
-                    FilterChildrenMenuRecursively(menu, dto);
+                    if (await _userMenuGrantChecker.CheckAsync(_principalAccessor.Principal, menu))
+                    {
+                        var dto = ObjectMapper.Map<Menu, VueMenu>(menu);
+                        vueMenu.Children.Add(dto);
+                        await FilterChildrenMenuRecursivelyAsync(menu, dto);
+                    }
                 }
             }
         }

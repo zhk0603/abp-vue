@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Security.Claims;
@@ -8,6 +9,11 @@ namespace Abp.VueTemplate.MenuManagement.Security
     [Dependency(ReplaceServices = true)]
     public class FakeCurrentPrincipalAccessor : ICurrentPrincipalAccessor, ISingletonDependency
     {
+        public IDisposable Change(ClaimsPrincipal principal)
+        {
+            throw new NotImplementedException();
+        }
+
         public ClaimsPrincipal Principal => GetPrincipal();
         private ClaimsPrincipal _principal;
 

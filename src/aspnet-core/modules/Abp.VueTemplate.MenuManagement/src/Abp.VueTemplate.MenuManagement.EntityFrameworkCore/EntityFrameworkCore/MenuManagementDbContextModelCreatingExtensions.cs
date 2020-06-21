@@ -34,6 +34,8 @@ namespace Abp.VueTemplate.MenuManagement.EntityFrameworkCore
                 b.Property(x => x.Sort).HasMaxLength(50);
                 b.Property(x => x.TargetUrl).HasMaxLength(500);
                 b.Property(x => x.PermissionKey).HasMaxLength(100);
+
+                b.HasIndex(x => new {x.PermissionKey});
             });
 
             builder.Entity<MenuGrant>(b =>

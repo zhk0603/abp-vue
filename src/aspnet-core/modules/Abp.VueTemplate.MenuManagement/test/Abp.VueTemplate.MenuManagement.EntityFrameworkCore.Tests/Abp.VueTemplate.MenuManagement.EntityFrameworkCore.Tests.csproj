@@ -8,10 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.5" />
     <ProjectReference Include="..\..\src\Abp.VueTemplate.MenuManagement.EntityFrameworkCore\Abp.VueTemplate.MenuManagement.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Abp.VueTemplate.MenuManagement.TestBase\Abp.VueTemplate.MenuManagement.TestBase.csproj" />
   </ItemGroup>

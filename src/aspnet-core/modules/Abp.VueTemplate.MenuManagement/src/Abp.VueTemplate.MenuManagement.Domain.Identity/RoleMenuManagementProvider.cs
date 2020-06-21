@@ -18,12 +18,14 @@ namespace Abp.VueTemplate.MenuManagement.Domain.Identity
             IMenuGrantChecker menuGrantChecker,
             IGuidGenerator guidGenerator,
             ICurrentTenant currentTenant,
-            IUserRoleFinder userRoleFinder) : base(menuGrantRepository,
-            permissionDefinitionManager,
-            menuGrantChecker,
-            guidGenerator,
-            currentTenant
-        )
+            IUserRoleFinder userRoleFinder
+        ) :
+            base(menuGrantRepository,
+                permissionDefinitionManager,
+                menuGrantChecker,
+                guidGenerator,
+                currentTenant
+            )
         {
             _userRoleFinder = userRoleFinder;
         }
