@@ -121,13 +121,9 @@ namespace Abp.VueTemplate.MenuManagement
         {
             await CheckGetListPolicyAsync();
 
-            var multiTenancySide = CurrentTenant.GetMultiTenancySide();
-
             var allMenus = Repository
                 .WhereIf(input.Type.HasValue, m => m.MenuType == input.Type)
                 .WhereIf(!input.Name.IsNullOrWhiteSpace(), m => m.DisplayName.Contains(input.Name))
-                .WhereIf(multiTenancySide == MultiTenancySides.Tenant,
-                    m => m.MultiTenancySide != MultiTenancySides.Host)
                 .ToList();
 
             var root = allMenus

@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import menuApi from '@/api/menu'
 import menuGrantApi from '@/api/menuGrant'
 
 export default {
@@ -93,7 +92,7 @@ export default {
     },
     async bindData() {
       if (this.providerKey) {
-        const treeData = (await menuApi.getList()).items
+        // const treeData = (await menuApi.getList()).items
 
         // 读取拥有的权限，初始化选中
         menuGrantApi.get({
@@ -107,7 +106,7 @@ export default {
             }
           })
           this.$refs['tree'].setCheckedKeys(this.checkedMenus)
-          this.initTreeData(treeData, res.menuGrants)
+          this.initTreeData(res.menus, res.menuGrants)
         })
       }
     },
@@ -136,7 +135,7 @@ export default {
     initTreeData(treeData, items) {
       treeData.forEach(x => {
         if (this.enableDisableFeature) {
-          const arr = items.filter(y => y.id == x.id)
+          const arr = items.filter(y => y.id === x.id)
           if (arr.length > 0) {
             const provoders = arr[0].grantedProviders
             let disabled = provoders.length !== 0
@@ -158,7 +157,7 @@ export default {
     initChildren(treeData, items) {
       treeData.forEach(x => {
         if (this.enableDisableFeature) {
-          const arr = items.filter(y => y.id == x.id)
+          const arr = items.filter(y => y.id === x.id)
           if (arr.length > 0) {
             const provoders = arr[0].grantedProviders
             let disabled = provoders.length !== 0

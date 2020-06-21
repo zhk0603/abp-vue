@@ -57,7 +57,8 @@ export const permissionViewModel = {
   'parentId': '',
   'parentDisplayName': '',
   'menuType': 1,
-  'permissionKey': ''
+  'permissionKey': '',
+  'multiTenancySide': 3
 }
 
 export const permissionRules = {

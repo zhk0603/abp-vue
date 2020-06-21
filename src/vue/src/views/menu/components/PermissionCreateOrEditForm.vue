@@ -39,6 +39,21 @@
             <PermissionSelector :filter-group="parentPermission" :value.sync="formData.permissionKey" />
           </el-form-item>
         </el-col>
+        <el-col :span="24">
+          <el-form-item
+            prop="multiTenancySide"
+            label="多租户"
+          >
+            <el-select v-model="formData.multiTenancySide" class="form-item" placeholder="请选择">
+              <el-option
+                v-for="item in multiTenancySides"
+                :key="item.value"
+                :label="item.text"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
     <div class="from-footer">
@@ -51,7 +66,7 @@
 <script>
 import fromMixin from '@/mixins/formMixin'
 import menuApi from '@/api/menu'
-import { permissionViewModel, permissionRules } from './MenuConfig'
+import { permissionViewModel, permissionRules, multiTenancySides } from './MenuConfig'
 import PermissionSelector from './PermissionSelector'
 
 export default {
@@ -78,7 +93,8 @@ export default {
     return {
       formData: Object.assign({ }, permissionViewModel),
       permissionRules,
-      parentPermission: ''
+      parentPermission: '',
+      multiTenancySides
     }
   },
   watch: {

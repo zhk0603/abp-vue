@@ -97,7 +97,7 @@
             prop="multiTenancySide"
             label="多租户"
           >
-            <el-select v-model="formData.multiTenancySide" placeholder="请选择">
+            <el-select v-model="formData.multiTenancySide" class="form-item" placeholder="请选择">
               <el-option
                 v-for="item in multiTenancySides"
                 :key="item.value"

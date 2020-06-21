@@ -21,6 +21,7 @@ namespace Abp.VueTemplate.MenuManagement
         private readonly ICurrentPrincipalAccessor _principalAccessor;
         private readonly IAuthorizationService _authorizationService;
         private readonly IMenuManager _menuManager;
+        private readonly IMenuAppService _menuAppService;
         private readonly IMenuRepository _menuRepository;
         private readonly PermissionManagementOptions _options;
         private readonly IPermissionAppService _permissionAppService;
@@ -28,6 +29,7 @@ namespace Abp.VueTemplate.MenuManagement
         public MenuGrantAppService(
             IMenuRepository menuRepository,
             IMenuManager menuManager,
+            IMenuAppService menuAppService,
             IPermissionAppService permissionAppService,
             IOptions<PermissionManagementOptions> options,
             IAuthorizationService authorizationService,
@@ -38,6 +40,7 @@ namespace Abp.VueTemplate.MenuManagement
         {
             _menuRepository = menuRepository;
             _menuManager = menuManager;
+            _menuAppService = menuAppService;
             _permissionAppService = permissionAppService;
             _authorizationService = authorizationService;
             _abpAuthorizationPolicyProvider = abpAuthorizationPolicyProvider;
@@ -150,10 +153,34 @@ namespace Abp.VueTemplate.MenuManagement
                 });
             }
 
+            // _menuAppService.GetListAsync 没有做租户过滤，所以 这里要根据当前用户租户过滤。
+            var menuDtos = new List<MenuDto>();
+            foreach (var menu in (await _menuAppService.GetListAsync(new MenuRequestDto())).Items)
+            {
+                if (menu.MultiTenancySide.HasFlag(multiTenancySide))
+                {
+                    menuDtos.Add(menu);
+                    FilterChildrenByTenancySide(menu, multiTenancySide);
+                }
+            }
+
             return new GetMenuGrantListResultDto
             {
-                MenuGrants = menuGrants
+                MenuGrants = menuGrants,
+                Menus = menuDtos
             };
+        }
+
+        private void FilterChildrenByTenancySide(MenuDto menuDto, MultiTenancySides multiTenancySides)
+        {
+            if (menuDto.Children?.Count > 0)
+            {
+                menuDto.Children = menuDto.Children.Where(x => x.MultiTenancySide.HasFlag(multiTenancySides)).ToList();
+                foreach (var child in menuDto.Children)
+                {
+                    FilterChildrenByTenancySide(child, multiTenancySides);
+                }
+            }
         }
 
         private async Task CheckProviderPolicy(string providerName)
