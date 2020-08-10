@@ -15,6 +15,13 @@
         size="mini"
         @click="create"
       >新增</el-button>
+      
+      <el-button
+        v-permission="['AbpIdentity.Roles.Custom']"
+        class="header-item-btn"
+        type="success"
+        size="mini"
+      >测试-租户可见</el-button>
     </div>
     <div class="app-full-body">
       <el-table

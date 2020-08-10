@@ -70,7 +70,8 @@ namespace Abp.VueTemplate.MenuManagement
 
                 foreach (var permission in group.Permissions)
                 {
-                    if (!permission.MultiTenancySide.HasFlag(multiTenancySide))
+                    if (multiTenancySide != MultiTenancySides.Host &&
+                        !permission.MultiTenancySide.HasFlag(multiTenancySide))
                     {
                         continue;
                     }
@@ -92,7 +93,8 @@ namespace Abp.VueTemplate.MenuManagement
 
                     foreach (var c in permission.Children)
                     {
-                        if (!c.MultiTenancySide.HasFlag(multiTenancySide))
+                        if (multiTenancySide != MultiTenancySides.Host && 
+                            !c.MultiTenancySide.HasFlag(multiTenancySide))
                         {
                             continue;
                         }
@@ -119,7 +121,7 @@ namespace Abp.VueTemplate.MenuManagement
 
         public override async Task<PagedResultDto<MenuDto>> GetListAsync(MenuRequestDto input)
         {
-            await CheckGetListPolicyAsync();
+            //await CheckGetListPolicyAsync();
 
             var allMenus = Repository
                 .WhereIf(input.Type.HasValue, m => m.MenuType == input.Type)

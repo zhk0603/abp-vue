@@ -187,7 +187,6 @@ namespace Abp.VueTemplate.IdentityServer
                         IdentityTokenLifetime = 7200,
                         RequireConsent = false,
                         AllowAccessTokensViaBrowser = true,
-
                     },
                     autoSave: true
                 );

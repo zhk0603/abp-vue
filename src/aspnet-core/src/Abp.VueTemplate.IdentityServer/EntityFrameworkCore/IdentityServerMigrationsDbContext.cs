@@ -20,10 +20,7 @@ namespace Abp.VueTemplate.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ConfigureIdentityServer(options =>
-            {
-                options.DatabaseProvider = EfCoreDatabaseProvider.MySql;
-            });
+            modelBuilder.ConfigureIdentityServer();
         }
     }
 }
